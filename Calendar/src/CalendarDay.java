@@ -2,6 +2,8 @@
 //Stephen Fulton, Shawn Parkes, and Rebekah Manweiler
 //Java CalendarDay class
 
+import java.io.*;
+
 public class CalendarDay
 {
 	private int date = 0;
