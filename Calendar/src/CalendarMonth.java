@@ -9,10 +9,12 @@ public class CalendarMonth {
 		private int numDays = 0;
 		private CalendarDay[] Days;
 		private String month = "";
+		private int year = 0;
 		
-		public CalendarMonth(int nd, String m){
+		public CalendarMonth(int nd, String m, int y){
 			numDays = nd;
 			month = m;
+			year = y;
 			Days = new CalendarDay[nd];
 			for(int i = 1; i <= nd; i++){
 				Days[i-1] = new CalendarDay(i, month);
