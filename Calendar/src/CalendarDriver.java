@@ -5,6 +5,7 @@ public class CalendarDriver {
 	{
 		CalendarDay x = new CalendarDay(5,"September","Sunday");
 		System.out.println(x.getEvents());
+		x.addEvent("this sucks a lot");
 	}
 
 }

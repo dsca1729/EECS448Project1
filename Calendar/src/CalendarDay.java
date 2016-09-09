@@ -43,4 +43,16 @@ public class CalendarDay
 		}
 		return temp;
 	}
+	
+	public void addEvent(String event)
+	{
+		try
+		{
+			BufferedWriter bw = new BufferedWriter(new FileWriter("MonthFiles/" + this.getMonth() + ".txt", true));
+			bw.newLine();
+			bw.write(date + " " + event);
+			bw.close();
+			
+		}catch(IOException e){}
+	}
 }
