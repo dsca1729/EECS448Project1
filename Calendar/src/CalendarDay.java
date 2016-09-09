@@ -10,13 +10,19 @@ public class CalendarDay
 	private String month;
 	private String dayOfWeek;
 	private String[] dayEvents;
+	private String monthFilePath;
 	
-	public CalendarDay(int d, String m, String dow)
+	public CalendarDay(int d, String m)
 	{
 		date = d;
 		month = m;
-		dayOfWeek = dow;
 		dayEvents = new String[0];
+		monthFilePath = "MonthFiles/" + m + ".txt";
+	}
+
+	public void setDayOfWeek(String dow)
+	{
+		dayOfWeek = dow;
 	}
 	
 	public int getDate()
@@ -39,7 +45,7 @@ public class CalendarDay
 		String temp = "";
 		for (int i = 0; i < dayEvents.length; i++)
 		{
-			temp += i + ". " + dayEvents[i] + "\n";
+			temp += (i+1) + ". " + dayEvents[i] + "\n";
 		}
 		return temp;
 	}
@@ -48,11 +54,23 @@ public class CalendarDay
 	{
 		try
 		{
-			BufferedWriter bw = new BufferedWriter(new FileWriter("MonthFiles/" + this.getMonth() + ".txt", true));
+			BufferedWriter bw = new BufferedWriter(new FileWriter(monthFilePath, true));
 			bw.newLine();
 			bw.write(date + " " + event);
 			bw.close();
 			
 		}catch(IOException e){}
+		addEventToArray(event);
+	}
+
+	public void addEventToArray(String event)
+	{
+		String[] temp = new String[dayEvents.length + 1];
+		for(int i = 0; i < dayEvents.length; i++)
+		{
+			temp[i] = dayEvents[i];
+		}
+		temp[dayEvents.length] = event;
+		dayEvents = temp;	
 	}
 }
