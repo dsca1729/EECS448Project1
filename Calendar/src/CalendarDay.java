@@ -11,11 +11,10 @@ public class CalendarDay
 	private String dayOfWeek;
 	private String[] dayEvents;
 	
-	public CalendarDay(int d, String m, String dow)
+	public CalendarDay(int d, String m)
 	{
 		date = d;
 		month = m;
-		dayOfWeek = dow;
 		dayEvents = new String[0];
 	}
 	
