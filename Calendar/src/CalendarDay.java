@@ -73,4 +73,36 @@ public class CalendarDay
 		temp[dayEvents.length] = event;
 		dayEvents = temp;	
 	}
+	
+	public void removeEvent(int event)
+	{
+		if(event == 0 || event > dayEvents.length)
+		{
+			return;
+		}
+		try{
+			File monthPath = new File(monthFilePath);
+			File tempFile = new File("MonthFiles/temp.txt");
+			BufferedReader br = new BufferedReader(new FileReader(monthPath));
+			BufferedWriter bw = new BufferedWriter(new FileWriter(tempFile));
+			String temp = date + " " + dayEvents[event-1];
+			String x = br.readLine();
+			while(x != null)
+			{
+				if(temp.equals(x) || x.equals("")){}
+				else
+				{
+					bw.write(x);
+					bw.newLine();
+				}
+				x = br.readLine();
+			}
+			br.close();
+			bw.close();
+			monthPath.delete();
+			tempFile.renameTo(new File(monthFilePath));
+		}catch(IOException e){
+			System.out.println(e);
+		}
+	}
 }

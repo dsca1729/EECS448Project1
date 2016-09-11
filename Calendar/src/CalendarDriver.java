@@ -6,7 +6,9 @@ public class CalendarDriver {
 	{
 		CalendarDay x = new CalendarDay(5,"September");
 		x.addEvent("this sucks a lot");
+		x.addEvent("this, like, really sucks");
 		System.out.println(x.getEvents());
+		x.removeEvent(2);
 		CalendarJFrame y = new CalendarJFrame();
 	}
 
