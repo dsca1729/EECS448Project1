@@ -1,13 +1,13 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-public class Test extends JFrame{
+public class CalendarJFrame extends JFrame{
 	public static void main(String[] args)
 	{
-		new Test();
+		new CalendarJFrame();
 	}
 	
-	public Test()
+	public CalendarJFrame()
 	{
 		super("Base");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
