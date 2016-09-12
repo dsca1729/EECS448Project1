@@ -8,8 +8,9 @@ public class CalendarDriver {
 		x.addEvent("this sucks a lot");
 		x.addEvent("this, like, really sucks");
 		System.out.println(x.getEvents());
-		x.removeEvent(2);
-		CalendarJFrame y = new CalendarJFrame();
+		x.removeEvent(1);
+		System.out.println(x.getEvents());
+		//CalendarJFrame y = new CalendarJFrame();
 	}
 
 }
