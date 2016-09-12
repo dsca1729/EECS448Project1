@@ -7,7 +7,6 @@ import java.io.*;
 public class CalendarYear {
 	
 	private CalendarMonth[] Months = new CalendarMonth[10];
-	private static String firstDayofWeek = "Monday";
 	
 	public CalendarYear(){
 		Months[0] = new CalendarMonth(31, "August", 2016);
@@ -20,5 +19,13 @@ public class CalendarYear {
 		Months[7] = new CalendarMonth(31, "March", 2017);
 		Months[8] = new CalendarMonth(30, "April", 2017);
 		Months[9] = new CalendarMonth(31, "May", 2017);
+	}
+	
+	public CalendarMonth getMonth(int index){
+		return Months[index];
+	}
+	
+	public CalendarMonth[] getMonths(){
+		return Months;
 	}
 }

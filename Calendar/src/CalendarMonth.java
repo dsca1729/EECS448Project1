@@ -31,5 +31,9 @@ public class CalendarMonth {
 		
 		public CalendarDay[] getDays(){
 			return Days;
-		}		
+		}	
+		
+		public CalendarDay getDay(int index){
+			return Days[index];
+		}
 }
