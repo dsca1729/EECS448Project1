@@ -12,7 +12,6 @@ public class CalendarJFrame extends JFrame{
 	
 	public static void main(String[] args)
 	{
-		getCurrentDate();
 		new CalendarJFrame();
 	}
 	
@@ -135,19 +134,6 @@ public class CalendarJFrame extends JFrame{
 		{
 			bx.addItem(j);
 		}
-	}
-	
-	public static void getCurrentDate()
-	{
-		try{
-			
-			BufferedReader br = new BufferedReader(new FileReader("MonthFiles/CurrentDate.txt"));
-			currentDay = Integer.parseInt(br.readLine());
-			currentMonth = br.readLine();
-			br.close();
-			overallCurDay = cy.getMonth(currentMonth).getDay(currentDay-1);
-			
-		}catch(IOException e){}
 	}
 	
 	public static void setCurrentDate(JComboBox monthBX, JComboBox dayBX)

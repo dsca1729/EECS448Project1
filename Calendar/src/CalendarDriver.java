@@ -1,41 +1,47 @@
-/*import java.io.*;
+import java.io.*;
 
 public class CalendarDriver {
 
 	/**
 	 * String firstDayofWeek - reset after every session as the oldest day with stored events
 	 * 						 - is initialized in the CalendarDriver constructor
-	 
-	private static String firstDayofWeek = "Monday"; //ok for now
-	private static CalendarYear[] Years;
+	 */
+	private static CalendarYear year;
+	private static CalendarDay curDay;
+	
+	public CalendarDriver()
+	{
+		year = new CalendarYear();
+		getCurrentDate();
+		setDaysofWeek("Monday");
+	}
 	
 	public static void setDaysofWeek(String firstDayofWeek){
 		
 		String curday = firstDayofWeek;
-		
-		for(int y = 0; y < Years.length; y++){
-			for(int m = 0; m < Years[y].getMonths().length; m++){
-				for(int d = 0; d < (Years[y].getMonth(m)).getNumDays(); d++){
-					CalendarMonth currentMonth = Years[y].getMonth(m);
-					CalendarDay currentDay = currentMonth.getDay(d);
-					currentDay.setDayOfWeek(curday);
-					curday = setNextDayofWeek(curday);
-				}
+		for(int m = 0; m < year.getMonths().length; m++){
+			for(int d = 0; d < (year.getMonths())[m].getNumDays(); d++){
+				CalendarMonth currentMonth = year.getMonths()[m];
+				CalendarDay currentDay = currentMonth.getDay(d);
+				currentDay.setDayOfWeek(curday);
+				curday = setNextDayofWeek(curday);
 			}
 		}
 	}
 	
-	public static void main(String[] args)
+	public static void getCurrentDate()
 	{
-		Years = new CalendarYear[1];
-		Years[0] = new CalendarYear();
-		CalendarDay x = new CalendarDay(5,"September");
-		x.addEvent("this sucks a lot");
-		x.addEvent("this, like, really sucks");
-		System.out.println(x.getEvents());
-		x.removeEvent(2);
-		setDaysofWeek("Monday");
-		CalendarJFrame y = new CalendarJFrame(Years[0]);
+		int currentDay;
+		String currentMonth;
+		try{
+			
+			BufferedReader br = new BufferedReader(new FileReader("MonthFiles/CurrentDate.txt"));
+			currentDay = Integer.parseInt(br.readLine());
+			currentMonth = br.readLine();
+			br.close();
+			curDay = year.getMonth(currentMonth).getDay(currentDay-1);
+			
+		}catch(IOException e){}
 	}
 	
 	public static String setNextDayofWeek(String curday){
@@ -50,4 +56,4 @@ public class CalendarDriver {
 	
 	
 
-}*/
+}
