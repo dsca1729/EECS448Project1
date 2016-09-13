@@ -11,10 +11,9 @@ public class CalendarMonth {
 		private String month = "";
 		private int year = 0;
 		
-		public CalendarMonth(int nd, String m, int y){
+		public CalendarMonth(int nd, String m){
 			numDays = nd;
 			month = m;
-			year = y;
 			Days = new CalendarDay[nd];
 			for(int i = 1; i <= nd; i++){
 				Days[i-1] = new CalendarDay(i, month);

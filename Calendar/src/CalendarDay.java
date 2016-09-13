@@ -164,4 +164,25 @@ public class CalendarDay
 		}
 		dayEvents = temp;
 	}
+	
+	public void loadDayEvents()
+	{
+		try
+		{
+			BufferedReader br = new BufferedReader(new FileReader(monthFilePath));
+			String temp = br.readLine();
+			while(temp != null)
+			{
+				String temp2 = temp.substring(0, 2);
+				temp2.trim();
+				if(Integer.parseInt(temp2) == date)
+				{
+					addEventToArray(temp);
+				}
+				temp = br.readLine();
+			}
+			br.close();
+		}catch(IOException e)
+		{System.out.println(e);}
+	}
 }
