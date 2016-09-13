@@ -19,6 +19,18 @@ public class CalendarYear {
 		//loadEvents();
 	}
 	
+	public static int getMonthIndex(String month)
+	{
+		for(int i = 0; i < Months.length; i++)
+		{
+			if(month.equals(monthNames[i]))
+			{
+				return i;
+			}
+		}
+		return 0;
+	}
+	
 	public CalendarMonth getMonth(String curMonth){
 		for(int i = 0; i < Months.length; i++)
 		{

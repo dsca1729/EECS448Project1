@@ -67,7 +67,8 @@ public class CalendarJFrame extends JFrame{
 		JButton dayButton = new JButton("Go to this Day");
 		currentDayPanel.add(curDayLab);
 		
-		monthList.setSelectedIndex(0);
+		monthList.setSelectedIndex(cy.getMonthIndex(currentMonth));
+		dayList.setSelectedIndex(overallCurDay.getDate()-1);
 		
 		monthList.addActionListener(
 				new ActionListener(){
@@ -155,9 +156,10 @@ public class CalendarJFrame extends JFrame{
 		int y = (Integer)dayBX.getSelectedItem();
 		try{
 			BufferedWriter bw = new BufferedWriter(new FileWriter("MonthFiles/CurrentDate.txt"));
-			bw.write(y);
+			bw.write(Integer.toString(y));
 			bw.newLine();
 			bw.write(x);
+			bw.close();
 		}catch(IOException e){}
 		overallCurDay = cy.getMonth(x).getDay(y - 1);
 	}
