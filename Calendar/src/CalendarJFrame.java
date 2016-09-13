@@ -2,14 +2,13 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 public class CalendarJFrame extends JFrame{
-	public static void main(String[] args)
-	{
-		new CalendarJFrame();
-	}
 	
-	public CalendarJFrame()
+	private CalendarYear yearOne;
+	
+	public CalendarJFrame(CalendarYear x)
 	{
-		super("Base");
+		super("Calendar");
+		yearOne = x;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(600, 400);
 		setResizable(false);

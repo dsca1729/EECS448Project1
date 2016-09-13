@@ -28,12 +28,14 @@ public class CalendarDriver {
 	public static void main(String[] args)
 	{
 		Years = new CalendarYear[1];
+		Years[1] = new CalendarYear();
 		CalendarDay x = new CalendarDay(5,"September");
 		x.addEvent("this sucks a lot");
 		x.addEvent("this, like, really sucks");
 		System.out.println(x.getEvents());
 		x.removeEvent(2);
-		CalendarJFrame y = new CalendarJFrame();
+		setDaysofWeek("Monday");
+		CalendarJFrame y = new CalendarJFrame(Years[1]);
 	}
 	
 	public static String setNextDayofWeek(String curday){
@@ -45,5 +47,7 @@ public class CalendarDriver {
 		else if(curday == "Friday") return "Saturday";
 		else return "Sunday";
 	}
+	
+	
 
 }
