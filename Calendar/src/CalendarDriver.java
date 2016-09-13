@@ -1,4 +1,8 @@
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 public class CalendarDriver {
 
 	/**
@@ -9,8 +13,36 @@ public class CalendarDriver {
 	private CalendarYear[] Years;
 	private CalendarDay[] currentWeek;
 	
+	/**
+	 * reads in files and creates needed years, months, days, and events
+	 */
 	public CalendarDriver(){
+		String initilizepath = "Initialize.txt";
+		try {
+			BufferedReader in = new BufferedReader(new FileReader(initilizepath));
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
+	}
+	
+	/**
+	 * takes all years, months, days, and events and writes them to respective files 
+	 * http://stackoverflow.com/questions/2361510/how-to-save-application-options-before-exit
+	 */
+	public void saveAndExitCalendar(){
+		try{
+			for(int y = 0; y < Years.length; y++){
+				CalendarYear curyear = Years[y];
+				CalendarMonth[] curmonths = curyear.getMonths();
+				for(int m = 0; m < curmonths.length; m++){
+					CalendarMonth curmonth = curmonths[m];
+				}
+			}
+		}catch (IOException e){
+			
+		}
 	}
 	
 	public void setDaysofWeek(String firstDayofWeek){
