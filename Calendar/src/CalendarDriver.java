@@ -1,11 +1,11 @@
-import java.io.*;
+/*import java.io.*;
 
 public class CalendarDriver {
 
 	/**
 	 * String firstDayofWeek - reset after every session as the oldest day with stored events
 	 * 						 - is initialized in the CalendarDriver constructor
-	 */
+	 
 	private static String firstDayofWeek = "Monday"; //ok for now
 	private static CalendarYear[] Years;
 	
@@ -25,7 +25,7 @@ public class CalendarDriver {
 		}
 	}
 	
-	/*public static void main(String[] args)
+	public static void main(String[] args)
 	{
 		Years = new CalendarYear[1];
 		Years[0] = new CalendarYear();
@@ -36,7 +36,7 @@ public class CalendarDriver {
 		x.removeEvent(2);
 		setDaysofWeek("Monday");
 		CalendarJFrame y = new CalendarJFrame(Years[0]);
-	}*/
+	}
 	
 	public static String setNextDayofWeek(String curday){
 		if(curday == "Sunday") return "Monday";
@@ -50,4 +50,4 @@ public class CalendarDriver {
 	
 	
 
-}
+}*/

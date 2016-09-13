@@ -16,10 +16,17 @@ public class CalendarYear {
 		{
 			Months[i] = new CalendarMonth(daysInMonth[i], monthNames[i]);
 		}
+		//loadEvents();
 	}
 	
-	public CalendarMonth getMonth(int index){
-		return Months[index];
+	public CalendarMonth getMonth(String curMonth){
+		for(int i = 0; i < Months.length; i++)
+		{
+			if(curMonth.equals(Months[i].getMonth())){
+				return Months[i];
+			}
+		}
+		return Months[0];
 	}
 	
 	public CalendarMonth[] getMonths(){

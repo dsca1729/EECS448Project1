@@ -42,6 +42,11 @@ public class CalendarDay
 		return date;
 	}
 	
+	public String getFilePath()
+	{
+		return monthFilePath;
+	}
+	
 	/**
 	 * Returns the month as a string from the CalendarDay object.
 	 * @return the month that the given CalendarDay belongs to.
@@ -174,11 +179,15 @@ public class CalendarDay
 			while(temp != null)
 			{
 				String temp2 = temp.substring(0, 2);
-				temp2.trim();
-				if(Integer.parseInt(temp2) == date)
-				{
-					addEventToArray(temp);
-				}
+				temp2 = temp2.trim();
+				try{
+					if(Integer.parseInt(temp2) == date)
+					{
+						temp = temp.substring(2);
+						temp = temp.trim();
+						addEventToArray(temp);
+					}	
+				}catch(Exception e){}
 				temp = br.readLine();
 			}
 			br.close();

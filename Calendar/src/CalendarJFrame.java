@@ -6,6 +6,7 @@ import java.io.*;
 public class CalendarJFrame extends JFrame{
 	
 	public static CalendarYear cy = new CalendarYear();
+	private static CalendarDay overallCurDay;
 	private static int currentDay;
 	private static String currentMonth;
 	
@@ -49,15 +50,18 @@ public class CalendarJFrame extends JFrame{
 		setVisible(true);
 	}
 	
-	public static void setDayPanel(JPanel panel1)
+	public static void setDayPanel(JPanel panel)
 	{
-		panel1.setLayout(new BorderLayout());
+		final JLabel curDate = new JLabel(cy.getMonth(currentMonth).getMonth() + " " + currentDay);
+		final JTextArea eventText = new JTextArea(15, 20);
+		
+		panel.setLayout(new BorderLayout());
 		JPanel currentDayPanel = new JPanel();
 		currentDayPanel.setLayout(new FlowLayout());
 		JLabel curDayLab = new JLabel("Current Day");
 		
 		curDayLab.setHorizontalTextPosition(SwingConstants.LEADING);
-		JComboBox monthList = new JComboBox(cy.monthNames);
+		final JComboBox monthList = new JComboBox(cy.monthNames);
 		final JComboBox dayList = new JComboBox();
 		updateDayComboBox(31, dayList);
 		JButton dayButton = new JButton("Go to this Day");
@@ -85,22 +89,42 @@ public class CalendarJFrame extends JFrame{
 						}
 				});
 		
-		
+		dayButton.addActionListener(
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						setCurrentDate(monthList, dayList);
+						curDate.setText(overallCurDay.getMonth() + " " + overallCurDay.getDate());
+						overallCurDay.loadDayEvents();
+						eventText.setText(overallCurDay.getEvents());
+					}
+				});
 		currentDayPanel.add(monthList);
 		currentDayPanel.add(dayList);
 		currentDayPanel.add(dayButton);
 		
 		JPanel eventPanel = new JPanel();
+		eventPanel.setLayout(new BoxLayout(eventPanel, BoxLayout.Y_AXIS));
 		eventPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,0)); //Code from: http://stackoverflow.com/questions/8863062/add-space-between-jframe-and-jpanel
-		JLabel curDay = new JLabel();
-		JTextArea eventText = new JTextArea(15, 20);
+		
+		
+		JLabel eventTitle = new JLabel("Today's Events:");
+		eventTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
+		eventTitle.setFont(eventTitle.getFont().deriveFont(16.0f));
+		curDate.setAlignmentX(Component.CENTER_ALIGNMENT);
+		curDate.setFont(curDate.getFont().deriveFont(24.0f));  //Code from: http://stackoverflow.com/questions/17884843/change-jlabel-font-size
+		cy.getMonth(currentMonth).getDay(currentDay-1).loadDayEvents();
+		
+		eventText.setText(cy.getMonth(currentMonth).getDay(currentDay-1).getEvents());
 		eventText.setLineWrap(true);
 		eventText.setWrapStyleWord(true);
 		eventText.setEditable(false);
 		
-		panel1.add(currentDayPanel, BorderLayout.NORTH);
+		eventPanel.add(curDate);
+		eventPanel.add(eventTitle);
 		eventPanel.add(eventText);
-		panel1.add(eventPanel, BorderLayout.WEST);
+		
+		panel.add(currentDayPanel, BorderLayout.NORTH);
+		panel.add(eventPanel, BorderLayout.WEST);
 	}
 	
 	public static void updateDayComboBox(Integer i, JComboBox bx)
@@ -119,9 +143,23 @@ public class CalendarJFrame extends JFrame{
 			BufferedReader br = new BufferedReader(new FileReader("MonthFiles/CurrentDate.txt"));
 			currentDay = Integer.parseInt(br.readLine());
 			currentMonth = br.readLine();
-			System.out.println(currentDay + currentMonth);
 			br.close();
+			overallCurDay = cy.getMonth(currentMonth).getDay(currentDay-1);
 			
 		}catch(IOException e){}
 	}
+	
+	public static void setCurrentDate(JComboBox monthBX, JComboBox dayBX)
+	{
+		String x = (String)monthBX.getSelectedItem();
+		int y = (Integer)dayBX.getSelectedItem();
+		try{
+			BufferedWriter bw = new BufferedWriter(new FileWriter("MonthFiles/CurrentDate.txt"));
+			bw.write(y);
+			bw.newLine();
+			bw.write(x);
+		}catch(IOException e){}
+		overallCurDay = cy.getMonth(x).getDay(y - 1);
+	}
+	
 }
