@@ -6,19 +6,23 @@ import java.io.*;
 
 public class CalendarYear {
 	
-	private CalendarMonth[] Months = new CalendarMonth[10];
+	private CalendarMonth[] Months;
+	private int Year = 0;
 	
-	public CalendarYear(){
-		Months[0] = new CalendarMonth(31, "August", 2016);
-		Months[1] = new CalendarMonth(30, "September", 2016);
-		Months[2] = new CalendarMonth(31, "October", 2016);
-		Months[3] = new CalendarMonth(30, "November", 2016);
-		Months[4] = new CalendarMonth(31, "December", 2016);
-		Months[5] = new CalendarMonth(31, "January", 2017);
-		Months[6] = new CalendarMonth(28, "February", 2017);
-		Months[7] = new CalendarMonth(31, "March", 2017);
-		Months[8] = new CalendarMonth(30, "April", 2017);
-		Months[9] = new CalendarMonth(31, "May", 2017);
+	public CalendarYear(int y){
+		Year = y;
+		Months[0] = new CalendarMonth("January", Year);
+		Months[1] = new CalendarMonth("February", Year);
+		Months[2] = new CalendarMonth("March", Year);
+		Months[3] = new CalendarMonth("April", Year);
+		Months[4] = new CalendarMonth("May", Year);
+		Months[5] = new CalendarMonth("June", Year);
+		Months[6] = new CalendarMonth("July", Year);
+		Months[7] = new CalendarMonth("August", Year);
+		Months[8] = new CalendarMonth("September", Year);
+		Months[9] = new CalendarMonth("October", Year);
+		Months[10] = new CalendarMonth("November", Year);
+		Months[11] = new CalendarMonth("December", Year);
 	}
 	
 	public CalendarMonth getMonth(int index){
@@ -28,4 +32,5 @@ public class CalendarYear {
 	public CalendarMonth[] getMonths(){
 		return Months;
 	}
+	
 }

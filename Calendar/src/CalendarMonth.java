@@ -2,8 +2,6 @@
 //Stephen Fulton, Shawn Parkes, and Rebekah Manweiler
 //Java CalendaryMonth class
 
-import java.io.*;
-
 public class CalendarMonth {
 
 		private int numDays = 0;
@@ -11,18 +9,35 @@ public class CalendarMonth {
 		private String month = "";
 		private int year = 0;
 		
-		public CalendarMonth(int nd, String m, int y){
-			numDays = nd;
+		public CalendarMonth(String m, int y){
 			month = m;
 			year = y;
-			Days = new CalendarDay[nd];
-			for(int i = 1; i <= nd; i++){
+			numDays = setNumDays(month, y);
+			Days = new CalendarDay[numDays];
+			for(int i = 1; i <= numDays; i++){
 				Days[i-1] = new CalendarDay(i, month);
 			}
 		}
 		
+		public int setNumDays(String name, int y){
+			if(name == "April" || name == "June" || name == "September" || name == "November"){
+				return 30;
+			}
+			else if(name == "February" && (y%4 == 0)){
+				return 29;
+			}
+			else if(name == "February"){
+				return 28;
+			}
+			else return 31;
+		}
+		
 		public String getMonth(){
 			return month;
+		}
+		
+		public int getYear(){
+			return year;
 		}
 		
 		public int getNumDays(){
