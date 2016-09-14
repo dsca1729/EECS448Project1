@@ -88,17 +88,7 @@ public class CalendarJFrame extends JFrame{
 						}
 				});
 		
-		dayButton.addActionListener(
-				new ActionListener(){
-					public void actionPerformed(ActionEvent e){
-						curDay = setCurrentDate(monthList, dayList);
-						curDate.setText(curDay.getMonth() + " " + curDay.getDate());
-						if(curDay.getEvents().equals("")){
-							curDay.loadDayEvents();
-						}
-						eventText.setText(curDay.getEvents());
-					}
-				});
+
 		currentDayPanel.add(monthList);
 		currentDayPanel.add(dayList);
 		currentDayPanel.add(dayButton);
@@ -128,7 +118,12 @@ public class CalendarJFrame extends JFrame{
 		addEventPanel.setLayout(new BoxLayout(addEventPanel, BoxLayout.Y_AXIS));
 		addEventPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 		
+		JPanel newEventPanel = new JPanel();
 		JLabel newEventTitle = new JLabel("New Event");
+		JButton newEventButton = new JButton("Add Event");
+		newEventPanel.add(newEventTitle);
+		newEventPanel.add(newEventButton);
+		
 		JTextArea newEventText = new JTextArea(15, 20);
 		newEventText.setLineWrap(true);
 		newEventText.setWrapStyleWord(true);
@@ -137,14 +132,28 @@ public class CalendarJFrame extends JFrame{
 		JPanel removeEvent = new JPanel();
 		JLabel remove = new JLabel("Remove Event:");
 		final JComboBox eventSelection = new JComboBox();
+		updateDayComboBox(curDay.getEventCount(), eventSelection);
 		JButton removeEventButton = new JButton("Remove");
 		removeEvent.add(remove);
 		removeEvent.add(eventSelection);
 		removeEvent.add(removeEventButton);
 		
-		addEventPanel.add(newEventTitle);
+		addEventPanel.add(newEventPanel);
 		addEventPanel.add(newEventText);
 		addEventPanel.add(removeEvent);
+		
+		dayButton.addActionListener(
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						curDay = setCurrentDate(monthList, dayList);
+						curDate.setText(curDay.getMonth() + " " + curDay.getDate());
+						if(curDay.getEvents().equals("")){
+							curDay.loadDayEvents();
+						}
+						eventText.setText(curDay.getEvents());
+						updateDayComboBox(curDay.getEventCount(), eventSelection);
+					}
+				});
 		
 		panel.add(currentDayPanel, BorderLayout.NORTH);
 		panel.add(eventPanel, BorderLayout.WEST);
@@ -166,5 +175,4 @@ public class CalendarJFrame extends JFrame{
 		int day = (Integer)dayBX.getSelectedItem();
 		return calDrive.setCurrentDate(month, day);
 	}
-	
 }
