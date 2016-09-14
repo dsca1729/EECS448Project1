@@ -10,5 +10,10 @@ public class CalendarWeek {
 	public void setDay(int index, CalendarDay day){
 		currentWeek[index] = day;
 	}
+	
+	public CalendarDay getDay(int index)
+	{
+		return currentWeek[index];
+	}
 
 }

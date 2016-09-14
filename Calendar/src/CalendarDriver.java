@@ -114,13 +114,75 @@ public class CalendarDriver {
 		else return "Sunday";
 	}
 	
-	/*public static CalendarWeek getWeek()
+	public static CalendarWeek getPreviousWeek(CalendarWeek oldWeek)
 	{
-		int tempDate = curDay.getDate() - 1;
-		int offset = curDay.getDate() - 1;
+		CalendarDay tempDay = oldWeek.getWeek()[0];
+		int tempDate = tempDay.getDate();
+		String tempMonth = tempDay.getMonth();
+		if(tempMonth.equals("August") && (tempDate <= 6))
+		{
+			return oldWeek;
+		}
+		else if(tempMonth.equals("May") && (tempDate >= 28))
+		{
+			return oldWeek;
+		}
+		else
+		{
+			if(tempDate >= 8)
+			{
+				return setupWeek(year.getMonth(tempMonth).getDay(tempDate - 8));
+			}
+			else
+			{
+				int offset = tempDate - 8;
+				int temp = year.getMonthIndex(tempMonth) - 1;
+				CalendarMonth m = year.getMonth(year.monthNames[temp-1]);
+				tempDate = m.getNumDays() - 1 + offset;
+				return setupWeek(m.getDay(tempDate));
+				
+			}
+		}
+		
+	}
+	
+	public static CalendarWeek getWeek()
+	{
+		return setupWeek(curDay);
+	}
+	
+	public static CalendarWeek setupWeek(CalendarDay day)
+	{
+		int tempDate = day.getDate() - 1;
+		int offset = day.getDate();
 		int dayCount = 0;
-		CalendarMonth tempMonth = year.getMonth(curDay.getMonth());
-		String curDayOfWeek = curDay.getDayOfWeek();
+		CalendarMonth tempMonth = year.getMonth(day.getMonth());
+		String curDayOfWeek = day.getDayOfWeek();
+		CalendarDay nullDay = new CalendarDay(0, "Null");
+		nullDay.setDayOfWeek("");
+		CalendarWeek newWeek = new CalendarWeek();
+		if(tempMonth.getMonth().equals("August") && curDay.getDate() <= 6)
+		{
+			newWeek.setDay(0, nullDay);
+			newWeek.setDay(1, tempMonth.getDay(0));
+			newWeek.setDay(2, tempMonth.getDay(1));
+			newWeek.setDay(3, tempMonth.getDay(2));
+			newWeek.setDay(4, tempMonth.getDay(3));
+			newWeek.setDay(5, tempMonth.getDay(4));
+			newWeek.setDay(6, tempMonth.getDay(5));
+			return newWeek;
+		}
+		else if(tempMonth.getMonth().equals("May") && curDay.getDate() >= 28)
+		{
+			newWeek.setDay(0, tempMonth.getDay(27));
+			newWeek.setDay(1, tempMonth.getDay(28));
+			newWeek.setDay(2, tempMonth.getDay(29));
+			newWeek.setDay(3, tempMonth.getDay(30));
+			newWeek.setDay(4, nullDay);
+			newWeek.setDay(5, nullDay);
+			newWeek.setDay(6, nullDay);
+			return newWeek;
+		}
 		switch(curDayOfWeek)
 		{
 		case "Monday":
@@ -149,26 +211,20 @@ public class CalendarDriver {
 			tempDate = tempMonth.getNumDays() - 1;
 			tempDate = tempDate + offset;
 		}
+		else{tempDate = offset - 1;}
 		while(dayCount < 7)
 		{
-			System.out.println("hi");
+			newWeek.setDay(dayCount, tempMonth.getDays()[tempDate]);
 			dayCount++;
-		}
-		CalendarWeek newWeek = new CalendarWeek();
-		return newWeek;
-		CalendarDay nullDay = new CalendarDay(0, ""); // used to fill gaps at beginning of august and end of may
-		int dayCount = 0; // keeps track of how many days have been put into the week
-		CalendarWeek newWeek = new CalendarWeek();
-		//checks if week is at beginning of august
-		if(tempMonth.equals("August"))
-		{
-			if(tempDate == 1 || tempDate == 2 || tempDate == 3 || tempDate == 4 || tempDate == 5 || tempDate == 6)
-			{
-				newWeek.setDay(0, nullDay);
-				dayCount++;
+			tempDate++;
+			if(tempDate == tempMonth.getNumDays()){
+				int temp = year.getMonthIndex(tempMonth.getMonth()) + 1;
+				tempMonth = year.getMonth(year.monthNames[temp]);
+				tempDate = 0;
 			}
 		}
-	}*/
+		return newWeek;
+	}
 	
 	
 

@@ -39,10 +39,9 @@ public class CalendarJFrame extends JFrame{
 		
 		
 		JPanel panel2 = new JPanel(false);
-		JLabel panelInsert2 = new JLabel("This is the Week");
-		panel2.add(panelInsert2);
-		tabs.addTab("Week", panel2);
-		panel2.setSize(600, 400);
+		JPanel weekPanel = new JPanel();
+		setWeekPanel(weekPanel);
+		tabs.addTab("Week", weekPanel);
 		
 		JPanel panel3 = new JPanel(false);
 		JPanel monthPanel = new JPanel();
@@ -76,7 +75,7 @@ public class CalendarJFrame extends JFrame{
 		curDayLab.setHorizontalTextPosition(SwingConstants.LEADING);
 		final JComboBox monthList = new JComboBox(calDrive.getMonthNames());
 		final JComboBox dayList = new JComboBox();
-		updateComboBox(31, dayList);
+		updateComboBox(calDrive.getCurrentMonth().getNumDays(), dayList);
 		final JButton dayButton = new JButton("Go to this Day");
 		currentDayPanel.add(curDayLab);
 		
@@ -161,6 +160,9 @@ public class CalendarJFrame extends JFrame{
 		addEventPanel.add(newEventPanel);
 		addEventPanel.add(newEventScroll);
 		addEventPanel.add(removeEvent);
+		
+		CalendarWeek wk = new CalendarWeek();
+		wk = calDrive.getWeek();
 		
 		dayButton.addActionListener(
 				new ActionListener(){
@@ -270,6 +272,34 @@ public class CalendarJFrame extends JFrame{
 		currentMonthPanel.add(columnHeads);
 		currentMonthPanel.add(monthTable);
 		panel.add(currentMonthPanel, BorderLayout.CENTER);
+	}
+	
+	public static void setWeekPanel(JPanel panel)
+	{
+		CalendarWeek curWeek = calDrive.getWeek();
+		panel.setLayout(new BorderLayout());
+		JPanel labels = new JPanel();
+		JPanel eventBoxes = new JPanel();
+		JLabel[] dateLabels = new JLabel[7];
+		JTextArea[] eventAreas = new JTextArea[7];
+		for(int i = 0; i < 7; i++)
+		{
+			curWeek.getDay(i).loadDayEvents();
+			if(curWeek.getDay(i).getMonth().equals("Null"))
+			{
+				dateLabels[i] = new JLabel();
+				eventAreas[i] = new JTextArea();
+			}
+			else
+			{
+				dateLabels[i] = new JLabel(curWeek.getDay(i).getMonth() + " " + curWeek.getDay(i).getDate());
+				eventAreas[i] = new JTextArea(curWeek.getDay(i).getEvents());
+			}
+			labels.add(dateLabels[i]);
+			eventBoxes.add(eventAreas[i]);
+		}
+		panel.add(labels, BorderLayout.NORTH);
+		panel.add(eventBoxes, BorderLayout.SOUTH);
 	}
 	
 	public static void updateMonthDisplay(String newMonth)
