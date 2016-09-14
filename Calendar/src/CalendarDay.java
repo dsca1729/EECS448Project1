@@ -130,10 +130,24 @@ public class CalendarDay
 			BufferedReader br = new BufferedReader(new FileReader(monthPath));
 			BufferedWriter bw = new BufferedWriter(new FileWriter(tempFile));
 			removeEventFromArray(event);
+			String x = br.readLine();
+			while(x != null)
+			{
+				if(x.equals("") == false)
+				{
+					String trimmedX = x.substring(0, 2);
+					trimmedX = trimmedX.trim();
+					if(Integer.parseInt(trimmedX) != date)
+					{
+						bw.write(x);
+						bw.newLine();
+					}
+				}
+				x = br.readLine();
+			}
 			for(int i = 0; i < dayEvents.length; i++)
 			{
-				System.out.println(dayEvents[i]);
-				bw.write(dayEvents[i]);
+				bw.write(date + " " + dayEvents[i]);
 				bw.newLine();
 			}
 			br.close();

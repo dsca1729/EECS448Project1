@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import java.io.*;
 
@@ -200,15 +201,19 @@ public class CalendarJFrame extends JFrame{
 	public static void setMonthPanel(JPanel panel)
 	{
 		final JLabel curMonth = new JLabel(curDay.getMonth());
+		curMonth.setAlignmentX(Component.CENTER_ALIGNMENT);
 		panel.setLayout(new GridLayout());
 		JPanel currentMonthPanel = new JPanel();
-		currentMonthPanel.setLayout(new FlowLayout());
+		currentMonthPanel.setLayout(new BoxLayout(currentMonthPanel, BoxLayout.Y_AXIS));
+		currentMonthPanel.setBorder(BorderFactory.createEmptyBorder(0,20,0,20));
 		JLabel curMonthLab = new JLabel(curDay.getMonth());
 		curMonthLab.setHorizontalTextPosition(SwingConstants.LEADING);
 		currentMonthPanel.add(curMonthLab);
 		
+		JLabel columnHeads = new JLabel("SundayMondayTuesdayWednesdaThursdayFridaySaturday");
+		
 		String[] weekNames = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
-		String[][] data = new String[6][7];
+		String[][] data = new String[5][7];
 		int numdays = (calDrive.getCurrentMonth()).getNumDays();
 		int curnum = 1;
 		int blankDays = 0;
@@ -228,7 +233,7 @@ public class CalendarJFrame extends JFrame{
 		default: blankDays = 0;
 			break;
 		}
-		for(int r = 0; r < 6; r++){
+		for(int r = 0; r < 5; r++){
 			for(int c = 0; c < 7; c++){
 				if(r == 0 && blankDays >0){
 					data[r][c] = "";
@@ -243,7 +248,22 @@ public class CalendarJFrame extends JFrame{
 				}
 			}
 		}
+		
+		//In grid text alignment code from http://stackoverflow.com/questions/2408541/align-the-values-of-the-cells-in-jtable
+		DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+		rightRenderer.setHorizontalAlignment(SwingConstants.LEFT);
+		rightRenderer.setVerticalAlignment(SwingConstants.TOP);
+		
 		final JTable monthTable = new JTable(data, weekNames);
+		for(int i = 0; i < 5; i++)
+		{
+			monthTable.setRowHeight(i, 40);
+		}
+		for(int i = 0; i < 7; i++)
+		{
+			monthTable.getColumnModel().getColumn(i).setCellRenderer(rightRenderer);
+		}
+		currentMonthPanel.add(columnHeads);
 		currentMonthPanel.add(monthTable);
 		panel.add(currentMonthPanel, BorderLayout.CENTER);
 	}
