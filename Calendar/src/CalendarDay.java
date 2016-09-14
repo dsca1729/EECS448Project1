@@ -190,8 +190,8 @@ public class CalendarDay
 							addEventToArray(temp);
 						}	
 					}catch(Exception e){}
-					temp = br.readLine();
 				}
+				temp = br.readLine();
 			}
 			br.close();
 		}catch(IOException e)
