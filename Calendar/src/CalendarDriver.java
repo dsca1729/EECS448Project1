@@ -8,14 +8,38 @@ public class CalendarDriver {
 	 */
 	private static CalendarYear year;
 	private static CalendarDay curDay;
+	private static CalendarMonth curMonth;
 	
 	public CalendarDriver()
 	{
 		year = new CalendarYear();
 		curDay = getCurrentDate();
+		curMonth = getCurrentMonth();
 		setDaysofWeek("Monday");
 	}
+
+	public CalendarMonth getCurrentMonth() {
+		return year.getMonth(curDay.getMonth());
+	}
 	
+	public String getNextMonth(String month){
+		try{
+			for(int i = 0; i < 12; i++){
+				if(year.monthNames[i] == month) return year.monthNames[i+1];
+			}
+		}catch(Exception e){}
+		return "";
+	}
+	
+	public String getPrevMonth(String month){
+		try{
+			for(int i = 0; i < 12; i++){
+				if(year.monthNames[i] == month) return year.monthNames[i-1];
+			}
+		}catch(Exception e){}
+		return "";
+	}
+
 	public static String[] getMonthNames()
 	{
 		return year.monthNames;

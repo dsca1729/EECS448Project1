@@ -1,6 +1,8 @@
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
+
 import java.io.*;
 
 public class CalendarJFrame extends JFrame{
@@ -15,6 +17,10 @@ public class CalendarJFrame extends JFrame{
 		//calDrive.getWeek();
 	}
 	
+	/**
+	 * <h3>Calendar JFrame Constructor</h3><p>
+	 * Creates a Calendar JFrame object that has 4 tabs with different panels inside of them
+	 */
 	public CalendarJFrame()
 	{
 		super("Calendar");
@@ -36,10 +42,9 @@ public class CalendarJFrame extends JFrame{
 		panel2.setSize(600, 400);
 		
 		JPanel panel3 = new JPanel(false);
-		JLabel panelInsert3 = new JLabel("This is the Month");
-		panel3.add(panelInsert3);
-		tabs.addTab("Month", panel3);
-		panel3.setSize(600, 400);
+		JPanel monthPanel = new JPanel();
+		setMonthPanel(monthPanel);
+		tabs.addTab("Month", monthPanel);
 		
 		JPanel panel4 = new JPanel(false);
 		JLabel panelInsert4 = new JLabel("This is the Year");
@@ -51,6 +56,10 @@ public class CalendarJFrame extends JFrame{
 		setVisible(true);
 	}
 	
+	/**
+	 * Sets up the layout and appearance of the day panel
+	 * @param panel - the panel that will display all the day components
+	 */
 	public static void setDayPanel(JPanel panel)
 	{
 		final JLabel curDate = new JLabel(curDay.getMonth() + " " + curDay.getDate());
@@ -188,6 +197,62 @@ public class CalendarJFrame extends JFrame{
 		panel.add(addEventPanel, BorderLayout.EAST);
 	}
 	
+	public static void setMonthPanel(JPanel panel)
+	{
+		final JLabel curMonth = new JLabel(curDay.getMonth());
+		panel.setLayout(new GridLayout());
+		JPanel currentMonthPanel = new JPanel();
+		currentMonthPanel.setLayout(new FlowLayout());
+		JLabel curMonthLab = new JLabel(curDay.getMonth());
+		curMonthLab.setHorizontalTextPosition(SwingConstants.LEADING);
+		currentMonthPanel.add(curMonthLab);
+		
+		String[] weekNames = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+		String[][] data = new String[6][7];
+		int numdays = (calDrive.getCurrentMonth()).getNumDays();
+		int curnum = 1;
+		int blankDays = 0;
+		switch (curDay.getDayOfWeek()){
+		case "Monday": blankDays = 1;
+			break;
+		case "Tuesday": blankDays = 2;
+			break;
+		case "Wednesday": blankDays = 3;
+			break;
+		case "Thursday": blankDays = 4;
+			break;
+		case "Friday": blankDays = 5;
+			break;
+		case "Saturday": blankDays = 6;
+			break;
+		default: blankDays = 0;
+			break;
+		}
+		for(int r = 0; r < 6; r++){
+			for(int c = 0; c < 7; c++){
+				if(r == 0 && blankDays >0){
+					data[r][c] = "";
+					blankDays--;
+				}
+				else if(curnum > numdays){
+					data[r][c] = "";
+				}
+				else{
+					data[r][c] = String.valueOf(curnum);
+					curnum++;
+				}
+			}
+		}
+		final JTable monthTable = new JTable(data, weekNames);
+		currentMonthPanel.add(monthTable);
+		panel.add(currentMonthPanel, BorderLayout.CENTER);
+	}
+
+	/**
+	 * Updates a combo box with numbers up to the specified Integer
+	 * @param i - the Integer that the combo box will go up to
+	 * @param bx - the combo box that will be updated
+	 */
 	public static void updateComboBox(Integer i, JComboBox bx)
 	{
 		bx.removeAllItems();
@@ -197,6 +262,11 @@ public class CalendarJFrame extends JFrame{
 		}
 	}
 	
+	/**
+	 * Sets the current Date that the say class will display
+	 * @param monthBX - the combo box that has the month selected to be set
+	 * @param dayBX - the combo box that has the day selected to be set
+	 */
 	public static CalendarDay setCurrentDate(JComboBox monthBX, JComboBox dayBX)
 	{
 		String month = (String)monthBX.getSelectedItem();
