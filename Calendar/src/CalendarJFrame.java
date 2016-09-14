@@ -61,7 +61,7 @@ public class CalendarJFrame extends JFrame{
 		curDayLab.setHorizontalTextPosition(SwingConstants.LEADING);
 		final JComboBox monthList = new JComboBox(calDrive.getMonthNames());
 		final JComboBox dayList = new JComboBox();
-		updateDayComboBox(31, dayList);
+		updateComboBox(31, dayList);
 		final JButton dayButton = new JButton("Go to this Day");
 		currentDayPanel.add(curDayLab);
 		
@@ -75,15 +75,15 @@ public class CalendarJFrame extends JFrame{
 								String x = (String)bx.getSelectedItem();
 								if(x.equals("September") || x.equals("November") || x.equals("April"))
 								{
-									updateDayComboBox(30, dayList);
+									updateComboBox(30, dayList);
 								}
 								else if(x.equals("February"))
 								{
-									updateDayComboBox(28, dayList);
+									updateComboBox(28, dayList);
 								}
 								else
 								{
-									updateDayComboBox(31, dayList);
+									updateComboBox(31, dayList);
 								}
 						}
 				});
@@ -132,7 +132,7 @@ public class CalendarJFrame extends JFrame{
 		JPanel removeEvent = new JPanel();
 		JLabel remove = new JLabel("Remove Event:");
 		final JComboBox eventSelection = new JComboBox();
-		updateDayComboBox(curDay.getEventCount(), eventSelection);
+		updateComboBox(curDay.getEventCount(), eventSelection);
 		JButton removeEventButton = new JButton("Remove");
 		removeEvent.add(remove);
 		removeEvent.add(eventSelection);
@@ -151,7 +151,7 @@ public class CalendarJFrame extends JFrame{
 							curDay.loadDayEvents();
 						}
 						eventText.setText(curDay.getEvents());
-						updateDayComboBox(curDay.getEventCount(), eventSelection);
+						updateComboBox(curDay.getEventCount(), eventSelection);
 					}
 				});
 		
@@ -176,7 +176,7 @@ public class CalendarJFrame extends JFrame{
 		panel.add(addEventPanel, BorderLayout.EAST);
 	}
 	
-	public static void updateDayComboBox(Integer i, JComboBox bx)
+	public static void updateComboBox(Integer i, JComboBox bx)
 	{
 		bx.removeAllItems();
 		for(Integer j = 1; j <= i; j++)
