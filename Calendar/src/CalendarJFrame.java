@@ -1,6 +1,8 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
+
 import java.io.*;
 
 public class CalendarJFrame extends JFrame{
@@ -33,10 +35,9 @@ public class CalendarJFrame extends JFrame{
 		panel2.setSize(600, 400);
 		
 		JPanel panel3 = new JPanel(false);
-		JLabel panelInsert3 = new JLabel("This is the Month");
-		panel3.add(panelInsert3);
-		tabs.addTab("Month", panel3);
-		panel3.setSize(600, 400);
+		JPanel monthPanel = new JPanel();
+		setMonthPanel(monthPanel);
+		tabs.addTab("Month", monthPanel);
 		
 		JPanel panel4 = new JPanel(false);
 		JLabel panelInsert4 = new JLabel("This is the Year");
@@ -124,6 +125,57 @@ public class CalendarJFrame extends JFrame{
 		
 		panel.add(currentDayPanel, BorderLayout.NORTH);
 		panel.add(eventPanel, BorderLayout.WEST);
+	}
+	
+	public static void setMonthPanel(JPanel panel)
+	{
+		final JLabel curMonth = new JLabel(curDay.getMonth());
+		panel.setLayout(new GridLayout());
+		JPanel currentMonthPanel = new JPanel();
+		currentMonthPanel.setLayout(new FlowLayout());
+		JLabel curMonthLab = new JLabel(curDay.getMonth());
+		curMonthLab.setHorizontalTextPosition(SwingConstants.LEADING);
+		currentMonthPanel.add(curMonthLab);
+		
+		String[] weekNames = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+		String[][] data = new String[6][7];
+		int numdays = (calDrive.getCurrentMonth()).getNumDays();
+		int curnum = 1;
+		int blankDays = 0;
+		switch (curDay.getDayOfWeek()){
+		case "Monday": blankDays = 1;
+			break;
+		case "Tuesday": blankDays = 2;
+			break;
+		case "Wednesday": blankDays = 3;
+			break;
+		case "Thursday": blankDays = 4;
+			break;
+		case "Friday": blankDays = 5;
+			break;
+		case "Saturday": blankDays = 6;
+			break;
+		default: blankDays = 0;
+			break;
+		}
+		for(int r = 0; r < 6; r++){
+			for(int c = 0; c < 7; c++){
+				if(r == 0 && blankDays >0){
+					data[r][c] = "";
+					blankDays--;
+				}
+				else if(curnum > numdays){
+					data[r][c] = "";
+				}
+				else{
+					data[r][c] = String.valueOf(curnum);
+					curnum++;
+				}
+			}
+		}
+		final JTable monthTable = new JTable(data, weekNames);
+		currentMonthPanel.add(monthTable);
+		panel.add(currentMonthPanel, BorderLayout.CENTER);
 	}
 	
 	public static void updateDayComboBox(Integer i, JComboBox bx)
