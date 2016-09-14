@@ -178,20 +178,28 @@ public class CalendarDay
 			String temp = br.readLine();
 			while(temp != null)
 			{
-				String temp2 = temp.substring(0, 2);
-				temp2 = temp2.trim();
-				try{
-					if(Integer.parseInt(temp2) == date)
-					{
-						temp = temp.substring(2);
-						temp = temp.trim();
-						addEventToArray(temp);
-					}	
-				}catch(Exception e){}
+				if(temp.equals("") == false)
+				{
+					String temp2 = temp.substring(0, 2);
+					temp2 = temp2.trim();
+					try{
+						if(Integer.parseInt(temp2) == date)
+						{
+							temp = temp.substring(2);
+							temp = temp.trim();
+							addEventToArray(temp);
+						}	
+					}catch(Exception e){}
+				}
 				temp = br.readLine();
 			}
 			br.close();
 		}catch(IOException e)
 		{System.out.println(e);}
+	}
+	
+	public int getEventCount()
+	{
+		return dayEvents.length;
 	}
 }
