@@ -12,6 +12,7 @@ public class CalendarJFrame extends JFrame{
 	{
 		curDay = calDrive.getCurrentDate();
 		new CalendarJFrame();
+		//calDrive.getWeek();
 	}
 	
 	public CalendarJFrame()
@@ -21,10 +22,12 @@ public class CalendarJFrame extends JFrame{
 		setSize(600, 400);
 		setResizable(false);
 		
+		
 		JTabbedPane tabs = new JTabbedPane();
 		JPanel dayPanel = new JPanel();
 		setDayPanel(dayPanel);
 		tabs.addTab("Day", dayPanel);
+		
 		
 		JPanel panel2 = new JPanel(false);
 		JLabel panelInsert2 = new JLabel("This is the Week");
@@ -88,7 +91,7 @@ public class CalendarJFrame extends JFrame{
 						}
 				});
 		
-
+		
 		currentDayPanel.add(monthList);
 		currentDayPanel.add(dayList);
 		currentDayPanel.add(dayButton);
@@ -104,6 +107,7 @@ public class CalendarJFrame extends JFrame{
 		curDate.setAlignmentX(Component.CENTER_ALIGNMENT);
 		curDate.setFont(curDate.getFont().deriveFont(24.0f));  //Code from: http://stackoverflow.com/questions/17884843/change-jlabel-font-size
 		curDay.loadDayEvents();
+		
 		
 		eventText.setText(curDay.getEvents());
 		eventText.setLineWrap(true);
@@ -159,15 +163,19 @@ public class CalendarJFrame extends JFrame{
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
 						curDay.addEvent(newEventText.getText());
-						dayButton.doClick();
+						eventText.setText(curDay.getEvents());
+						updateComboBox(curDay.getEventCount(), eventSelection);
 					}
 				});
 		
 		removeEventButton.addActionListener(
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
-						curDay.removeEvent((int)eventSelection.getSelectedItem());
-						dayButton.doClick();
+						try{
+							curDay.removeEvent((int)eventSelection.getSelectedItem());
+							eventText.setText(curDay.getEvents());
+							updateComboBox(curDay.getEventCount(), eventSelection);	
+						}catch(Exception err){}
 					}
 				});
 		
