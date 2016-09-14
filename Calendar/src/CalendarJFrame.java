@@ -1,6 +1,8 @@
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
+
 import java.io.*;
 
 public class CalendarJFrame extends JFrame{
@@ -15,6 +17,10 @@ public class CalendarJFrame extends JFrame{
 		//calDrive.getWeek();
 	}
 	
+	/**
+	 * <h3>Calendar JFrame Constructor</h3><p>
+	 * Creates a Calendar JFrame object that has 4 tabs with different panels inside of them
+	 */
 	public CalendarJFrame()
 	{
 		super("Calendar");
@@ -51,6 +57,10 @@ public class CalendarJFrame extends JFrame{
 		setVisible(true);
 	}
 	
+	/**
+	 * Sets up the layout and appearance of the day panel
+	 * @param panel - the panel that will display all the day components
+	 */
 	public static void setDayPanel(JPanel panel)
 	{
 		final JLabel curDate = new JLabel(curDay.getMonth() + " " + curDay.getDate());
@@ -184,6 +194,11 @@ public class CalendarJFrame extends JFrame{
 		panel.add(addEventPanel, BorderLayout.EAST);
 	}
 	
+	/**
+	 * Updates a combo box with numbers up to the specified Integer
+	 * @param i - the Integer that the combo box will go up to
+	 * @param bx - the combo box that will be updated
+	 */
 	public static void updateComboBox(Integer i, JComboBox bx)
 	{
 		bx.removeAllItems();
@@ -193,6 +208,11 @@ public class CalendarJFrame extends JFrame{
 		}
 	}
 	
+	/**
+	 * Sets the current Date that the say class will display
+	 * @param monthBX - the combo box that has the month selected to be set
+	 * @param dayBX - the combo box that has the day selected to be set
+	 */
 	public static CalendarDay setCurrentDate(JComboBox monthBX, JComboBox dayBX)
 	{
 		String month = (String)monthBX.getSelectedItem();
