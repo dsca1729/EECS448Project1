@@ -6,34 +6,39 @@ public class CalendarDriver {
 	 * String firstDayofWeek - reset after every session as the oldest day with stored events
 	 * 						 - is initialized in the CalendarDriver constructor
 	 */
-	private static String firstDayofWeek = "Monday";//ok for now
-	private static CalendarYear[] Years;
+	private static CalendarYear year;
+	private static CalendarDay curDay;
+	
+	public CalendarDriver()
+	{
+		year = new CalendarYear();
+		getCurrentDate();
+		setDaysofWeek("Monday");
+	}
 	
 	public static void setDaysofWeek(String firstDayofWeek){
 		
 		String curday = firstDayofWeek;
-		
-		for(int y = 0; y < Years.length; y++){
-			for(int m = 0; m < Years[y].getMonths().length; m++){
-				for(int d = 0; d < (Years[y].getMonth(m)).getNumDays(); d++){
-					CalendarMonth currentMonth = Years[y].getMonth(m);
+			for(int m = 0; m < year.getMonths().length; m++){
+				for(int d = 0; d < (year.getMonth(m)).getNumDays(); d++){
+					CalendarMonth currentMonth = year.getMonth(m);
 					CalendarDay currentDay = currentMonth.getDay(d);
 					currentDay.setDayOfWeek(curday);
 					curday = setNextDayofWeek(curday);
 				}
 			}
-		}
 	}
 	
-	public static void main(String[] args)
-	{
-		Years = new CalendarYear[1];
-		CalendarDay x = new CalendarDay(5,"September");
-		x.addEvent("this sucks a lot");
-		x.addEvent("this, like, really sucks");
-		System.out.println(x.getEvents());
-		x.removeEvent(2);
-		CalendarJFrame y = new CalendarJFrame();
+	public static void getCurrentDate(){
+		int currentDay;
+		int currentMonth;
+		try{
+			BufferedReader br = new BufferedReader(new FileReader("MonthFiles/CurrentDate.txt"));
+			currentDay = Integer.parseInt(br.readLine());
+			currentMonth = Integer.parseInt(br.readLine());
+			br.close();
+			curDay = year.getMonth(currentMonth -1).getDay(currentDay -1);
+		}catch(IOException e){}
 	}
 	
 	public static String setNextDayofWeek(String curday){
