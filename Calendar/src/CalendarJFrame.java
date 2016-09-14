@@ -114,9 +114,11 @@ public class CalendarJFrame extends JFrame{
 		eventText.setWrapStyleWord(true);
 		eventText.setEditable(false);
 		
+		JScrollPane textBox = new JScrollPane(eventText);
+		
 		eventPanel.add(curDate);
 		eventPanel.add(eventTitle);
-		eventPanel.add(eventText);
+		eventPanel.add(textBox);
 		
 		JPanel addEventPanel = new JPanel();
 		addEventPanel.setLayout(new BoxLayout(addEventPanel, BoxLayout.Y_AXIS));
@@ -142,8 +144,10 @@ public class CalendarJFrame extends JFrame{
 		removeEvent.add(eventSelection);
 		removeEvent.add(removeEventButton);
 		
+		JScrollPane newEventScroll = new JScrollPane(newEventText);
+		
 		addEventPanel.add(newEventPanel);
-		addEventPanel.add(newEventText);
+		addEventPanel.add(newEventScroll);
 		addEventPanel.add(removeEvent);
 		
 		dayButton.addActionListener(

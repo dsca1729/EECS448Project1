@@ -5,7 +5,7 @@ public class CalendarDay
 	private int date = 0;
 	private String month;
 	private String dayOfWeek;
-	private String[] dayEvents;
+	public String[] dayEvents;
 	private String monthFilePath;
 	
 	/**
@@ -129,17 +129,12 @@ public class CalendarDay
 			File tempFile = new File("MonthFiles/temp.txt");
 			BufferedReader br = new BufferedReader(new FileReader(monthPath));
 			BufferedWriter bw = new BufferedWriter(new FileWriter(tempFile));
-			String temp = date + " " + dayEvents[event];
-			String x = br.readLine();
-			while(x != null)
+			removeEventFromArray(event);
+			for(int i = 0; i < dayEvents.length; i++)
 			{
-				if(temp.equals(x) || x.equals("")){}
-				else
-				{
-					bw.write(x);
-					bw.newLine();
-				}
-				x = br.readLine();
+				System.out.println(dayEvents[i]);
+				bw.write(dayEvents[i]);
+				bw.newLine();
 			}
 			br.close();
 			bw.close();
@@ -148,7 +143,6 @@ public class CalendarDay
 		}catch(IOException e){
 			System.out.println(e);
 		}
-		removeEventFromArray(event);
 	}
 	/**
 	 * Removes the event at the given index from the CalendarDay's event array.
