@@ -12,33 +12,66 @@ public class CalendarDriver {
 	public CalendarDriver()
 	{
 		year = new CalendarYear();
-		getCurrentDate();
+		curDay = getCurrentDate();
 		setDaysofWeek("Monday");
+	}
+	
+	public static String[] getMonthNames()
+	{
+		return year.monthNames;
+	}
+	
+	public static int getCurrentMonthIndex(String m)
+	{
+		for(int i = 0; i < year.getMonths().length; i++)
+		{
+			if(m.equals(year.getMonths()[i].getMonth())){
+				return i;
+			}
+		}
+		return 0;
+	}
+	
+	public static CalendarDay setCurrentDate(String x, int y)
+	{
+		try{
+			BufferedWriter bw = new BufferedWriter(new FileWriter("MonthFiles/CurrentDate.txt"));
+			bw.write(Integer.toString(y));
+			bw.newLine();
+			bw.write(x);
+			bw.close();
+		}catch(IOException e){}
+		curDay = year.getMonth(x).getDay(y - 1);
+		return curDay;
 	}
 	
 	public static void setDaysofWeek(String firstDayofWeek){
 		
 		String curday = firstDayofWeek;
-			for(int m = 0; m < year.getMonths().length; m++){
-				for(int d = 0; d < (year.getMonth(m)).getNumDays(); d++){
-					CalendarMonth currentMonth = year.getMonth(m);
-					CalendarDay currentDay = currentMonth.getDay(d);
-					currentDay.setDayOfWeek(curday);
-					curday = setNextDayofWeek(curday);
-				}
+		for(int m = 0; m < year.getMonths().length; m++){
+			for(int d = 0; d < (year.getMonths())[m].getNumDays(); d++){
+				CalendarMonth currentMonth = year.getMonths()[m];
+				CalendarDay currentDay = currentMonth.getDay(d);
+				currentDay.setDayOfWeek(curday);
+				curday = setNextDayofWeek(curday);
 			}
+		}
 	}
 	
-	public static void getCurrentDate(){
+	public static CalendarDay getCurrentDate()
+	{
 		int currentDay;
-		int currentMonth;
+		String currentMonth;
 		try{
+			
 			BufferedReader br = new BufferedReader(new FileReader("MonthFiles/CurrentDate.txt"));
 			currentDay = Integer.parseInt(br.readLine());
-			currentMonth = Integer.parseInt(br.readLine());
+			currentMonth = br.readLine();
 			br.close();
-			curDay = year.getMonth(currentMonth -1).getDay(currentDay -1);
+			curDay = year.getMonth(currentMonth).getDay(currentDay-1);
+			
 		}catch(IOException e){}
+		return curDay;
 	}
 	
 	public static String setNextDayofWeek(String curday){
@@ -50,5 +83,7 @@ public class CalendarDriver {
 		else if(curday == "Friday") return "Saturday";
 		else return "Sunday";
 	}
+	
+	
 
 }

@@ -1,5 +1,4 @@
-//EECS 448 Project 1
+//EECS 448 Project 1 
 //September 2016 records
 //Stephen Fulton, Shawn Parkes, and Rebekah Manweiler
-5 this, like, really sucks
-5 this, like, really sucks
+5 this is a neat event!

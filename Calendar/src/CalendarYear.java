@@ -6,26 +6,53 @@ import java.io.*;
 
 public class CalendarYear {
 	
-	private CalendarMonth[] Months = new CalendarMonth[10];
+	private static CalendarMonth[] Months = new CalendarMonth[10];
+	public final static String[] monthNames = {"August", "September", "October", "November", "December", "January", "February", "March", "April", "May"};
+	public final static int[] daysInMonth = {31,30,31,30,31,31,28,31,30,31};
 	
-	public CalendarYear(){
-		Months[0] = new CalendarMonth(31, "August", 2016);
-		Months[1] = new CalendarMonth(30, "September", 2016);
-		Months[2] = new CalendarMonth(31, "October", 2016);
-		Months[3] = new CalendarMonth(30, "November", 2016);
-		Months[4] = new CalendarMonth(31, "December", 2016);
-		Months[5] = new CalendarMonth(31, "January", 2017);
-		Months[6] = new CalendarMonth(28, "February", 2017);
-		Months[7] = new CalendarMonth(31, "March", 2017);
-		Months[8] = new CalendarMonth(30, "April", 2017);
-		Months[9] = new CalendarMonth(31, "May", 2017);
+	public CalendarYear()
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			Months[i] = new CalendarMonth(daysInMonth[i], monthNames[i]);
+		}
+		//loadEvents();
 	}
 	
-	public CalendarMonth getMonth(int index){
-		return Months[index];
+	public static int getMonthIndex(String month)
+	{
+		for(int i = 0; i < Months.length; i++)
+		{
+			if(month.equals(monthNames[i]))
+			{
+				return i;
+			}
+		}
+		return 0;
+	}
+	
+	public CalendarMonth getMonth(String curMonth){
+		for(int i = 0; i < Months.length; i++)
+		{
+			if(curMonth.equals(Months[i].getMonth())){
+				return Months[i];
+			}
+		}
+		return Months[0];
 	}
 	
 	public CalendarMonth[] getMonths(){
 		return Months;
+	}
+	
+	public static void loadEvents()
+	{
+		for(int i = 0; i < Months.length; i++)
+		{
+			for(int j = 0; j < (Months[i]).getDays().length; j++)
+			{
+				((Months[i]).getDays())[j].loadDayEvents();
+			}
+		}
 	}
 }
