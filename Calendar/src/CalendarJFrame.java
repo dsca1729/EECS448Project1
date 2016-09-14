@@ -62,7 +62,7 @@ public class CalendarJFrame extends JFrame{
 		final JComboBox monthList = new JComboBox(calDrive.getMonthNames());
 		final JComboBox dayList = new JComboBox();
 		updateDayComboBox(31, dayList);
-		JButton dayButton = new JButton("Go to this Day");
+		final JButton dayButton = new JButton("Go to this Day");
 		currentDayPanel.add(curDayLab);
 		
 		monthList.setSelectedIndex(calDrive.getCurrentMonthIndex(curDay.getMonth()));
@@ -124,7 +124,7 @@ public class CalendarJFrame extends JFrame{
 		newEventPanel.add(newEventTitle);
 		newEventPanel.add(newEventButton);
 		
-		JTextArea newEventText = new JTextArea(15, 20);
+		final JTextArea newEventText = new JTextArea(15, 20);
 		newEventText.setLineWrap(true);
 		newEventText.setWrapStyleWord(true);
 		newEventText.setEditable(true);
@@ -152,6 +152,22 @@ public class CalendarJFrame extends JFrame{
 						}
 						eventText.setText(curDay.getEvents());
 						updateDayComboBox(curDay.getEventCount(), eventSelection);
+					}
+				});
+		
+		newEventButton.addActionListener(
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						curDay.addEvent(newEventText.getText());
+						dayButton.doClick();
+					}
+				});
+		
+		removeEventButton.addActionListener(
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						curDay.removeEvent((int)eventSelection.getSelectedItem());
+						dayButton.doClick();
 					}
 				});
 		
