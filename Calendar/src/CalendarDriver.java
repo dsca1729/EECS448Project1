@@ -56,6 +56,11 @@ public class CalendarDriver {
 		return 0;
 	}
 	
+	public static String getFirstDayOfMonth(String monthName)
+	{
+		return year.getMonth(monthName).getFirstDayOfMonth();
+	}
+	
 	public static CalendarDay setCurrentDate(String x, int y)
 	{
 		try{
@@ -66,6 +71,7 @@ public class CalendarDriver {
 			bw.close();
 		}catch(IOException e){}
 		curDay = year.getMonth(x).getDay(y - 1);
+		curMonth = year.getMonth(curDay.getMonth());
 		return curDay;
 	}
 	

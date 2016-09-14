@@ -10,6 +10,8 @@ public class CalendarJFrame extends JFrame{
 	
 	public static CalendarDriver calDrive = new CalendarDriver();
 	private static CalendarDay curDay;
+	private static JLabel curMonth;
+	private static JTable monthTable;
 	
 	public static void main(String[] args)
 	{
@@ -170,6 +172,7 @@ public class CalendarJFrame extends JFrame{
 						}
 						eventText.setText(curDay.getEvents());
 						updateComboBox(curDay.getEventCount(), eventSelection);
+						updateMonthDisplay(curDay.getMonth());
 					}
 				});
 		
@@ -200,24 +203,25 @@ public class CalendarJFrame extends JFrame{
 	
 	public static void setMonthPanel(JPanel panel)
 	{
-		final JLabel curMonth = new JLabel(curDay.getMonth());
+		curMonth = new JLabel(curDay.getMonth());
+		curMonth.setFont(curMonth.getFont().deriveFont(24.0f));
 		curMonth.setAlignmentX(Component.CENTER_ALIGNMENT);
 		panel.setLayout(new GridLayout());
 		JPanel currentMonthPanel = new JPanel();
 		currentMonthPanel.setLayout(new BoxLayout(currentMonthPanel, BoxLayout.Y_AXIS));
 		currentMonthPanel.setBorder(BorderFactory.createEmptyBorder(0,20,0,20));
-		JLabel curMonthLab = new JLabel(curDay.getMonth());
-		curMonthLab.setHorizontalTextPosition(SwingConstants.LEADING);
-		currentMonthPanel.add(curMonthLab);
+		curMonth.setHorizontalTextPosition(SwingConstants.LEADING);
+		currentMonthPanel.add(curMonth);
 		
-		JLabel columnHeads = new JLabel("SundayMondayTuesdayWednesdaThursdayFridaySaturday");
+		JLabel columnHeads = new JLabel("Sunday          Monday          Tuesday       Wednesday       Thursday           Friday          Saturday");
+		columnHeads.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
 		String[] weekNames = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
-		String[][] data = new String[5][7];
+		String[][] data = new String[6][7];
 		int numdays = (calDrive.getCurrentMonth()).getNumDays();
 		int curnum = 1;
 		int blankDays = 0;
-		switch (curDay.getDayOfWeek()){
+		switch (calDrive.getFirstDayOfMonth(curDay.getMonth())){
 		case "Monday": blankDays = 1;
 			break;
 		case "Tuesday": blankDays = 2;
@@ -233,7 +237,7 @@ public class CalendarJFrame extends JFrame{
 		default: blankDays = 0;
 			break;
 		}
-		for(int r = 0; r < 5; r++){
+		for(int r = 0; r < 6; r++){
 			for(int c = 0; c < 7; c++){
 				if(r == 0 && blankDays >0){
 					data[r][c] = "";
@@ -254,8 +258,8 @@ public class CalendarJFrame extends JFrame{
 		rightRenderer.setHorizontalAlignment(SwingConstants.LEFT);
 		rightRenderer.setVerticalAlignment(SwingConstants.TOP);
 		
-		final JTable monthTable = new JTable(data, weekNames);
-		for(int i = 0; i < 5; i++)
+		monthTable = new JTable(data, weekNames);
+		for(int i = 0; i < 6; i++)
 		{
 			monthTable.setRowHeight(i, 40);
 		}
@@ -266,6 +270,51 @@ public class CalendarJFrame extends JFrame{
 		currentMonthPanel.add(columnHeads);
 		currentMonthPanel.add(monthTable);
 		panel.add(currentMonthPanel, BorderLayout.CENTER);
+	}
+	
+	public static void updateMonthDisplay(String newMonth)
+	{
+		String[] weekNames = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+		String[][] data = new String[6][7];
+		int numdays = (calDrive.getCurrentMonth()).getNumDays();
+		int curnum = 1;
+		int blankDays = 0;
+		switch (calDrive.getFirstDayOfMonth(newMonth)){
+		case "Monday": blankDays = 1;
+			break;
+		case "Tuesday": blankDays = 2;
+			break;
+		case "Wednesday": blankDays = 3;
+			break;
+		case "Thursday": blankDays = 4;
+			break;
+		case "Friday": blankDays = 5;
+			break;
+		case "Saturday": blankDays = 6;
+			break;
+		default: blankDays = 0;
+			break;
+		}
+		for(int r = 0; r < 6; r++){
+			for(int c = 0; c < 7; c++){
+				if(r == 0 && blankDays >0){
+					monthTable.setValueAt("", r, c);
+					data[r][c] = "";
+					blankDays--;
+				}
+				else if(curnum > numdays){
+					monthTable.setValueAt("", r, c);
+					data[r][c] = "";
+				}
+				else{
+					monthTable.setValueAt(String.valueOf(curnum), r, c);
+					data[r][c] = String.valueOf(curnum);
+					curnum++;
+				}
+			}
+		}
+		curMonth.setText(curDay.getMonth());
+		
 	}
 
 	/**

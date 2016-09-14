@@ -35,4 +35,9 @@ public class CalendarMonth {
 		public CalendarDay getDay(int index){
 			return Days[index];
 		}
+		
+		public String getFirstDayOfMonth()
+		{
+			return Days[0].getDayOfWeek();
+		}
 }
