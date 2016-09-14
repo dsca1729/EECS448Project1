@@ -93,8 +93,7 @@ public class CalendarJFrame extends JFrame{
 					public void actionPerformed(ActionEvent e){
 						curDay = setCurrentDate(monthList, dayList);
 						curDate.setText(curDay.getMonth() + " " + curDay.getDate());
-						if(curDay.getEvents().equals(""))
-						{
+						if(curDay.getEvents().equals("")){
 							curDay.loadDayEvents();
 						}
 						eventText.setText(curDay.getEvents());
@@ -125,8 +124,31 @@ public class CalendarJFrame extends JFrame{
 		eventPanel.add(eventTitle);
 		eventPanel.add(eventText);
 		
+		JPanel addEventPanel = new JPanel();
+		addEventPanel.setLayout(new BoxLayout(addEventPanel, BoxLayout.Y_AXIS));
+		addEventPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+		
+		JLabel newEventTitle = new JLabel("New Event");
+		JTextArea newEventText = new JTextArea(15, 20);
+		newEventText.setLineWrap(true);
+		newEventText.setWrapStyleWord(true);
+		newEventText.setEditable(true);
+		
+		JPanel removeEvent = new JPanel();
+		JLabel remove = new JLabel("Remove Event:");
+		final JComboBox eventSelection = new JComboBox();
+		JButton removeEventButton = new JButton("Remove");
+		removeEvent.add(remove);
+		removeEvent.add(eventSelection);
+		removeEvent.add(removeEventButton);
+		
+		addEventPanel.add(newEventTitle);
+		addEventPanel.add(newEventText);
+		addEventPanel.add(removeEvent);
+		
 		panel.add(currentDayPanel, BorderLayout.NORTH);
 		panel.add(eventPanel, BorderLayout.WEST);
+		panel.add(addEventPanel, BorderLayout.EAST);
 	}
 	
 	public static void updateDayComboBox(Integer i, JComboBox bx)
