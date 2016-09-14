@@ -5,13 +5,12 @@ import java.io.*;
 
 public class CalendarJFrame extends JFrame{
 	
-	public static CalendarYear cy = new CalendarYear();
-	private static CalendarDay overallCurDay;
-	private static int currentDay;
-	private static String currentMonth;
+	public static CalendarDriver calDrive = new CalendarDriver();
+	private static CalendarDay curDay;
 	
 	public static void main(String[] args)
 	{
+		curDay = calDrive.getCurrentDate();
 		new CalendarJFrame();
 	}
 	
@@ -51,7 +50,7 @@ public class CalendarJFrame extends JFrame{
 	
 	public static void setDayPanel(JPanel panel)
 	{
-		final JLabel curDate = new JLabel(cy.getMonth(currentMonth).getMonth() + " " + currentDay);
+		final JLabel curDate = new JLabel(curDay.getMonth() + " " + curDay.getDate());
 		final JTextArea eventText = new JTextArea(15, 20);
 		
 		panel.setLayout(new BorderLayout());
@@ -60,14 +59,14 @@ public class CalendarJFrame extends JFrame{
 		JLabel curDayLab = new JLabel("Current Day");
 		
 		curDayLab.setHorizontalTextPosition(SwingConstants.LEADING);
-		final JComboBox monthList = new JComboBox(cy.monthNames);
+		final JComboBox monthList = new JComboBox(calDrive.getMonthNames());
 		final JComboBox dayList = new JComboBox();
 		updateDayComboBox(31, dayList);
 		JButton dayButton = new JButton("Go to this Day");
 		currentDayPanel.add(curDayLab);
 		
-		monthList.setSelectedIndex(cy.getMonthIndex(currentMonth));
-		dayList.setSelectedIndex(overallCurDay.getDate()-1);
+		monthList.setSelectedIndex(calDrive.getCurrentMonthIndex(curDay.getMonth()));
+		dayList.setSelectedIndex(curDay.getDate()-1);
 		
 		monthList.addActionListener(
 				new ActionListener(){
@@ -92,10 +91,10 @@ public class CalendarJFrame extends JFrame{
 		dayButton.addActionListener(
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
-						setCurrentDate(monthList, dayList);
-						curDate.setText(overallCurDay.getMonth() + " " + overallCurDay.getDate());
-						overallCurDay.loadDayEvents();
-						eventText.setText(overallCurDay.getEvents());
+						curDay = setCurrentDate(monthList, dayList);
+						curDate.setText(curDay.getMonth() + " " + curDay.getDate());
+						curDay.loadDayEvents();
+						eventText.setText(curDay.getEvents());
 					}
 				});
 		currentDayPanel.add(monthList);
@@ -112,9 +111,9 @@ public class CalendarJFrame extends JFrame{
 		eventTitle.setFont(eventTitle.getFont().deriveFont(16.0f));
 		curDate.setAlignmentX(Component.CENTER_ALIGNMENT);
 		curDate.setFont(curDate.getFont().deriveFont(24.0f));  //Code from: http://stackoverflow.com/questions/17884843/change-jlabel-font-size
-		cy.getMonth(currentMonth).getDay(currentDay-1).loadDayEvents();
+		curDay.loadDayEvents();
 		
-		eventText.setText(cy.getMonth(currentMonth).getDay(currentDay-1).getEvents());
+		eventText.setText(curDay.getEvents());
 		eventText.setLineWrap(true);
 		eventText.setWrapStyleWord(true);
 		eventText.setEditable(false);
@@ -136,18 +135,11 @@ public class CalendarJFrame extends JFrame{
 		}
 	}
 	
-	public static void setCurrentDate(JComboBox monthBX, JComboBox dayBX)
+	public static CalendarDay setCurrentDate(JComboBox monthBX, JComboBox dayBX)
 	{
-		String x = (String)monthBX.getSelectedItem();
-		int y = (Integer)dayBX.getSelectedItem();
-		try{
-			BufferedWriter bw = new BufferedWriter(new FileWriter("MonthFiles/CurrentDate.txt"));
-			bw.write(Integer.toString(y));
-			bw.newLine();
-			bw.write(x);
-			bw.close();
-		}catch(IOException e){}
-		overallCurDay = cy.getMonth(x).getDay(y - 1);
+		String month = (String)monthBX.getSelectedItem();
+		int day = (Integer)dayBX.getSelectedItem();
+		return calDrive.setCurrentDate(month, day);
 	}
 	
 }

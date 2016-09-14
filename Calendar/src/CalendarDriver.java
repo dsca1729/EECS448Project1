@@ -12,8 +12,37 @@ public class CalendarDriver {
 	public CalendarDriver()
 	{
 		year = new CalendarYear();
-		getCurrentDate();
+		curDay = getCurrentDate();
 		setDaysofWeek("Monday");
+	}
+	
+	public static String[] getMonthNames()
+	{
+		return year.monthNames;
+	}
+	
+	public static int getCurrentMonthIndex(String m)
+	{
+		for(int i = 0; i < year.getMonths().length; i++)
+		{
+			if(m.equals(year.getMonths()[i].getMonth())){
+				return i;
+			}
+		}
+		return 0;
+	}
+	
+	public static CalendarDay setCurrentDate(String x, int y)
+	{
+		try{
+			BufferedWriter bw = new BufferedWriter(new FileWriter("MonthFiles/CurrentDate.txt"));
+			bw.write(Integer.toString(y));
+			bw.newLine();
+			bw.write(x);
+			bw.close();
+		}catch(IOException e){}
+		curDay = year.getMonth(x).getDay(y - 1);
+		return curDay;
 	}
 	
 	public static void setDaysofWeek(String firstDayofWeek){
@@ -29,7 +58,7 @@ public class CalendarDriver {
 		}
 	}
 	
-	public static void getCurrentDate()
+	public static CalendarDay getCurrentDate()
 	{
 		int currentDay;
 		String currentMonth;
@@ -42,6 +71,7 @@ public class CalendarDriver {
 			curDay = year.getMonth(currentMonth).getDay(currentDay-1);
 			
 		}catch(IOException e){}
+		return curDay;
 	}
 	
 	public static String setNextDayofWeek(String curday){
