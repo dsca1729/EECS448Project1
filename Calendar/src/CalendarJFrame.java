@@ -93,7 +93,10 @@ public class CalendarJFrame extends JFrame{
 					public void actionPerformed(ActionEvent e){
 						curDay = setCurrentDate(monthList, dayList);
 						curDate.setText(curDay.getMonth() + " " + curDay.getDate());
-						curDay.loadDayEvents();
+						if(curDay.getEvents().equals(""))
+						{
+							curDay.loadDayEvents();
+						}
 						eventText.setText(curDay.getEvents());
 					}
 				});

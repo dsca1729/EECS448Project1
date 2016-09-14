@@ -194,4 +194,9 @@ public class CalendarDay
 		}catch(IOException e)
 		{System.out.println(e);}
 	}
+	
+	public int getEventCount()
+	{
+		return dayEvents.length;
+	}
 }

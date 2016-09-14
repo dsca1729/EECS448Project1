@@ -84,6 +84,30 @@ public class CalendarDriver {
 		else return "Sunday";
 	}
 	
+	/*public static CalendarWeek getWeek()
+	{
+		int tempDate = curDay.getDate() - 1;
+		CalendarMonth tempMonth = year.getMonth(curDay.getMonth());
+		String curDayOfWeek = curDay.getDayOfWeek();
+		switch(curDayOfWeek)
+		{
+			case "Sunday":
+			
+		}
+		CalendarDay nullDay = new CalendarDay(0, ""); // used to fill gaps at beginning of august and end of may
+		int dayCount = 0; // keeps track of how many days have been put into the week
+		CalendarWeek newWeek = new CalendarWeek();
+		//checks if week is at beginning of august
+		if(tempMonth.equals("August"))
+		{
+			if(tempDate == 1 || tempDate == 2 || tempDate == 3 || tempDate == 4 || tempDate == 5 || tempDate == 6)
+			{
+				newWeek.setDay(0, nullDay);
+				dayCount++;
+			}
+		}
+	}*/
+	
 	
 
 }
