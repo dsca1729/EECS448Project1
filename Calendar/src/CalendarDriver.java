@@ -151,6 +151,11 @@ public class CalendarDriver {
 		return setupWeek(curDay);
 	}
 	
+	public static CalendarMonth getMonth(String month)
+	{
+		return year.getMonth(month);
+	}
+	
 	public static CalendarWeek setupWeek(CalendarDay day)
 	{
 		int tempDate = day.getDate() - 1;

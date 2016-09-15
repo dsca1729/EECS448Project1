@@ -37,22 +37,17 @@ public class CalendarJFrame extends JFrame{
 		setDayPanel(dayPanel);
 		tabs.addTab("Day", dayPanel);
 		
-		
-		JPanel panel2 = new JPanel(false);
 		JPanel weekPanel = new JPanel();
 		setWeekPanel(weekPanel);
 		tabs.addTab("Week", weekPanel);
 		
-		JPanel panel3 = new JPanel(false);
 		JPanel monthPanel = new JPanel();
 		setMonthPanel(monthPanel);
 		tabs.addTab("Month", monthPanel);
 		
-		JPanel panel4 = new JPanel(false);
-		JLabel panelInsert4 = new JLabel("This is the Year");
-		panel4.add(panelInsert4);
-		tabs.addTab("Year", panel4);
-		panel4.setSize(600, 400);
+		JPanel yearPanel = new JPanel(false);
+		setYearPanel(yearPanel);
+		tabs.addTab("Year", yearPanel);
 		
 		add(tabs);
 		setVisible(true);
@@ -299,14 +294,14 @@ public class CalendarJFrame extends JFrame{
 			eventBoxes.add(eventAreas[i]);
 		}
 		panel.add(labels, BorderLayout.NORTH);
-		panel.add(eventBoxes, BorderLayout.SOUTH);
+		panel.add(eventBoxes, BorderLayout.CENTER);
 	}
 	
 	public static void updateMonthDisplay(String newMonth)
 	{
 		String[] weekNames = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 		String[][] data = new String[6][7];
-		int numdays = (calDrive.getCurrentMonth()).getNumDays();
+		int numdays = (calDrive.getMonth(newMonth).getNumDays());
 		int curnum = 1;
 		int blankDays = 0;
 		switch (calDrive.getFirstDayOfMonth(newMonth)){
@@ -343,7 +338,7 @@ public class CalendarJFrame extends JFrame{
 				}
 			}
 		}
-		curMonth.setText(curDay.getMonth());
+		curMonth.setText(newMonth);
 		
 	}
 
@@ -371,5 +366,114 @@ public class CalendarJFrame extends JFrame{
 		String month = (String)monthBX.getSelectedItem();
 		int day = (Integer)dayBX.getSelectedItem();
 		return calDrive.setCurrentDate(month, day);
+	}
+	
+	public static void setYearPanel(JPanel panel)
+	{
+		panel.setLayout(new BorderLayout());
+		JPanel sixteenPanel = new JPanel();
+		sixteenPanel.setLayout(new BoxLayout(sixteenPanel, BoxLayout.Y_AXIS));
+		sixteenPanel.setBorder(BorderFactory.createEmptyBorder(10,60,10,10));
+		JPanel seventeenPanel = new JPanel();
+		seventeenPanel.setLayout(new BoxLayout(seventeenPanel, BoxLayout.Y_AXIS));
+		seventeenPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,60));
+		JLabel firstYear = new JLabel("2016");
+		firstYear.setAlignmentX(Component.CENTER_ALIGNMENT);
+		JButton august = new JButton("August");
+		august.setAlignmentX(Component.CENTER_ALIGNMENT);
+		JButton september = new JButton("September");
+		september.setAlignmentX(Component.CENTER_ALIGNMENT);
+		JButton october = new JButton("October");
+		october.setAlignmentX(Component.CENTER_ALIGNMENT);
+		JButton november = new JButton("November");
+		november.setAlignmentX(Component.CENTER_ALIGNMENT);
+		JButton december = new JButton("December");
+		december.setAlignmentX(Component.CENTER_ALIGNMENT);
+		sixteenPanel.add(firstYear);
+		sixteenPanel.add(august);
+		sixteenPanel.add(september);
+		sixteenPanel.add(october);
+		sixteenPanel.add(november);
+		sixteenPanel.add(december);
+		JLabel secondYear = new JLabel("2017");
+		secondYear.setAlignmentX(Component.CENTER_ALIGNMENT);
+		JButton january = new JButton("January");
+		january.setAlignmentX(Component.CENTER_ALIGNMENT);
+		JButton february = new JButton("February");
+		february.setAlignmentX(Component.CENTER_ALIGNMENT);
+		JButton march = new JButton("March");
+		march.setAlignmentX(Component.CENTER_ALIGNMENT);
+		JButton april = new JButton("April");
+		april.setAlignmentX(Component.CENTER_ALIGNMENT);
+		JButton may = new JButton("May");
+		may.setAlignmentX(Component.CENTER_ALIGNMENT);
+		seventeenPanel.add(secondYear);
+		seventeenPanel.add(january);
+		seventeenPanel.add(february);
+		seventeenPanel.add(march);
+		seventeenPanel.add(april);
+		seventeenPanel.add(may);
+		august.addActionListener(
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						updateMonthDisplay("August");
+					}
+				});
+		september.addActionListener(
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						updateMonthDisplay("September");
+					}
+				});
+		october.addActionListener(
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						updateMonthDisplay("October");
+					}
+				});
+		november.addActionListener(
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						updateMonthDisplay("November");
+					}
+				});
+		december.addActionListener(
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						updateMonthDisplay("December");
+					}
+				});
+		january.addActionListener(
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						updateMonthDisplay("January");
+					}
+				});
+		february.addActionListener(
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						updateMonthDisplay("February");
+					}
+				});
+		march.addActionListener(
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						updateMonthDisplay("March");
+					}
+				});
+		april.addActionListener(
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						updateMonthDisplay("April");
+					}
+				});
+		may.addActionListener(
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						updateMonthDisplay("May");
+					}
+				});
+		panel.add(sixteenPanel, BorderLayout.WEST);
+		panel.add(seventeenPanel, BorderLayout.EAST);
 	}
 }
