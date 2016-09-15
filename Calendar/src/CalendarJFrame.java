@@ -12,6 +12,7 @@ public class CalendarJFrame extends JFrame{
 	private static CalendarDay curDay;
 	private static JLabel curMonth;
 	private static JTable monthTable;
+	private static JTabbedPane tabs = new JTabbedPane();
 	
 	public static void main(String[] args)
 	{
@@ -32,7 +33,6 @@ public class CalendarJFrame extends JFrame{
 		setResizable(false);
 		
 		
-		JTabbedPane tabs = new JTabbedPane();
 		JPanel dayPanel = new JPanel();
 		setDayPanel(dayPanel);
 		tabs.addTab("Day", dayPanel);
@@ -417,60 +417,70 @@ public class CalendarJFrame extends JFrame{
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
 						updateMonthDisplay("August");
+						tabs.setSelectedIndex(2);
 					}
 				});
 		september.addActionListener(
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
 						updateMonthDisplay("September");
+						tabs.setSelectedIndex(2);
 					}
 				});
 		october.addActionListener(
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
 						updateMonthDisplay("October");
+						tabs.setSelectedIndex(2);
 					}
 				});
 		november.addActionListener(
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
 						updateMonthDisplay("November");
+						tabs.setSelectedIndex(2);
 					}
 				});
 		december.addActionListener(
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
 						updateMonthDisplay("December");
+						tabs.setSelectedIndex(2);
 					}
 				});
 		january.addActionListener(
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
 						updateMonthDisplay("January");
+						tabs.setSelectedIndex(2);
 					}
 				});
 		february.addActionListener(
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
 						updateMonthDisplay("February");
+						tabs.setSelectedIndex(2);
 					}
 				});
 		march.addActionListener(
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
 						updateMonthDisplay("March");
+						tabs.setSelectedIndex(2);
 					}
 				});
 		april.addActionListener(
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
 						updateMonthDisplay("April");
+						tabs.setSelectedIndex(2);
 					}
 				});
 		may.addActionListener(
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
 						updateMonthDisplay("May");
+						tabs.setSelectedIndex(2);
 					}
 				});
 		panel.add(sixteenPanel, BorderLayout.WEST);
