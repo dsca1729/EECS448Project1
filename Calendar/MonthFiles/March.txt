@@ -1,3 +1,4 @@
 //EECS 448 Project 1 
 //March 2017 records
 //Stephen Fulton, Shawn Parkes, and Rebekah Manweiler
+2 This is a new event

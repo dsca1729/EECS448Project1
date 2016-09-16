@@ -29,7 +29,7 @@ public class CalendarJFrame extends JFrame{
 	{
 		super("Calendar");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(600, 400);
+		setSize(800, 600);
 		setResizable(false);
 		
 		
@@ -59,8 +59,8 @@ public class CalendarJFrame extends JFrame{
 	 */
 	public static void setDayPanel(JPanel panel)
 	{
-		final JLabel curDate = new JLabel(curDay.getMonth() + " " + curDay.getDate());
-		final JTextArea eventText = new JTextArea(15, 20);
+		final JLabel curDate = new JLabel(curDay.getDayOfWeek() + ", " + curDay.getMonth() + " " + curDay.getDate());
+		final JTextArea eventText = new JTextArea(5, 35);
 		
 		panel.setLayout(new BorderLayout());
 		JPanel currentDayPanel = new JPanel();
@@ -104,7 +104,7 @@ public class CalendarJFrame extends JFrame{
 		
 		JPanel eventPanel = new JPanel();
 		eventPanel.setLayout(new BoxLayout(eventPanel, BoxLayout.Y_AXIS));
-		eventPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,0)); //Code from: http://stackoverflow.com/questions/8863062/add-space-between-jframe-and-jpanel
+		eventPanel.setBorder(BorderFactory.createEmptyBorder(10,26,26,0)); //Code from: http://stackoverflow.com/questions/8863062/add-space-between-jframe-and-jpanel
 		
 		
 		JLabel eventTitle = new JLabel("Today's Events:");
@@ -113,7 +113,6 @@ public class CalendarJFrame extends JFrame{
 		curDate.setAlignmentX(Component.CENTER_ALIGNMENT);
 		curDate.setFont(curDate.getFont().deriveFont(24.0f));  //Code from: http://stackoverflow.com/questions/17884843/change-jlabel-font-size
 		curDay.loadDayEvents();
-		
 		
 		eventText.setText(curDay.getEvents());
 		eventText.setLineWrap(true);
@@ -128,21 +127,23 @@ public class CalendarJFrame extends JFrame{
 		
 		JPanel addEventPanel = new JPanel();
 		addEventPanel.setLayout(new BoxLayout(addEventPanel, BoxLayout.Y_AXIS));
-		addEventPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+		addEventPanel.setBorder(BorderFactory.createEmptyBorder(60,0,10,26));
 		
 		JPanel newEventPanel = new JPanel();
-		JLabel newEventTitle = new JLabel("New Event");
+		JLabel newEventTitle = new JLabel("New Event:         ");
+		newEventTitle.setFont(newEventTitle.getFont().deriveFont(20.0f));
 		JButton newEventButton = new JButton("Add Event");
 		newEventPanel.add(newEventTitle);
 		newEventPanel.add(newEventButton);
 		
-		final JTextArea newEventText = new JTextArea(15, 20);
+		final JTextArea newEventText = new JTextArea(20, 30);
 		newEventText.setLineWrap(true);
 		newEventText.setWrapStyleWord(true);
 		newEventText.setEditable(true);
 		
 		JPanel removeEvent = new JPanel();
-		JLabel remove = new JLabel("Remove Event:");
+		JLabel remove = new JLabel("Remove Event:   ");
+		remove.setFont(remove.getFont().deriveFont(20.0f));
 		final JComboBox eventSelection = new JComboBox();
 		updateComboBox(curDay.getEventCount(), eventSelection);
 		JButton removeEventButton = new JButton("Remove");
@@ -163,7 +164,7 @@ public class CalendarJFrame extends JFrame{
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
 						curDay = setCurrentDate(monthList, dayList);
-						curDate.setText(curDay.getMonth() + " " + curDay.getDate());
+						curDate.setText(curDay.getDayOfWeek() + ", " + curDay.getMonth() + " " + curDay.getDate());
 						if(curDay.getEvents().equals("")){
 							curDay.loadDayEvents();
 						}
@@ -273,28 +274,55 @@ public class CalendarJFrame extends JFrame{
 	{
 		CalendarWeek curWeek = calDrive.getWeek();
 		panel.setLayout(new BorderLayout());
-		JPanel labels = new JPanel();
-		JPanel eventBoxes = new JPanel();
+		JPanel weekHeader = new JPanel(new BorderLayout());
+		weekHeader.setBorder(BorderFactory.createEmptyBorder(10,0,10,0));
+		JButton prevWeek = new JButton("Previous Week");
+		prevWeek.setHorizontalAlignment(SwingConstants.CENTER);
+		JButton nextWeek = new JButton("Next Week");
+		nextWeek.setHorizontalAlignment(SwingConstants.CENTER);
+		JLabel weekTitle = new JLabel("Week of " + curDay.getMonth() + " " + curDay.getDate());
+		weekHeader.add(prevWeek, BorderLayout.WEST);
+		weekHeader.add(weekTitle, BorderLayout.CENTER);
+		weekHeader.add(nextWeek, BorderLayout.EAST);
+		weekTitle.setFont(weekTitle.getFont().deriveFont(24.0f));
+		weekTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(weekHeader, BorderLayout.NORTH);
+		JPanel weekPanel = new JPanel(new FlowLayout());
+		JPanel[] dayOfWeekPan = new JPanel[7];
+		JLabel[] dayOfWeek = new JLabel[7];
 		JLabel[] dateLabels = new JLabel[7];
 		JTextArea[] eventAreas = new JTextArea[7];
 		for(int i = 0; i < 7; i++)
 		{
+			dayOfWeekPan[i] = new JPanel(new BorderLayout());
 			curWeek.getDay(i).loadDayEvents();
 			if(curWeek.getDay(i).getMonth().equals("Null"))
 			{
+				dayOfWeek[i] = new JLabel();
 				dateLabels[i] = new JLabel();
 				eventAreas[i] = new JTextArea();
 			}
 			else
 			{
+				dayOfWeek[i] = new JLabel(curWeek.getDay(i).getDayOfWeek());
 				dateLabels[i] = new JLabel(curWeek.getDay(i).getMonth() + " " + curWeek.getDay(i).getDate());
-				eventAreas[i] = new JTextArea(curWeek.getDay(i).getEvents());
+				eventAreas[i] = new JTextArea(20, 9);
+				eventAreas[i].setText(curWeek.getDay(i).getEvents());
 			}
-			labels.add(dateLabels[i]);
-			eventBoxes.add(eventAreas[i]);
+			eventAreas[i].setLineWrap(true);
+			eventAreas[i].setWrapStyleWord(true);
+			eventAreas[i].setEditable(false);
+			dateLabels[i].setHorizontalAlignment(SwingConstants.CENTER);
+			dayOfWeek[i].setHorizontalAlignment(SwingConstants.CENTER);
+			dayOfWeekPan[i].add(dayOfWeek[i], BorderLayout.NORTH);
+			dayOfWeekPan[i].add(dateLabels[i], BorderLayout.CENTER);
+			if(eventAreas[i].getText().equals("") && dayOfWeek[i].getText().equals("")){}
+			else{
+				dayOfWeekPan[i].add(eventAreas[i], BorderLayout.SOUTH);
+			}
+			weekPanel.add(dayOfWeekPan[i]);
 		}
-		panel.add(labels, BorderLayout.NORTH);
-		panel.add(eventBoxes, BorderLayout.CENTER);
+		panel.add(weekPanel, BorderLayout.CENTER);
 	}
 	
 	public static void updateMonthDisplay(String newMonth)
@@ -347,7 +375,7 @@ public class CalendarJFrame extends JFrame{
 	 * @param i - the Integer that the combo box will go up to
 	 * @param bx - the combo box that will be updated
 	 */
-	public static void updateComboBox(Integer i, JComboBox bx)
+	public static void updateComboBox(Integer i, JComboBox<Integer> bx)
 	{
 		bx.removeAllItems();
 		for(Integer j = 1; j <= i; j++)
@@ -361,7 +389,7 @@ public class CalendarJFrame extends JFrame{
 	 * @param monthBX - the combo box that has the month selected to be set
 	 * @param dayBX - the combo box that has the day selected to be set
 	 */
-	public static CalendarDay setCurrentDate(JComboBox monthBX, JComboBox dayBX)
+	public static CalendarDay setCurrentDate(JComboBox<Integer> monthBX, JComboBox<Integer> dayBX)
 	{
 		String month = (String)monthBX.getSelectedItem();
 		int day = (Integer)dayBX.getSelectedItem();
