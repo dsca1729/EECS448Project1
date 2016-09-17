@@ -100,15 +100,15 @@ public class CalendarJFrame extends JFrame{
 						}
 				});
 		
-		//adds everything to the current day panel
+		//Adds everything to the current day panel
 		currentDayPanel.add(monthList);
 		currentDayPanel.add(dayList);
 		currentDayPanel.add(dayButton);
 		
+		//Sets up the display of the event panel which has the current day along with the events of it
 		JPanel eventPanel = new JPanel();
 		eventPanel.setLayout(new BoxLayout(eventPanel, BoxLayout.Y_AXIS));
 		eventPanel.setBorder(BorderFactory.createEmptyBorder(10,26,26,0)); //Code from: http://stackoverflow.com/questions/8863062/add-space-between-jframe-and-jpanel
-		
 		
 		JLabel eventTitle = new JLabel("Today's Events:");
 		eventTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -122,8 +122,10 @@ public class CalendarJFrame extends JFrame{
 		eventText.setWrapStyleWord(true);
 		eventText.setEditable(false);
 		
+		//Gives the eventText a scroll bar
 		JScrollPane textBox = new JScrollPane(eventText);
 		
+		//Adds everything to the event panel
 		eventPanel.add(curDate);
 		eventPanel.add(eventTitle);
 		eventPanel.add(textBox);
