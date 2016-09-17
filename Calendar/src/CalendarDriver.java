@@ -17,6 +17,10 @@ public class CalendarDriver {
 		curMonth = getCurrentMonth();
 		setDaysofWeek("Monday");
 	}
+	
+	public CalendarYear getYear(){
+		return year;
+	}
 
 	public CalendarMonth getCurrentMonth() {
 		return year.getMonth(curDay.getMonth());

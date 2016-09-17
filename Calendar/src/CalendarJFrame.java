@@ -10,6 +10,7 @@ public class CalendarJFrame extends JFrame{
 	
 	public static CalendarDriver calDrive = new CalendarDriver();
 	private static CalendarDay curDay;
+	private static String monthShowing;
 	private static JLabel curMonth;
 	private static JTable monthTable;
 	private static JTabbedPane tabs = new JTabbedPane();
@@ -199,27 +200,40 @@ public class CalendarJFrame extends JFrame{
 		panel.add(addEventPanel, BorderLayout.EAST);
 	}
 	
+	/**
+	 * Sets up the layout and appearance of the month panel
+	 * @param panel - the panel that will display all the day components
+	 */
 	public static void setMonthPanel(JPanel panel)
 	{
-		curMonth = new JLabel(curDay.getMonth());
+		monthShowing = curDay.getMonth();
+		curMonth = new JLabel(monthShowing);
+		JButton prevMonth = new JButton("Previous Month");
+		JButton nextMonth = new JButton("Next Month");
 		curMonth.setFont(curMonth.getFont().deriveFont(24.0f));
+		prevMonth.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		curMonth.setAlignmentX(Component.CENTER_ALIGNMENT);
+		nextMonth.setAlignmentX(Component.LEFT_ALIGNMENT);
 		panel.setLayout(new GridLayout());
+		JPanel monthLabelPanel = new JPanel();
+		monthLabelPanel.setLayout(new BoxLayout(monthLabelPanel, BoxLayout.X_AXIS));
+		monthLabelPanel.add(nextMonth);
+		monthLabelPanel.add(curMonth);
+		monthLabelPanel.add(prevMonth);
 		JPanel currentMonthPanel = new JPanel();
 		currentMonthPanel.setLayout(new BoxLayout(currentMonthPanel, BoxLayout.Y_AXIS));
 		currentMonthPanel.setBorder(BorderFactory.createEmptyBorder(0,20,0,20));
 		curMonth.setHorizontalTextPosition(SwingConstants.LEADING);
-		currentMonthPanel.add(curMonth);
 		
-		JLabel columnHeads = new JLabel("Sunday          Monday          Tuesday       Wednesday       Thursday           Friday          Saturday");
+		JLabel columnHeads = new JLabel("Sunday                  Monday                  Tuesday                  Wednesday                  Thursday                  Friday                  Saturday");
 		columnHeads.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
 		String[] weekNames = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 		String[][] data = new String[6][7];
-		int numdays = (calDrive.getCurrentMonth()).getNumDays();
+		int numdays = (calDrive.getYear().getMonth(monthShowing)).getNumDays();
 		int curnum = 1;
 		int blankDays = 0;
-		switch (calDrive.getFirstDayOfMonth(curDay.getMonth())){
+		switch (calDrive.getFirstDayOfMonth(monthShowing)){
 		case "Monday": blankDays = 1;
 			break;
 		case "Tuesday": blankDays = 2;
@@ -259,7 +273,7 @@ public class CalendarJFrame extends JFrame{
 		monthTable = new JTable(data, weekNames);
 		for(int i = 0; i < 6; i++)
 		{
-			monthTable.setRowHeight(i, 40);
+			monthTable.setRowHeight(i, 70);
 		}
 		for(int i = 0; i < 7; i++)
 		{
@@ -267,9 +281,29 @@ public class CalendarJFrame extends JFrame{
 		}
 		currentMonthPanel.add(columnHeads);
 		currentMonthPanel.add(monthTable);
-		panel.add(currentMonthPanel, BorderLayout.CENTER);
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		panel.add(monthLabelPanel, BorderLayout.NORTH);
+		panel.add(currentMonthPanel, BorderLayout.SOUTH);
+		prevMonth.addActionListener(
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						String newMonth = calDrive.getPrevMonth(monthShowing);
+						if(newMonth != "") updateMonthDisplay(newMonth);
+					}
+				});
+		nextMonth.addActionListener(
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						String newMonth = calDrive.getNextMonth(monthShowing);
+						if(newMonth != "") updateMonthDisplay(newMonth);
+					}
+				});
 	}
 	
+	/**
+	 * Sets up the layout and appearance of the week panel
+	 * @param panel - the panel that will display all the day components
+	 */
 	public static void setWeekPanel(JPanel panel)
 	{
 		CalendarWeek curWeek = calDrive.getWeek();
@@ -327,6 +361,7 @@ public class CalendarJFrame extends JFrame{
 	
 	public static void updateMonthDisplay(String newMonth)
 	{
+		monthShowing = newMonth;
 		String[] weekNames = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 		String[][] data = new String[6][7];
 		int numdays = (calDrive.getMonth(newMonth).getNumDays());
@@ -396,6 +431,10 @@ public class CalendarJFrame extends JFrame{
 		return calDrive.setCurrentDate(month, day);
 	}
 	
+	/**
+	 * Sets up the layout and appearance of the year panel
+	 * @param panel - the panel that will display all the day components
+	 */
 	public static void setYearPanel(JPanel panel)
 	{
 		panel.setLayout(new BorderLayout());
