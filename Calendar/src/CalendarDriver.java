@@ -2,14 +2,16 @@ import java.io.*;
 
 public class CalendarDriver {
 
-	/**
-	 * String firstDayofWeek - reset after every session as the oldest day with stored events
-	 * 						 - is initialized in the CalendarDriver constructor
-	 */
 	private static CalendarYear year;
 	private static CalendarDay curDay;
 	private static CalendarMonth curMonth;
 	
+	/**
+	 * sets CalendarDriver object up by setting
+	 * <p>year object to new CalendarYear
+	 * <p>currentDay object to currentDay read in from currentDay.txt
+	 * <p>sets all days of the week in the year
+	 */
 	public CalendarDriver()
 	{
 		year = new CalendarYear();
@@ -18,6 +20,10 @@ public class CalendarDriver {
 		setDaysofWeek("Monday");
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public CalendarYear getYear(){
 		return year;
 	}

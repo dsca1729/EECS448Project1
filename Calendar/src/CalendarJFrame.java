@@ -622,7 +622,6 @@ public class CalendarJFrame extends JFrame{
 		JButton august = new JButton("August");
 		
 		
-		//august.setPreferredSize(new Dimension(20,20));
 		
 		
 		august.setAlignmentX(Component.CENTER_ALIGNMENT);

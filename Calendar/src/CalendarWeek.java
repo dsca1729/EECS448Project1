@@ -1,30 +1,60 @@
 
 public class CalendarWeek {
 	
+	//array of days in the calendarweek
 	private CalendarDay[] currentWeek = new CalendarDay[7];
 	
+	/**
+	 * Gets an array of CalendarDays found within the week
+	 * @return CalendarDay[] - array of CalendarDays in week
+	 */
 	public CalendarDay[] getWeek(){
 		return currentWeek;
 	}
 	
+	/**
+	 * Sets position (index) in array to the passed in CalendarDay (day)
+	 * @param index - position in day (day in week) to set day to
+	 * @param day - day to store in the week
+	 */
 	public void setDay(int index, CalendarDay day){
 		currentWeek[index] = day;
 	}
 	
+	/**
+	 * Gets a CalendarDay from currentWeek array based on given index
+	 * @param index - Position in CalendarDay array that is the desired day
+	 * @return CalendarDay - CalendarDay object at given index in current week
+	 */
 	public CalendarDay getDay(int index)
 	{
 		return currentWeek[index];
 	}
 	
+	/**
+	 * Sets up week based on the given day.<p>
+	 * Also takes in a year object to be able to reference months when weeks span multiple months
+	 * @param day - CalendarDay object that the week will have to include
+	 * @param year - year object that week references to get months
+	 */
 	public void setupWeek(CalendarDay day, CalendarYear year)
 	{
-		int tempDate = day.getDate() - 1;
+		//tempDate stores the day's date, offset stores date to calculate how many days to include before it
+		int tempDate = day.getDate();
 		int offset = day.getDate();
+		
+		//dayCount is position in currentWeek to which the next day will be added
 		int dayCount = 0;
+		
+		//tempMonth stores the CalendarMonth the day is in
 		CalendarMonth tempMonth = year.getMonth(day.getMonth());
 		String curDayOfWeek = day.getDayOfWeek();
+		
+		//Nullday is used when there is a day at beginning or end of week that is outside of the year scope (august and may)
 		CalendarDay nullDay = new CalendarDay(0, "Null");
 		nullDay.setDayOfWeek("");
+		
+		//checks if week is first week of august or last week of may and automatically loads them to format correctly.
 		if(tempMonth.getMonth().equals("August") && day.getDate() <= 6)
 		{
 			setDay(0, nullDay);
@@ -55,6 +85,7 @@ public class CalendarWeek {
 		}
 		else
 		{
+			//this calculates where to start the week (where the next closest sunday is)
 			switch(curDayOfWeek)
 			{
 			case "Sunday":
@@ -79,6 +110,8 @@ public class CalendarWeek {
 				offset = offset - 6;
 				break;
 			}
+			
+			//offset <= 0 means week spans the currentmonth and previousmonth, adjusts tempdate to start of week in previous month
 			if(offset <= 0)
 			{
 				int temp = year.getMonthIndex(tempMonth.getMonth()) - 1;
@@ -87,6 +120,8 @@ public class CalendarWeek {
 				tempDate = tempDate + offset;
 			}
 			else{tempDate = offset-1;}
+			//loops through and adds CalendarDays to week, if date reaches end of month then 
+			//sets it to first day of next month to continue loading week
 			while(dayCount < 7)
 			{
 				setDay(dayCount, tempMonth.getDay(tempDate));
