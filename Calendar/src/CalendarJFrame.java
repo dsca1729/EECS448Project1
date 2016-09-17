@@ -62,6 +62,7 @@ public class CalendarJFrame extends JFrame{
 		final JLabel curDate = new JLabel(curDay.getDayOfWeek() + ", " + curDay.getMonth() + " " + curDay.getDate());
 		final JTextArea eventText = new JTextArea(5, 35);
 		
+		//Set up the display for setting the current day
 		panel.setLayout(new BorderLayout());
 		JPanel currentDayPanel = new JPanel();
 		currentDayPanel.setLayout(new FlowLayout());
@@ -77,6 +78,8 @@ public class CalendarJFrame extends JFrame{
 		monthList.setSelectedIndex(calDrive.getCurrentMonthIndex(curDay.getMonth()));
 		dayList.setSelectedIndex(curDay.getDate()-1);
 		
+		//Sets how the monstList comboBox will work
+		//When a month is selected in this comboBox, the dayList will update to accommodate for the month selected
 		monthList.addActionListener(
 				new ActionListener(){
 						public void actionPerformed(ActionEvent e){
@@ -97,7 +100,7 @@ public class CalendarJFrame extends JFrame{
 						}
 				});
 		
-		
+		//adds everything to the current day panel
 		currentDayPanel.add(monthList);
 		currentDayPanel.add(dayList);
 		currentDayPanel.add(dayButton);
