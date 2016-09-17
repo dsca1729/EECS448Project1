@@ -1,3 +1,10 @@
+/**
+ * EECS 448 Project 1: Calendar
+ * CalendarDriver.java
+ * Authors: Rebekah Manweiler, Shawn Parkes, Stephen Fulton
+ * Date: 2016-09-17
+ */
+
 import java.io.*;
 /**
  * <h2>CalendarDriver Class</h2>

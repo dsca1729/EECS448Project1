@@ -1,6 +1,9 @@
-//EECS 448 Project 1
-//Stephen Fulton, Shawn Parkes, and Rebekah Manweiler
-//Java CalendarYear class
+/**
+ * EECS 448 Project 1: Calendar
+ * CalendarYear.java
+ * Authors: Rebekah Manweiler, Shawn Parkes, Stephen Fulton
+ * Date: 2016-09-17
+ */
 
 import java.io.*;
 /**

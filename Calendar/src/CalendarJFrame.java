@@ -1,3 +1,10 @@
+/**
+ * EECS 448 Project 1: Calendar
+ * CalendarFrame.java
+ * Authors: Rebekah Manweiler, Shawn Parkes, Stephen Fulton
+ * Date: 2016-09-17
+ */
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -136,7 +143,7 @@ public class CalendarJFrame extends JFrame{
 		
 		JLabel eventTitle = new JLabel("Today's Events:");
 		eventTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
-		eventTitle.setFont(eventTitle.getFont().deriveFont(16.0f)); //Code from: http://stackoverflow.com/questions/17884843/change-jlabel-font-size
+		eventTitle.setFont(eventTitle.getFont().deriveFont(16.0f));
 		curDate.setAlignmentX(Component.CENTER_ALIGNMENT); 
 		curDate.setFont(curDate.getFont().deriveFont(24.0f)); 
 		curDay.loadDayEvents();

@@ -1,0 +1,5 @@
+Mazzy, "add space between JFrame and JPanel", URL (version: 2012-01-14): 		http://stackoverflow.com/questions/8863062/add-space-between-jframe-and-jpanel
+
+dododedodonl, "JTextArea new line on shift + enter", URL (version 2010-01-29): 		http://stackoverflow.com/questions/2162170/jtextarea-new-line-on-shift-enter
+
+Venkat, "Align the values of the cells in JTable?", URL (version: 2010-03-09): 		http://stackoverflow.com/questions/2408541/align-the-values-of-the-cells-in-jtable

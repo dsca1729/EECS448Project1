@@ -1,4 +1,12 @@
 /**
+ * EECS 448 Project 1: Calendar
+ * CalendarWeek.java
+ * Authors: Rebekah Manweiler, Shawn Parkes, Stephen Fulton
+ * Date: 2016-09-17
+ */
+
+
+/**
  * <h2>CalendarWeek Class</h2> 
  * <p>Contains an array of CalendarDay instances with size equal to 7
  * @see CalendarDay
