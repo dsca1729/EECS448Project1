@@ -103,7 +103,6 @@ public class CalendarDriver {
 		int currentDay;
 		String currentMonth;
 		try{
-			
 			BufferedReader br = new BufferedReader(new FileReader("MonthFiles/CurrentDate.txt"));
 			currentDay = Integer.parseInt(br.readLine());
 			currentMonth = br.readLine();

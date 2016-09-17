@@ -10,9 +10,12 @@ import java.io.*;
 
 public class CalendarJFrame extends JFrame{
 	
+	//These are the tools for the JFrame to interact with the Calendar class structure, primarily through calDrive
 	public static CalendarDriver calDrive = new CalendarDriver();
 	private static CalendarDay curDay;
 	private static CalendarWeek curWeek;
+	
+	//These are globals, as they are updated across multiple panels and thus need to be accessable by them.
 	private static JLabel curMonth;
 	private static JTable monthTable;
 	private static JTabbedPane tabs = new JTabbedPane();
@@ -346,6 +349,10 @@ public class CalendarJFrame extends JFrame{
 		panel.add(currentMonthPanel, BorderLayout.CENTER);
 	}
 	
+	/**
+	 * Sets up the layout and appearance of the week panel
+	 * @param panel - The panel that will display all the week components.
+	 */
 	public static void setWeekPanel(JPanel panel)
 	{
 		panel.setLayout(new BorderLayout());
