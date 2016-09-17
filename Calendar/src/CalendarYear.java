@@ -3,13 +3,22 @@
 //Java CalendarYear class
 
 import java.io.*;
-
+/**
+ * <h2>CalendarYear Class</h2> 
+ * <p>Contains an array of CalendarMonth instances for each month (Aug-May) of this academic year (2016-2017)
+ * @see CalendarMonth
+ */
 public class CalendarYear {
 	
 	private static CalendarMonth[] Months = new CalendarMonth[10];
 	public final static String[] monthNames = {"August", "September", "October", "November", "December", "January", "February", "March", "April", "May"};
 	public final static int[] daysInMonth = {31,30,31,30,31,31,28,31,30,31};
 	
+	/**
+	 * <h3>Calendar Year Constructor</h3><p>
+	 * Creates each month object in the array Months
+	 * @see Calendarmonth
+	 */
 	public CalendarYear()
 	{
 		for (int i = 0; i < 10; i++)

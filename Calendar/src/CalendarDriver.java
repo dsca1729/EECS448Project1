@@ -1,5 +1,13 @@
 import java.io.*;
-
+/**
+ * <h2>CalendarDriver Class</h2>
+ * <p>Contains an instance "year" of the CalendarYear Class
+ * Contains an instance "curDay" of the CalendarDay class
+ * Contains the instance "curMonth" of the CalendarMonth class
+ * @see CalendarYear
+ * @see CalendarDay
+ * @see CalendarMonth
+ */
 public class CalendarDriver {
 
 	private static CalendarYear year;

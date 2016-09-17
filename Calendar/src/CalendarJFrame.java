@@ -7,7 +7,15 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 import java.io.*;
-
+/**
+ * <h2>CalendarJFrame Class extends JFrame</h2>
+ * <p>Contains an instance "calDrive" of the CalendarDriver Class
+ * Contains an instance "curDay" of the CalendarDay class
+ * Contains the instance "curWeek" of the CalendarWeek class
+ * @see CalendarDriver
+ * @see CalendarDay
+ * @see CalendarWeek
+ */
 public class CalendarJFrame extends JFrame{
 	
 	//These are the tools for the JFrame to interact with the Calendar class structure, primarily through calDrive
@@ -256,6 +264,8 @@ public class CalendarJFrame extends JFrame{
 	
 	/**
 	 * Sets up the layout and appearance of the month panel
+	 * <p>Loads previous and next buttons, the month label, and the month table into the panel
+	 * creates listeners for the previous and next buttons
 	 * @param panel - the panel that will display all the day components
 	 */
 	public static void setMonthPanel(JPanel panel)
@@ -497,6 +507,10 @@ public class CalendarJFrame extends JFrame{
 		panel.add(weekPanel, BorderLayout.CENTER);
 	}
 	
+	/**
+	 * Updates the month panel display based on the passed in month
+	 * @param month - the month name the panel will pull data from to update display
+	 */
 	public static void updateMonthDisplay(String newMonth)
 	{
 		monthShowing = newMonth;
