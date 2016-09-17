@@ -44,15 +44,4 @@ public class CalendarYear {
 	public CalendarMonth[] getMonths(){
 		return Months;
 	}
-	
-	public static void loadEvents()
-	{
-		for(int i = 0; i < Months.length; i++)
-		{
-			for(int j = 0; j < (Months[i]).getDays().length; j++)
-			{
-				((Months[i]).getDays())[j].loadDayEvents();
-			}
-		}
-	}
 }
