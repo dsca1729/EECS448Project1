@@ -21,8 +21,8 @@ public class CalendarDriver {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * returns the year object
+	 * @return CalendarYear 
 	 */
 	public CalendarYear getYear(){
 		return year;
