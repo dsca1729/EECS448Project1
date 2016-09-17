@@ -18,6 +18,7 @@ public class CalendarJFrame extends JFrame{
 	private static final JLabel[] dateLabels = new JLabel[7];
 	private static final JTextArea[] eventAreas = new JTextArea[7];
 	private static final JPanel[] dayOfWeekPan = new JPanel[7];
+	private static final JLabel weekTitle = new JLabel();
 	
 	public static void main(String[] args)
 	{
@@ -197,6 +198,9 @@ public class CalendarJFrame extends JFrame{
 						if(curDay.getEvents().equals("")){
 							curDay.loadDayEvents();
 						}
+						curWeek = calDrive.getWeek();
+						updateWeekDisplay(curWeek);
+						weekTitle.setText("Week of " + curDay.getMonth() + " " + curWeek.getDay(0).getDate());
 						eventText.setText(curDay.getEvents());
 						updateComboBox(curDay.getEventCount(), eventSelection);
 						updateMonthDisplay(curDay.getMonth());
@@ -318,6 +322,7 @@ public class CalendarJFrame extends JFrame{
 					{
 						curWeek = calDrive.getPreviousWeek(curWeek);
 						updateWeekDisplay(curWeek);
+						weekTitle.setText("Week of " + curWeek.getDay(0).getMonth() + " " + curWeek.getDay(0).getDate());
 					}
 				});
 		JButton nextWeek = new JButton("Next Week");
@@ -330,7 +335,7 @@ public class CalendarJFrame extends JFrame{
 						updateWeekDisplay(curWeek);
 					}
 				});
-		JLabel weekTitle = new JLabel("Week of " + curDay.getMonth() + " " + curDay.getDate());
+		weekTitle.setText("Week of " + curDay.getMonth() + " " + curWeek.getDay(0).getDate());
 		weekHeader.add(prevWeek, BorderLayout.WEST);
 		weekHeader.add(weekTitle, BorderLayout.CENTER);
 		weekHeader.add(nextWeek, BorderLayout.EAST);

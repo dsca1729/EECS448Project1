@@ -250,7 +250,7 @@ public class CalendarDriver {
 			tempDate = tempMonth.getNumDays() - 1;
 			tempDate = tempDate + offset;
 		}
-		else{}
+		else{tempDate = offset-1;}
 		while(dayCount < 7)
 		{
 			newWeek.setDay(dayCount, tempMonth.getDay(tempDate));
