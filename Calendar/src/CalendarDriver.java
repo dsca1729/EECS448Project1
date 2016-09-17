@@ -141,7 +141,7 @@ public class CalendarDriver {
 			{
 				int offset = tempDate - 8;
 				int temp = year.getMonthIndex(tempMonth) - 1;
-				CalendarMonth m = year.getMonth(year.monthNames[temp-1]);
+				CalendarMonth m = year.getMonth(year.monthNames[temp]);
 				tempDate = m.getNumDays() - 1 + offset;
 				return setupWeek(m.getDay(tempDate));
 				
