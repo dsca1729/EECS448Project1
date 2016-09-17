@@ -182,6 +182,7 @@ public class CalendarDay
 	{
 		try
 		{
+			dayEvents = new String[0];
 			BufferedReader br = new BufferedReader(new FileReader(monthFilePath));
 			String temp = br.readLine();
 			while(temp != null)

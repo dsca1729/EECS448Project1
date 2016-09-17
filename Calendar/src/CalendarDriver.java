@@ -120,16 +120,16 @@ public class CalendarDriver {
 	
 	public static CalendarWeek getPreviousWeek(CalendarWeek oldWeek)
 	{
-		CalendarDay tempDay = oldWeek.getWeek()[0];
+		CalendarDay tempDay = oldWeek.getDay(0);
 		int tempDate = tempDay.getDate();
 		String tempMonth = tempDay.getMonth();
-		if(tempMonth.equals("August") && (tempDate <= 6))
+		if((tempMonth.equals("August") && (tempDate <= 6)) || tempMonth.equals("Null"))
 		{
 			return oldWeek;
 		}
-		else if(tempMonth.equals("May") && (tempDate >= 28))
+		else if(tempMonth.equals("August") && tempDate == 7)
 		{
-			return oldWeek;
+			return setupWeek(year.getMonth("August").getDay(2));
 		}
 		else
 		{
@@ -142,7 +142,7 @@ public class CalendarDriver {
 				int offset = tempDate - 8;
 				int temp = year.getMonthIndex(tempMonth) - 1;
 				CalendarMonth m = year.getMonth(year.monthNames[temp]);
-				tempDate = m.getNumDays() - 1 + offset;
+				tempDate = m.getNumDays() + offset;
 				return setupWeek(m.getDay(tempDate));
 				
 			}
@@ -160,6 +160,29 @@ public class CalendarDriver {
 		return year.getMonth(month);
 	}
 	
+	public static CalendarWeek getNextWeek(CalendarWeek oldWeek)
+	{
+		int tempDate = oldWeek.getDay(0).getDate();
+		int offset = tempDate + 7;
+		CalendarMonth tempMonth = year.getMonth(oldWeek.getDay(0).getMonth());
+		if(tempMonth.getMonth().equals("May") && tempDate >= 28)
+		{
+			return oldWeek;
+		}
+		if(offset > tempMonth.getNumDays())
+		{
+			offset = offset - tempMonth.getNumDays();
+			tempMonth = year.getMonths()[year.getMonthIndex(tempMonth.getMonth())+1];
+			tempDate = 1;
+			tempDate = tempDate + offset;
+			return setupWeek(tempMonth.getDay(tempDate-2));
+		}
+		else
+		{
+			return setupWeek(tempMonth.getDay(offset-1));
+		}
+	}
+	
 	public static CalendarWeek setupWeek(CalendarDay day)
 	{
 		int tempDate = day.getDate() - 1;
@@ -170,7 +193,7 @@ public class CalendarDriver {
 		CalendarDay nullDay = new CalendarDay(0, "Null");
 		nullDay.setDayOfWeek("");
 		CalendarWeek newWeek = new CalendarWeek();
-		if(tempMonth.getMonth().equals("August") && curDay.getDate() <= 6)
+		if(tempMonth.getMonth().equals("August") && day.getDate() <= 6)
 		{
 			newWeek.setDay(0, nullDay);
 			newWeek.setDay(1, tempMonth.getDay(0));
@@ -179,9 +202,13 @@ public class CalendarDriver {
 			newWeek.setDay(4, tempMonth.getDay(3));
 			newWeek.setDay(5, tempMonth.getDay(4));
 			newWeek.setDay(6, tempMonth.getDay(5));
+			for(int i = 0; i < 6; i++)
+			{
+				tempMonth.getDay(i).loadDayEvents();
+			}
 			return newWeek;
 		}
-		else if(tempMonth.getMonth().equals("May") && curDay.getDate() >= 28)
+		else if(tempMonth.getMonth().equals("May") && day.getDate() >= 28)
 		{
 			newWeek.setDay(0, tempMonth.getDay(27));
 			newWeek.setDay(1, tempMonth.getDay(28));
@@ -190,10 +217,17 @@ public class CalendarDriver {
 			newWeek.setDay(4, nullDay);
 			newWeek.setDay(5, nullDay);
 			newWeek.setDay(6, nullDay);
+			for(int i = 27; i < 31; i++)
+			{
+				tempMonth.getDay(i).loadDayEvents();
+			}
 			return newWeek;
 		}
 		switch(curDayOfWeek)
 		{
+		case "Sunday":
+			offset = offset - 0;
+			break;
 		case "Monday":
 			offset = offset - 1;
 			break;
@@ -220,13 +254,14 @@ public class CalendarDriver {
 			tempDate = tempMonth.getNumDays() - 1;
 			tempDate = tempDate + offset;
 		}
-		else{tempDate = offset - 1;}
+		else{tempDate = offset-1;}
 		while(dayCount < 7)
 		{
-			newWeek.setDay(dayCount, tempMonth.getDays()[tempDate]);
+			newWeek.setDay(dayCount, tempMonth.getDay(tempDate));
+			tempMonth.getDay(tempDate).loadDayEvents();
 			dayCount++;
 			tempDate++;
-			if(tempDate == tempMonth.getNumDays()){
+			if(tempDate >= tempMonth.getNumDays()){
 				int temp = year.getMonthIndex(tempMonth.getMonth()) + 1;
 				tempMonth = year.getMonth(year.monthNames[temp]);
 				tempDate = 0;
@@ -234,7 +269,4 @@ public class CalendarDriver {
 		}
 		return newWeek;
 	}
-	
-	
-
 }
