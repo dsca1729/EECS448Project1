@@ -265,9 +265,9 @@ public class CalendarJFrame extends JFrame{
 		panel.setLayout(new GridLayout());
 		JPanel monthLabelPanel = new JPanel();
 		monthLabelPanel.setLayout(new BoxLayout(monthLabelPanel, BoxLayout.X_AXIS));
-		monthLabelPanel.add(nextMonth);
-		monthLabelPanel.add(curMonth);
 		monthLabelPanel.add(prevMonth);
+		monthLabelPanel.add(curMonth);
+		monthLabelPanel.add(nextMonth);
 		JPanel currentMonthPanel = new JPanel();
 		currentMonthPanel.setLayout(new BoxLayout(currentMonthPanel, BoxLayout.Y_AXIS));
 		currentMonthPanel.setBorder(BorderFactory.createEmptyBorder(0,20,0,20));
