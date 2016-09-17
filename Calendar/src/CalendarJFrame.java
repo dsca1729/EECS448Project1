@@ -20,10 +20,13 @@ public class CalendarJFrame extends JFrame{
 	private static JLabel curMonth;
 	private static JTable monthTable;
 	private static JTabbedPane tabs = new JTabbedPane();
+	
+	//These arrays store the displays of the week panel, with each instance in dayOfWeekPan holding (1) dayOfWeek label, (1) dateLabel, and (1) eventArea
 	private static final JLabel[] dayOfWeek = new JLabel[7];
 	private static final JLabel[] dateLabels = new JLabel[7];
 	private static final JTextArea[] eventAreas = new JTextArea[7];
 	private static final JPanel[] dayOfWeekPan = new JPanel[7];
+	
 	private static final JLabel weekTitle = new JLabel();
 	
 	public static void main(String[] args)
@@ -336,7 +339,6 @@ public class CalendarJFrame extends JFrame{
 			monthTable.getColumnModel().getColumn(i).setHeaderValue(weekNames[i]);
 			monthTable.getColumnModel().getColumn(i).setCellRenderer(rightRenderer);
 		}
-		//currentMonthPanel.add(columnHeads);
 		currentMonthPanel.add(monthTable);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		panel.add(monthLabelPanel, BorderLayout.NORTH);
@@ -372,6 +374,7 @@ public class CalendarJFrame extends JFrame{
 						{
 							weekTitle.setText("Week of August 1");
 						}
+					  tabs.setSelectedIndex(1);
 			      }
 			  }
 			});
@@ -383,14 +386,23 @@ public class CalendarJFrame extends JFrame{
 	}
 	
 	/**
-	 * Sets up the layout and appearance of the week panel
+	 * Sets up the layout and appearance of the week panel. <p>Loads previous and next buttons and date label into panel and events into panel, and places them into the overall week display panel.
 	 * @param panel - The panel that will display all the week components.
 	 */
 	public static void setWeekPanel(JPanel panel)
 	{
+		//sets layout for overall week panel to be able to place sub-panels easily
 		panel.setLayout(new BorderLayout());
+		
+		//weekHeader panel contains the previous and next buttons as well as the string stating what week the user is in
 		JPanel weekHeader = new JPanel(new BorderLayout());
 		weekHeader.setBorder(BorderFactory.createEmptyBorder(10,0,10,0));
+		
+		//weekPanel contains the title for each day in the week and the text areas for each of those day's events.
+		JPanel weekPanel = new JPanel(new FlowLayout());
+		
+		//sets what prevweek button does
+		//prev week calls calDrive to get the week prior to the one the user is on, then calls updateWeekDisplay to change box and label values according to new week.
 		JButton prevWeek = new JButton("Previous Week");
 		prevWeek.setHorizontalAlignment(SwingConstants.CENTER);
 		prevWeek.addActionListener(
@@ -400,12 +412,17 @@ public class CalendarJFrame extends JFrame{
 						curWeek = calDrive.getPreviousWeek(curWeek);
 						updateWeekDisplay(curWeek);
 						weekTitle.setText("Week of " + curWeek.getDay(0).getMonth() + " " + curWeek.getDay(0).getDate());
+						
+						//if the week being displayed is august 1st, then this overrides the setText for the week to accommodate not having a base Sunday to title from.
 						if(curWeek.getDay(0).getDate() == 0)
 						{
 							weekTitle.setText("Week of August 1");
 						}
 					}
 				});
+		
+		//sets what nextweek button does
+		//nextweek calls calDrive to get the week after the one the user is on, then calls updateWeekDisplay to change box and label values according to new week.
 		JButton nextWeek = new JButton("Next Week");
 		nextWeek.setHorizontalAlignment(SwingConstants.CENTER);
 		nextWeek.addActionListener(
@@ -417,22 +434,32 @@ public class CalendarJFrame extends JFrame{
 						weekTitle.setText("Week of " + curWeek.getDay(0).getMonth() + " " + curWeek.getDay(0).getDate());
 					}
 				});
+		
+		//Initializes weekTitle based on whatever the current day the user open the program on is
 		weekTitle.setText("Week of " + curDay.getMonth() + " " + curWeek.getDay(0).getDate());
 		if(curWeek.getDay(0).getDate() == 0)
 		{
 			weekTitle.setText("Week of August 1");
 		}
+		weekTitle.setFont(weekTitle.getFont().deriveFont(24.0f));
+		weekTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		//add all components to the weekheader panel
 		weekHeader.add(prevWeek, BorderLayout.WEST);
 		weekHeader.add(weekTitle, BorderLayout.CENTER);
 		weekHeader.add(nextWeek, BorderLayout.EAST);
-		weekTitle.setFont(weekTitle.getFont().deriveFont(24.0f));
-		weekTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		
 		panel.add(weekHeader, BorderLayout.NORTH);
-		JPanel weekPanel = new JPanel(new FlowLayout());
+		
+		//Adds components to weekPanel
+		//This loop goes through for all 7 days in a week and using the current stored week adds titles and textAreas to individual panels to display each day and it's events, 
+		//then adds those panels to one large display for that section.
 		for(int i = 0; i < 7; i++)
 		{
 			dayOfWeekPan[i] = new JPanel(new BorderLayout());
 			curWeek.getDay(i).loadDayEvents();
+			
+			//A day's month will be null if at beginning of august or end of may
 			if(curWeek.getDay(i).getMonth().equals("Null"))
 			{
 				dayOfWeek[i] = new JLabel();
@@ -441,19 +468,26 @@ public class CalendarJFrame extends JFrame{
 			}
 			else
 			{
+				//Initializes dayofweek label, date label, and event area based on the given day's stored values
 				dayOfWeek[i] = new JLabel(curWeek.getDay(i).getDayOfWeek());
 				dateLabels[i] = new JLabel(curWeek.getDay(i).getMonth() + " " + curWeek.getDay(i).getDate());
 				eventAreas[i] = new JTextArea(20, 9);
 				eventAreas[i].setText(curWeek.getDay(i).getEvents());
 			}
+			
+			//this formats the event area to display events properly
 			eventAreas[i].setLineWrap(true);
 			eventAreas[i].setWrapStyleWord(true);
 			eventAreas[i].setEditable(false);
 			dateLabels[i].setHorizontalAlignment(SwingConstants.CENTER);
 			dayOfWeek[i].setHorizontalAlignment(SwingConstants.CENTER);
+			
+			//adds components to each of 7 day of week panels
 			dayOfWeekPan[i].add(dayOfWeek[i], BorderLayout.NORTH);
 			dayOfWeekPan[i].add(dateLabels[i], BorderLayout.CENTER);
 			dayOfWeekPan[i].add(new JScrollPane(eventAreas[i]), BorderLayout.SOUTH);
+			
+			//if a panel is for a null day (<august 1 or >may 31), hide the panel
 			if(curWeek.getDay(i).getMonth().equals("Null"))
 			{
 				dayOfWeekPan[i].setVisible(false);
@@ -509,11 +543,19 @@ public class CalendarJFrame extends JFrame{
 		
 	}
 	
+	/**
+	 * Updates the week Panel's display based on the passed in week
+	 * @param week - the week the panel will pull data from to update display
+	 */
 	public static void updateWeekDisplay(CalendarWeek week)
 	{
+		//Loops through each day of the week, updating info on corresponding components
 		for(int i = 0; i < 7; i++)
 		{
+			//Clears out eventArea, then reloads with the day's events
 			eventAreas[i].setText("");
+			
+			//if the month is null, then hide the display (contains no relevant info)
 			if(week.getDay(i).getMonth().equals("Null"))
 			{
 				dateLabels[i].setText(" ");
@@ -522,7 +564,7 @@ public class CalendarJFrame extends JFrame{
 			}
 			else
 			{
-				dateLabels[i].setVisible(true);
+				//sets all non-null day panels to visible and updates their info
 				dayOfWeekPan[i].setVisible(true);
 				dayOfWeek[i].setText(week.getDay(i).getDayOfWeek());
 				dateLabels[i].setText(week.getDay(i).getMonth() + " " + week.getDay(i).getDate());
