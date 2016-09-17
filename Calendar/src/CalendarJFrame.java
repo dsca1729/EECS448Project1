@@ -130,10 +130,12 @@ public class CalendarJFrame extends JFrame{
 		eventPanel.add(eventTitle);
 		eventPanel.add(textBox);
 		
+		//Sets up the display of the panel that will add and remove events
 		JPanel addEventPanel = new JPanel();
 		addEventPanel.setLayout(new BoxLayout(addEventPanel, BoxLayout.Y_AXIS));
 		addEventPanel.setBorder(BorderFactory.createEmptyBorder(60,0,10,26));
 		
+		//Makes label and button for adding events
 		JPanel newEventPanel = new JPanel();
 		JLabel newEventTitle = new JLabel("New Event:         ");
 		newEventTitle.setFont(newEventTitle.getFont().deriveFont(20.0f));
@@ -141,11 +143,13 @@ public class CalendarJFrame extends JFrame{
 		newEventPanel.add(newEventTitle);
 		newEventPanel.add(newEventButton);
 		
+		//Makes text area for the user to input what event they wish to add to the day
 		final JTextArea newEventText = new JTextArea(20, 30);
 		newEventText.setLineWrap(true);
 		newEventText.setWrapStyleWord(true);
 		newEventText.setEditable(true);
 		
+		//Makes the components for removing an event
 		JPanel removeEvent = new JPanel();
 		JLabel remove = new JLabel("Remove Event:   ");
 		remove.setFont(remove.getFont().deriveFont(20.0f));
@@ -156,8 +160,10 @@ public class CalendarJFrame extends JFrame{
 		removeEvent.add(eventSelection);
 		removeEvent.add(removeEventButton);
 		
+		//Gives the newEventText a scroll bar
 		JScrollPane newEventScroll = new JScrollPane(newEventText);
 		
+		//Adds everything to the add and remove event panel
 		addEventPanel.add(newEventPanel);
 		addEventPanel.add(newEventScroll);
 		addEventPanel.add(removeEvent);
