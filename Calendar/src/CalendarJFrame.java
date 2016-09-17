@@ -171,6 +171,9 @@ public class CalendarJFrame extends JFrame{
 		CalendarWeek wk = new CalendarWeek();
 		wk = calDrive.getWeek();
 		
+		//Sets what dayButton does
+		//When pressed, dayButton will update current date based on the input from the combo boxes
+		//It will also update the display of the week and month panels based on the new date
 		dayButton.addActionListener(
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
@@ -185,6 +188,8 @@ public class CalendarJFrame extends JFrame{
 					}
 				});
 		
+		//Sets what newEventButton does
+		//When pressed, newEventButton will add in the new event from the text box to the event panel
 		newEventButton.addActionListener(
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
@@ -194,6 +199,8 @@ public class CalendarJFrame extends JFrame{
 					}
 				});
 		
+		//Sets what removeEventButton does
+		//When pressed, removeEventButton removes whatever the selected event is from the list of events for the current day
 		removeEventButton.addActionListener(
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
@@ -205,6 +212,7 @@ public class CalendarJFrame extends JFrame{
 					}
 				});
 		
+		//Adds everything to the day panel
 		panel.add(currentDayPanel, BorderLayout.NORTH);
 		panel.add(eventPanel, BorderLayout.WEST);
 		panel.add(addEventPanel, BorderLayout.EAST);
