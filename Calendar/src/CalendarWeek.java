@@ -1,4 +1,8 @@
-
+/**
+ * <h2>CalendarWeek Class</h2> 
+ * <p>Contains an array of CalendarDay instances with size equal to 7
+ * @see CalendarDay
+ */
 public class CalendarWeek {
 	
 	//array of days in the calendarweek

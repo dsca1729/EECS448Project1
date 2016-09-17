@@ -1,5 +1,8 @@
 import java.io.*;
-
+/**
+ * <h2>CalendarDay Week</h2>
+ * <p>Contains an array of events and a String "dayOfWeek"
+ */
 public class CalendarDay
 {
 	private int date = 0;
@@ -13,7 +16,7 @@ public class CalendarDay
 	 * Creates a Calendar Day object based on the given date and month that stores its day of the week and events for the day
 	 * @param d - int: date of month (1,2...31)
 	 * @param m - String: name of CalendarMonth that CalendarDay belongs to
-	 * @see Calendarmonth
+	 * @see CalendarMonth
 	 */
 	public CalendarDay(int d, String m)
 	{

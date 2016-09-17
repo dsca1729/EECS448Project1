@@ -28,6 +28,11 @@ public class CalendarYear {
 		//loadEvents();
 	}
 	
+	/**
+	 * getMonthIndex(String month) returns the index of a month object given its name
+	 * @param month
+	 * @return int
+	 */
 	public static int getMonthIndex(String month)
 	{
 		for(int i = 0; i < Months.length; i++)
@@ -40,6 +45,11 @@ public class CalendarYear {
 		return 0;
 	}
 	
+	/**
+	 * getMonth(String curMonth) returns a month object given its name
+	 * @param curMonth
+	 * @return CalendarMonth
+	 */
 	public CalendarMonth getMonth(String curMonth){
 		for(int i = 0; i < Months.length; i++)
 		{
@@ -50,6 +60,11 @@ public class CalendarYear {
 		return Months[0];
 	}
 	
+	/**
+	 * getMonths() returns the array of month objects
+	 * @param none
+	 * @return CalendarMonth[]
+	 */
 	public CalendarMonth[] getMonths(){
 		return Months;
 	}
