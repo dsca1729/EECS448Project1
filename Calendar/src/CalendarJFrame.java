@@ -3,6 +3,8 @@ import java.awt.event.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import java.io.*;
 
@@ -30,7 +32,8 @@ public class CalendarJFrame extends JFrame{
 	
 	/**
 	 * <h3>Calendar JFrame Constructor</h3><p>
-	 * Creates a Calendar JFrame object that has 4 tabs with different panels inside of them
+	 * Creates a Calendar JFrame object that has 4 tabs with different panels inside of them to display day, week, month, and year.
+	 * @param - None
 	 */
 	public CalendarJFrame()
 	{
@@ -66,7 +69,7 @@ public class CalendarJFrame extends JFrame{
 	 */
 	public static void setDayPanel(JPanel panel)
 	{
-		final JLabel curDate = new JLabel(curDay.getDayOfWeek() + ", " + curDay.getMonth() + " " + curDay.getDate());
+		final JLabel curDate = new JLabel(calDrive.getCurrentDayOfWeek() + ", " + calDrive.getCurMonthName() + " " + calDrive.getCurDayOfMonth());
 		final JTextArea eventText = new JTextArea(5, 35);
 		
 		//Set up the display for setting the current day
@@ -82,8 +85,8 @@ public class CalendarJFrame extends JFrame{
 		final JButton dayButton = new JButton("Go to this Day");
 		currentDayPanel.add(curDayLab);
 		
-		monthList.setSelectedIndex(calDrive.getCurrentMonthIndex(curDay.getMonth()));
-		dayList.setSelectedIndex(curDay.getDate()-1);
+		monthList.setSelectedIndex(calDrive.getCurrentMonthIndex(calDrive.getCurMonthName()));
+		dayList.setSelectedIndex(calDrive.getCurDayOfMonth()-1);
 		
 		//Sets how the monstList comboBox will work
 		//When a month is selected in this comboBox, the dayList will update to accommodate for the month selected
@@ -119,12 +122,12 @@ public class CalendarJFrame extends JFrame{
 		
 		JLabel eventTitle = new JLabel("Today's Events:");
 		eventTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
-		eventTitle.setFont(eventTitle.getFont().deriveFont(16.0f));
-		curDate.setAlignmentX(Component.CENTER_ALIGNMENT);
-		curDate.setFont(curDate.getFont().deriveFont(24.0f));  //Code from: http://stackoverflow.com/questions/17884843/change-jlabel-font-size
+		eventTitle.setFont(eventTitle.getFont().deriveFont(16.0f)); //Code from: http://stackoverflow.com/questions/17884843/change-jlabel-font-size
+		curDate.setAlignmentX(Component.CENTER_ALIGNMENT); 
+		curDate.setFont(curDate.getFont().deriveFont(24.0f)); 
 		curDay.loadDayEvents();
 		
-		eventText.setText(curDay.getEvents());
+		eventText.setText(calDrive.getCurrentDate().getEvents());
 		eventText.setLineWrap(true);
 		eventText.setWrapStyleWord(true);
 		eventText.setEditable(false);
@@ -161,6 +164,7 @@ public class CalendarJFrame extends JFrame{
 		KeyStroke enter = KeyStroke.getKeyStroke("ENTER");
 		input.put(enter, "text submit");
 		
+		//File I/O can't handle JTextArea enter characters, so this forces the submission of the event
 		ActionMap actions = newEventText.getActionMap();
 	    actions.put("text submit", new AbstractAction() {
 	        @Override
@@ -202,6 +206,10 @@ public class CalendarJFrame extends JFrame{
 						curWeek = calDrive.getWeek();
 						updateWeekDisplay(curWeek);
 						weekTitle.setText("Week of " + curDay.getMonth() + " " + curWeek.getDay(0).getDate());
+						if(curWeek.getDay(0).getDate() == 0)
+						{
+							weekTitle.setText("Week of August 1");
+						}
 						eventText.setText(curDay.getEvents());
 						updateComboBox(curDay.getEventCount(), eventSelection);
 						updateMonthDisplay(curDay.getMonth());
@@ -217,6 +225,7 @@ public class CalendarJFrame extends JFrame{
 						eventText.setText(curDay.getEvents());
 						newEventText.setText("");
 						updateComboBox(curDay.getEventCount(), eventSelection);
+						updateWeekDisplay(curWeek);
 					}
 				});
 		
@@ -264,9 +273,12 @@ public class CalendarJFrame extends JFrame{
 		currentMonthPanel.setBorder(BorderFactory.createEmptyBorder(0,20,0,20));
 		curMonth.setHorizontalTextPosition(SwingConstants.LEADING);
 		
+<<<<<<< HEAD
 		JLabel columnHeads = new JLabel("Sunday                  Monday                  Tuesday                  Wednesday                  Thursday                  Friday                  Saturday");
 		columnHeads.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
+=======
+>>>>>>> b2c096055e2e953ff0f19a63d3573157f60914fd
 		String[] weekNames = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 		String[][] data = new String[6][7];
 		int numdays = (calDrive.getYear().getMonth(monthShowing)).getNumDays();
@@ -308,16 +320,30 @@ public class CalendarJFrame extends JFrame{
 		DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
 		rightRenderer.setHorizontalAlignment(SwingConstants.LEFT);
 		rightRenderer.setVerticalAlignment(SwingConstants.TOP);
+		TableModel model = new DefaultTableModel(data, weekNames)
+		{
+			public boolean isCellEditable(int row, int column)
+			{
+				return false;
+			}
+		};
 		
-		monthTable = new JTable(data, weekNames);
+		
+		monthTable = new JTable(model);
 		for(int i = 0; i < 6; i++)
 		{
+<<<<<<< HEAD
 			monthTable.setRowHeight(i, 70);
+=======
+			monthTable.setRowHeight(i, 80);
+>>>>>>> b2c096055e2e953ff0f19a63d3573157f60914fd
 		}
 		for(int i = 0; i < 7; i++)
 		{
+			monthTable.getColumnModel().getColumn(i).setHeaderValue(weekNames[i]);
 			monthTable.getColumnModel().getColumn(i).setCellRenderer(rightRenderer);
 		}
+<<<<<<< HEAD
 		currentMonthPanel.add(columnHeads);
 		currentMonthPanel.add(monthTable);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -337,6 +363,33 @@ public class CalendarJFrame extends JFrame{
 						if(newMonth != "") updateMonthDisplay(newMonth);
 					}
 				});
+=======
+		
+		monthTable.addMouseListener(new MouseAdapter() {
+			  public void mousePressed(MouseEvent e) {
+			      JTable target = (JTable)e.getSource();
+			      int row = target.getSelectedRow();
+			      int column = target.getSelectedColumn();
+			      String targetDay = (String) target.getValueAt(row, column);
+			      if(targetDay.equals("") == false)
+			      {
+			    	  int tempDay = Integer.parseInt(targetDay);
+			    	  curWeek = calDrive.setupWeek(calDrive.getMonth(curMonth.getText()).getDay(tempDay-1));
+				      updateWeekDisplay(curWeek);
+				      weekTitle.setText("Week of " + curWeek.getDay(0).getMonth() + " " + curWeek.getDay(0).getDate());
+						if(curWeek.getDay(0).getDate() == 0)
+						{
+							weekTitle.setText("Week of August 1");
+						}
+			      }
+			  }
+			});
+		JScrollPane scrollTable = new JScrollPane(monthTable);
+		scrollTable.setSize(monthTable.getSize());
+		scrollTable.setBorder(BorderFactory.createEmptyBorder());;
+		currentMonthPanel.add(scrollTable);
+		panel.add(currentMonthPanel, BorderLayout.CENTER);
+>>>>>>> b2c096055e2e953ff0f19a63d3573157f60914fd
 	}
 	
 	/**
@@ -357,6 +410,10 @@ public class CalendarJFrame extends JFrame{
 						curWeek = calDrive.getPreviousWeek(curWeek);
 						updateWeekDisplay(curWeek);
 						weekTitle.setText("Week of " + curWeek.getDay(0).getMonth() + " " + curWeek.getDay(0).getDate());
+						if(curWeek.getDay(0).getDate() == 0)
+						{
+							weekTitle.setText("Week of August 1");
+						}
 					}
 				});
 		JButton nextWeek = new JButton("Next Week");
@@ -367,9 +424,14 @@ public class CalendarJFrame extends JFrame{
 					{
 						curWeek = calDrive.getNextWeek(curWeek);
 						updateWeekDisplay(curWeek);
+						weekTitle.setText("Week of " + curWeek.getDay(0).getMonth() + " " + curWeek.getDay(0).getDate());
 					}
 				});
 		weekTitle.setText("Week of " + curDay.getMonth() + " " + curWeek.getDay(0).getDate());
+		if(curWeek.getDay(0).getDate() == 0)
+		{
+			weekTitle.setText("Week of August 1");
+		}
 		weekHeader.add(prevWeek, BorderLayout.WEST);
 		weekHeader.add(weekTitle, BorderLayout.CENTER);
 		weekHeader.add(nextWeek, BorderLayout.EAST);
@@ -516,6 +578,7 @@ public class CalendarJFrame extends JFrame{
 		panel.setLayout(new BorderLayout());
 		JPanel sixteenPanel = new JPanel();
 		sixteenPanel.setLayout(new BoxLayout(sixteenPanel, BoxLayout.Y_AXIS));
+		sixteenPanel.setSize(100,100);
 		sixteenPanel.setBorder(BorderFactory.createEmptyBorder(10,60,10,10));
 		JPanel seventeenPanel = new JPanel();
 		seventeenPanel.setLayout(new BoxLayout(seventeenPanel, BoxLayout.Y_AXIS));
@@ -525,6 +588,11 @@ public class CalendarJFrame extends JFrame{
 		JLabel firstYear = new JLabel("2016");
 		firstYear.setAlignmentX(Component.CENTER_ALIGNMENT);
 		JButton august = new JButton("August");
+		
+		
+		//august.setPreferredSize(new Dimension(20,20));
+		
+		
 		august.setAlignmentX(Component.CENTER_ALIGNMENT);
 		JButton september = new JButton("September");
 		september.setAlignmentX(Component.CENTER_ALIGNMENT);

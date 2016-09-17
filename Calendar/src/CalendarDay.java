@@ -85,6 +85,10 @@ public class CalendarDay
 	 */
 	public void addEvent(String event)
 	{
+		if(event.equals(""))
+		{
+			return;
+		}
 		try
 		{
 			BufferedWriter bw = new BufferedWriter(new FileWriter(monthFilePath, true));
