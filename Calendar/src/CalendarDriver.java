@@ -22,6 +22,16 @@ public class CalendarDriver {
 		return year.getMonth(curDay.getMonth());
 	}
 	
+	public String getCurMonthName()
+	{
+		return year.getMonth(curDay.getMonth()).getMonth();
+	}
+	
+	public String getCurrentDayOfWeek()
+	{
+		return curDay.getDayOfWeek();
+	}
+	
 	public String getNextMonth(String month){
 		try{
 			for(int i = 0; i < 12; i++){
@@ -104,6 +114,11 @@ public class CalendarDriver {
 		return curDay;
 	}
 	
+	public static int getCurDayOfMonth()
+	{
+		return curDay.getDate();
+	}
+	
 	public static String setNextDayofWeek(String curday){
 		if(curday == "Sunday") return "Monday";
 		else if(curday == "Monday") return "Tuesday";
@@ -181,91 +196,10 @@ public class CalendarDriver {
 	
 	public static CalendarWeek setupWeek(CalendarDay day)
 	{
-		int tempDate = day.getDate() - 1;
-		int offset = day.getDate();
-		int dayCount = 0;
-		CalendarMonth tempMonth = year.getMonth(day.getMonth());
-		String curDayOfWeek = day.getDayOfWeek();
-		CalendarDay nullDay = new CalendarDay(0, "Null");
-		nullDay.setDayOfWeek("");
 		CalendarWeek newWeek = new CalendarWeek();
-		if(tempMonth.getMonth().equals("August") && day.getDate() <= 6)
-		{
-			newWeek.setDay(0, nullDay);
-			newWeek.setDay(1, tempMonth.getDay(0));
-			newWeek.setDay(2, tempMonth.getDay(1));
-			newWeek.setDay(3, tempMonth.getDay(2));
-			newWeek.setDay(4, tempMonth.getDay(3));
-			newWeek.setDay(5, tempMonth.getDay(4));
-			newWeek.setDay(6, tempMonth.getDay(5));
-			for(int i = 0; i < 6; i++)
-			{
-				tempMonth.getDay(i).loadDayEvents();
-			}
-			return newWeek;
-		}
-		else if(tempMonth.getMonth().equals("May") && day.getDate() >= 28)
-		{
-			newWeek.setDay(0, tempMonth.getDay(27));
-			newWeek.setDay(1, tempMonth.getDay(28));
-			newWeek.setDay(2, tempMonth.getDay(29));
-			newWeek.setDay(3, tempMonth.getDay(30));
-			newWeek.setDay(4, nullDay);
-			newWeek.setDay(5, nullDay);
-			newWeek.setDay(6, nullDay);
-			for(int i = 27; i < 31; i++)
-			{
-				tempMonth.getDay(i).loadDayEvents();
-			}
-			return newWeek;
-		}
-		switch(curDayOfWeek)
-		{
-		case "Sunday":
-			offset = offset - 0;
-			break;
-		case "Monday":
-			offset = offset - 1;
-			break;
-		case "Tuesday":
-			offset = offset - 2;
-			break;
-		case "Wednesday":
-			offset = offset - 3;
-			break;
-		case "Thursday":
-			offset = offset - 4;
-			break;
-		case "Friday":
-			offset = offset - 5;
-			break;
-		case "Saturday":
-			offset = offset - 6;
-			break;
-		}
-		if(offset < 0)
-		{
-			int temp = year.getMonthIndex(tempMonth.getMonth()) - 1;
-			tempMonth = year.getMonth(year.monthNames[temp]);
-			tempDate = tempMonth.getNumDays() - 1;
-			tempDate = tempDate + offset;
-		}
-		else{tempDate = offset-1;}
-		while(dayCount < 7)
-		{
-			newWeek.setDay(dayCount, tempMonth.getDay(tempDate));
-			tempMonth.getDay(tempDate).loadDayEvents();
-			dayCount++;
-			tempDate++;
-			if(tempDate >= tempMonth.getNumDays()){
-				int temp = year.getMonthIndex(tempMonth.getMonth()) + 1;
-				tempMonth = year.getMonth(year.monthNames[temp]);
-				tempDate = 0;
-			}
-		}
+		newWeek.setupWeek(day, year);
 		return newWeek;
 	}
-	
 	
 
 }
