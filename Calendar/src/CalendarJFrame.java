@@ -10,15 +10,20 @@ public class CalendarJFrame extends JFrame{
 	
 	public static CalendarDriver calDrive = new CalendarDriver();
 	private static CalendarDay curDay;
+	private static CalendarWeek curWeek;
 	private static JLabel curMonth;
 	private static JTable monthTable;
 	private static JTabbedPane tabs = new JTabbedPane();
+	private static final JLabel[] dayOfWeek = new JLabel[7];
+	private static final JLabel[] dateLabels = new JLabel[7];
+	private static final JTextArea[] eventAreas = new JTextArea[7];
+	private static final JPanel[] dayOfWeekPan = new JPanel[7];
 	
 	public static void main(String[] args)
 	{
 		curDay = calDrive.getCurrentDate();
+		curWeek = calDrive.getWeek();
 		new CalendarJFrame();
-		//calDrive.getWeek();
 	}
 	
 	/**
@@ -132,7 +137,7 @@ public class CalendarJFrame extends JFrame{
 		JPanel newEventPanel = new JPanel();
 		JLabel newEventTitle = new JLabel("New Event:         ");
 		newEventTitle.setFont(newEventTitle.getFont().deriveFont(20.0f));
-		JButton newEventButton = new JButton("Add Event");
+		final JButton newEventButton = new JButton("Add Event");
 		newEventPanel.add(newEventTitle);
 		newEventPanel.add(newEventButton);
 		
@@ -140,6 +145,20 @@ public class CalendarJFrame extends JFrame{
 		newEventText.setLineWrap(true);
 		newEventText.setWrapStyleWord(true);
 		newEventText.setEditable(true);
+		
+		//KeyStroke tracking based off of http://stackoverflow.com/questions/2162170/jtextarea-new-line-on-shift-enter
+		InputMap input = newEventText.getInputMap();
+		KeyStroke enter = KeyStroke.getKeyStroke("ENTER");
+		input.put(enter, "text submit");
+		
+		ActionMap actions = newEventText.getActionMap();
+	    actions.put("text submit", new AbstractAction() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	            newEventButton.doClick();
+	        }
+	    });
+		
 		
 		JPanel removeEvent = new JPanel();
 		JLabel remove = new JLabel("Remove Event:   ");
@@ -150,15 +169,11 @@ public class CalendarJFrame extends JFrame{
 		removeEvent.add(remove);
 		removeEvent.add(eventSelection);
 		removeEvent.add(removeEventButton);
-		
 		JScrollPane newEventScroll = new JScrollPane(newEventText);
 		
 		addEventPanel.add(newEventPanel);
 		addEventPanel.add(newEventScroll);
 		addEventPanel.add(removeEvent);
-		
-		CalendarWeek wk = new CalendarWeek();
-		wk = calDrive.getWeek();
 		
 		dayButton.addActionListener(
 				new ActionListener(){
@@ -179,6 +194,7 @@ public class CalendarJFrame extends JFrame{
 					public void actionPerformed(ActionEvent e){
 						curDay.addEvent(newEventText.getText());
 						eventText.setText(curDay.getEvents());
+						newEventText.setText("");
 						updateComboBox(curDay.getEventCount(), eventSelection);
 					}
 				});
@@ -272,14 +288,29 @@ public class CalendarJFrame extends JFrame{
 	
 	public static void setWeekPanel(JPanel panel)
 	{
-		CalendarWeek curWeek = calDrive.getWeek();
 		panel.setLayout(new BorderLayout());
 		JPanel weekHeader = new JPanel(new BorderLayout());
 		weekHeader.setBorder(BorderFactory.createEmptyBorder(10,0,10,0));
 		JButton prevWeek = new JButton("Previous Week");
 		prevWeek.setHorizontalAlignment(SwingConstants.CENTER);
+		prevWeek.addActionListener(
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e)
+					{
+						curWeek = calDrive.getPreviousWeek(curWeek);
+						updateWeekDisplay(curWeek);
+					}
+				});
 		JButton nextWeek = new JButton("Next Week");
 		nextWeek.setHorizontalAlignment(SwingConstants.CENTER);
+		nextWeek.addActionListener(
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e)
+					{
+						curWeek = calDrive.getNextWeek(curWeek);
+						updateWeekDisplay(curWeek);
+					}
+				});
 		JLabel weekTitle = new JLabel("Week of " + curDay.getMonth() + " " + curDay.getDate());
 		weekHeader.add(prevWeek, BorderLayout.WEST);
 		weekHeader.add(weekTitle, BorderLayout.CENTER);
@@ -288,10 +319,6 @@ public class CalendarJFrame extends JFrame{
 		weekTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(weekHeader, BorderLayout.NORTH);
 		JPanel weekPanel = new JPanel(new FlowLayout());
-		JPanel[] dayOfWeekPan = new JPanel[7];
-		JLabel[] dayOfWeek = new JLabel[7];
-		JLabel[] dateLabels = new JLabel[7];
-		JTextArea[] eventAreas = new JTextArea[7];
 		for(int i = 0; i < 7; i++)
 		{
 			dayOfWeekPan[i] = new JPanel(new BorderLayout());
@@ -300,7 +327,7 @@ public class CalendarJFrame extends JFrame{
 			{
 				dayOfWeek[i] = new JLabel();
 				dateLabels[i] = new JLabel();
-				eventAreas[i] = new JTextArea();
+				eventAreas[i] = new JTextArea(20, 9);
 			}
 			else
 			{
@@ -316,9 +343,10 @@ public class CalendarJFrame extends JFrame{
 			dayOfWeek[i].setHorizontalAlignment(SwingConstants.CENTER);
 			dayOfWeekPan[i].add(dayOfWeek[i], BorderLayout.NORTH);
 			dayOfWeekPan[i].add(dateLabels[i], BorderLayout.CENTER);
-			if(eventAreas[i].getText().equals("") && dayOfWeek[i].getText().equals("")){}
-			else{
-				dayOfWeekPan[i].add(eventAreas[i], BorderLayout.SOUTH);
+			dayOfWeekPan[i].add(new JScrollPane(eventAreas[i]), BorderLayout.SOUTH);
+			if(curWeek.getDay(i).getMonth().equals("Null"))
+			{
+				dayOfWeekPan[i].setVisible(false);
 			}
 			weekPanel.add(dayOfWeekPan[i]);
 		}
@@ -369,6 +397,28 @@ public class CalendarJFrame extends JFrame{
 		curMonth.setText(newMonth);
 		
 	}
+	
+	public static void updateWeekDisplay(CalendarWeek week)
+	{
+		for(int i = 0; i < 7; i++)
+		{
+			eventAreas[i].setText("");
+			if(week.getDay(i).getMonth().equals("Null"))
+			{
+				dateLabels[i].setText(" ");
+				eventAreas[i].setText("");
+				dayOfWeekPan[i].setVisible(false);
+			}
+			else
+			{
+				dateLabels[i].setVisible(true);
+				dayOfWeekPan[i].setVisible(true);
+				dayOfWeek[i].setText(week.getDay(i).getDayOfWeek());
+				dateLabels[i].setText(week.getDay(i).getMonth() + " " + week.getDay(i).getDate());
+				eventAreas[i].setText(week.getDay(i).getEvents());
+			}
+		}
+	}
 
 	/**
 	 * Updates a combo box with numbers up to the specified Integer
@@ -395,6 +445,7 @@ public class CalendarJFrame extends JFrame{
 		int day = (Integer)dayBX.getSelectedItem();
 		return calDrive.setCurrentDate(month, day);
 	}
+
 	
 	public static void setYearPanel(JPanel panel)
 	{
