@@ -272,14 +272,10 @@ public class CalendarJFrame extends JFrame{
 		currentMonthPanel.setLayout(new BoxLayout(currentMonthPanel, BoxLayout.Y_AXIS));
 		currentMonthPanel.setBorder(BorderFactory.createEmptyBorder(0,20,0,20));
 		curMonth.setHorizontalTextPosition(SwingConstants.LEADING);
-		
-<<<<<<< HEAD
-		JLabel columnHeads = new JLabel("Sunday                  Monday                  Tuesday                  Wednesday                  Thursday                  Friday                  Saturday");
-		columnHeads.setAlignmentX(Component.CENTER_ALIGNMENT);
-		
-=======
->>>>>>> b2c096055e2e953ff0f19a63d3573157f60914fd
 		String[] weekNames = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+		
+		//JLabel columnHeads = new JLabel("Sunday                  Monday                  Tuesday                  Wednesday                  Thursday                  Friday                  Saturday");
+		//columnHeads.setAlignmentX(Component.CENTER_ALIGNMENT);
 		String[][] data = new String[6][7];
 		int numdays = (calDrive.getYear().getMonth(monthShowing)).getNumDays();
 		int curnum = 1;
@@ -332,19 +328,14 @@ public class CalendarJFrame extends JFrame{
 		monthTable = new JTable(model);
 		for(int i = 0; i < 6; i++)
 		{
-<<<<<<< HEAD
 			monthTable.setRowHeight(i, 70);
-=======
-			monthTable.setRowHeight(i, 80);
->>>>>>> b2c096055e2e953ff0f19a63d3573157f60914fd
 		}
 		for(int i = 0; i < 7; i++)
 		{
 			monthTable.getColumnModel().getColumn(i).setHeaderValue(weekNames[i]);
 			monthTable.getColumnModel().getColumn(i).setCellRenderer(rightRenderer);
 		}
-<<<<<<< HEAD
-		currentMonthPanel.add(columnHeads);
+		//currentMonthPanel.add(columnHeads);
 		currentMonthPanel.add(monthTable);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		panel.add(monthLabelPanel, BorderLayout.NORTH);
@@ -363,7 +354,6 @@ public class CalendarJFrame extends JFrame{
 						if(newMonth != "") updateMonthDisplay(newMonth);
 					}
 				});
-=======
 		
 		monthTable.addMouseListener(new MouseAdapter() {
 			  public void mousePressed(MouseEvent e) {
@@ -389,7 +379,6 @@ public class CalendarJFrame extends JFrame{
 		scrollTable.setBorder(BorderFactory.createEmptyBorder());;
 		currentMonthPanel.add(scrollTable);
 		panel.add(currentMonthPanel, BorderLayout.CENTER);
->>>>>>> b2c096055e2e953ff0f19a63d3573157f60914fd
 	}
 	
 	/**

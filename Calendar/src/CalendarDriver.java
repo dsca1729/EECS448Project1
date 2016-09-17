@@ -204,9 +204,4 @@ public class CalendarDriver {
 		newWeek.setupWeek(day, year);
 		return newWeek;
 	}
-<<<<<<< HEAD
-=======
-	
-
->>>>>>> b2c096055e2e953ff0f19a63d3573157f60914fd
 }
