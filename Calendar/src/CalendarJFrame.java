@@ -67,6 +67,7 @@ public class CalendarJFrame extends JFrame{
 		final JLabel curDate = new JLabel(curDay.getDayOfWeek() + ", " + curDay.getMonth() + " " + curDay.getDate());
 		final JTextArea eventText = new JTextArea(5, 35);
 		
+		//Set up the display for setting the current day
 		panel.setLayout(new BorderLayout());
 		JPanel currentDayPanel = new JPanel();
 		currentDayPanel.setLayout(new FlowLayout());
@@ -82,6 +83,8 @@ public class CalendarJFrame extends JFrame{
 		monthList.setSelectedIndex(calDrive.getCurrentMonthIndex(curDay.getMonth()));
 		dayList.setSelectedIndex(curDay.getDate()-1);
 		
+		//Sets how the monstList comboBox will work
+		//When a month is selected in this comboBox, the dayList will update to accommodate for the month selected
 		monthList.addActionListener(
 				new ActionListener(){
 						public void actionPerformed(ActionEvent e){
@@ -102,15 +105,15 @@ public class CalendarJFrame extends JFrame{
 						}
 				});
 		
-		
+		//Adds everything to the current day panel
 		currentDayPanel.add(monthList);
 		currentDayPanel.add(dayList);
 		currentDayPanel.add(dayButton);
 		
+		//Sets up the display of the event panel which has the current day along with the events of it
 		JPanel eventPanel = new JPanel();
 		eventPanel.setLayout(new BoxLayout(eventPanel, BoxLayout.Y_AXIS));
 		eventPanel.setBorder(BorderFactory.createEmptyBorder(10,26,26,0)); //Code from: http://stackoverflow.com/questions/8863062/add-space-between-jframe-and-jpanel
-		
 		
 		JLabel eventTitle = new JLabel("Today's Events:");
 		eventTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -124,16 +127,20 @@ public class CalendarJFrame extends JFrame{
 		eventText.setWrapStyleWord(true);
 		eventText.setEditable(false);
 		
+		//Gives the eventText a scroll bar
 		JScrollPane textBox = new JScrollPane(eventText);
 		
+		//Adds everything to the event panel
 		eventPanel.add(curDate);
 		eventPanel.add(eventTitle);
 		eventPanel.add(textBox);
 		
+		//Sets up the display of the panel that will add and remove events
 		JPanel addEventPanel = new JPanel();
 		addEventPanel.setLayout(new BoxLayout(addEventPanel, BoxLayout.Y_AXIS));
 		addEventPanel.setBorder(BorderFactory.createEmptyBorder(60,0,10,26));
 		
+		//Makes label and button for adding events
 		JPanel newEventPanel = new JPanel();
 		JLabel newEventTitle = new JLabel("New Event:         ");
 		newEventTitle.setFont(newEventTitle.getFont().deriveFont(20.0f));
@@ -141,6 +148,7 @@ public class CalendarJFrame extends JFrame{
 		newEventPanel.add(newEventTitle);
 		newEventPanel.add(newEventButton);
 		
+		//Makes text area for the user to input what event they wish to add to the day
 		final JTextArea newEventText = new JTextArea(20, 30);
 		newEventText.setLineWrap(true);
 		newEventText.setWrapStyleWord(true);
@@ -159,7 +167,7 @@ public class CalendarJFrame extends JFrame{
 	        }
 	    });
 		
-		
+		//Makes the components for removing an event
 		JPanel removeEvent = new JPanel();
 		JLabel remove = new JLabel("Remove Event:   ");
 		remove.setFont(remove.getFont().deriveFont(20.0f));
@@ -169,12 +177,18 @@ public class CalendarJFrame extends JFrame{
 		removeEvent.add(remove);
 		removeEvent.add(eventSelection);
 		removeEvent.add(removeEventButton);
+
+		//Gives the newEventText a scroll bar
 		JScrollPane newEventScroll = new JScrollPane(newEventText);
 		
+		//Adds everything to the add and remove event panel
 		addEventPanel.add(newEventPanel);
 		addEventPanel.add(newEventScroll);
 		addEventPanel.add(removeEvent);
 		
+		//Sets what dayButton does
+		//When pressed, dayButton will update current date based on the input from the combo boxes
+		//It will also update the display of the week and month panels based on the new date
 		dayButton.addActionListener(
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
@@ -189,6 +203,8 @@ public class CalendarJFrame extends JFrame{
 					}
 				});
 		
+		//Sets what newEventButton does
+		//When pressed, newEventButton will add in the new event from the text box to the event panel
 		newEventButton.addActionListener(
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
@@ -199,6 +215,8 @@ public class CalendarJFrame extends JFrame{
 					}
 				});
 		
+		//Sets what removeEventButton does
+		//When pressed, removeEventButton removes whatever the selected event is from the list of events for the current day
 		removeEventButton.addActionListener(
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
@@ -210,6 +228,7 @@ public class CalendarJFrame extends JFrame{
 					}
 				});
 		
+		//Adds everything to the day panel
 		panel.add(currentDayPanel, BorderLayout.NORTH);
 		panel.add(eventPanel, BorderLayout.WEST);
 		panel.add(addEventPanel, BorderLayout.EAST);
@@ -447,8 +466,13 @@ public class CalendarJFrame extends JFrame{
 	}
 
 	
+	/**
+	 * Sets up the layout and appearance of the year panel
+	 * @param panel - the panel that will display all the year components
+	 */
 	public static void setYearPanel(JPanel panel)
 	{
+		//Sets up the display of the Year Panel
 		panel.setLayout(new BorderLayout());
 		JPanel sixteenPanel = new JPanel();
 		sixteenPanel.setLayout(new BoxLayout(sixteenPanel, BoxLayout.Y_AXIS));
@@ -456,6 +480,8 @@ public class CalendarJFrame extends JFrame{
 		JPanel seventeenPanel = new JPanel();
 		seventeenPanel.setLayout(new BoxLayout(seventeenPanel, BoxLayout.Y_AXIS));
 		seventeenPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,60));
+		
+		//Sets up the label and buttons for the 2016 panel
 		JLabel firstYear = new JLabel("2016");
 		firstYear.setAlignmentX(Component.CENTER_ALIGNMENT);
 		JButton august = new JButton("August");
@@ -468,12 +494,16 @@ public class CalendarJFrame extends JFrame{
 		november.setAlignmentX(Component.CENTER_ALIGNMENT);
 		JButton december = new JButton("December");
 		december.setAlignmentX(Component.CENTER_ALIGNMENT);
+		
+		//Adds everything to the 2016 panel
 		sixteenPanel.add(firstYear);
 		sixteenPanel.add(august);
 		sixteenPanel.add(september);
 		sixteenPanel.add(october);
 		sixteenPanel.add(november);
 		sixteenPanel.add(december);
+		
+		//Sets up the label and buttons for the 2017 panel
 		JLabel secondYear = new JLabel("2017");
 		secondYear.setAlignmentX(Component.CENTER_ALIGNMENT);
 		JButton january = new JButton("January");
@@ -486,12 +516,18 @@ public class CalendarJFrame extends JFrame{
 		april.setAlignmentX(Component.CENTER_ALIGNMENT);
 		JButton may = new JButton("May");
 		may.setAlignmentX(Component.CENTER_ALIGNMENT);
+		
+		//Adds everything to the 2017 panel
 		seventeenPanel.add(secondYear);
 		seventeenPanel.add(january);
 		seventeenPanel.add(february);
 		seventeenPanel.add(march);
 		seventeenPanel.add(april);
 		seventeenPanel.add(may);
+		
+		//Sets up what all the month buttons do
+		//When a month button is pressed, it will update the month panel to that month
+		//The user will then by taken to the month panel
 		august.addActionListener(
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
@@ -499,6 +535,7 @@ public class CalendarJFrame extends JFrame{
 						tabs.setSelectedIndex(2);
 					}
 				});
+		
 		september.addActionListener(
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
@@ -506,6 +543,7 @@ public class CalendarJFrame extends JFrame{
 						tabs.setSelectedIndex(2);
 					}
 				});
+		
 		october.addActionListener(
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
@@ -513,6 +551,7 @@ public class CalendarJFrame extends JFrame{
 						tabs.setSelectedIndex(2);
 					}
 				});
+		
 		november.addActionListener(
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
@@ -520,6 +559,7 @@ public class CalendarJFrame extends JFrame{
 						tabs.setSelectedIndex(2);
 					}
 				});
+		
 		december.addActionListener(
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
@@ -527,6 +567,7 @@ public class CalendarJFrame extends JFrame{
 						tabs.setSelectedIndex(2);
 					}
 				});
+		
 		january.addActionListener(
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
@@ -534,6 +575,7 @@ public class CalendarJFrame extends JFrame{
 						tabs.setSelectedIndex(2);
 					}
 				});
+		
 		february.addActionListener(
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
@@ -541,6 +583,7 @@ public class CalendarJFrame extends JFrame{
 						tabs.setSelectedIndex(2);
 					}
 				});
+		
 		march.addActionListener(
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
@@ -548,6 +591,7 @@ public class CalendarJFrame extends JFrame{
 						tabs.setSelectedIndex(2);
 					}
 				});
+		
 		april.addActionListener(
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
@@ -555,6 +599,7 @@ public class CalendarJFrame extends JFrame{
 						tabs.setSelectedIndex(2);
 					}
 				});
+		
 		may.addActionListener(
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
@@ -562,6 +607,8 @@ public class CalendarJFrame extends JFrame{
 						tabs.setSelectedIndex(2);
 					}
 				});
+		
+		//Adds the 2 different year panels to the whole year panel
 		panel.add(sixteenPanel, BorderLayout.WEST);
 		panel.add(seventeenPanel, BorderLayout.EAST);
 	}
