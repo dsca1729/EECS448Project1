@@ -96,6 +96,7 @@ public class CalendarDay
 	public void addEvent(String event)
 	{
 		//if the passed in event is empty, then it does nothing
+		event = event.trim();
 		if(event.equals(""))
 		{
 			return;

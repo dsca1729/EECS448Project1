@@ -263,7 +263,8 @@ public class CalendarJFrame extends JFrame{
 						try{
 							curDay.removeEvent((int)eventSelection.getSelectedItem());
 							eventText.setText(curDay.getEvents());
-							updateComboBox(curDay.getEventCount(), eventSelection);	
+							updateComboBox(curDay.getEventCount(), eventSelection);
+							updateWeekDisplay(curWeek);
 						}catch(Exception err){}
 					}
 				});
@@ -282,6 +283,7 @@ public class CalendarJFrame extends JFrame{
 	 */
 	public static void setMonthPanel(JPanel panel)
 	{
+		//setting static variables, buttons, and lables
 		monthShowing = curDay.getMonth();
 		curMonth = new JLabel("  " + monthShowing + "  ");
 		JButton prevMonth = new JButton("Previous Month");
@@ -290,6 +292,8 @@ public class CalendarJFrame extends JFrame{
 		prevMonth.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		curMonth.setAlignmentX(Component.CENTER_ALIGNMENT);
 		nextMonth.setAlignmentX(Component.LEFT_ALIGNMENT);
+		
+		//setting up the panels for the month view
 		panel.setLayout(new GridLayout());
 		JPanel monthLabelPanel = new JPanel();
 		monthLabelPanel.setLayout(new BoxLayout(monthLabelPanel, BoxLayout.X_AXIS));
@@ -300,8 +304,9 @@ public class CalendarJFrame extends JFrame{
 		currentMonthPanel.setLayout(new BoxLayout(currentMonthPanel, BoxLayout.Y_AXIS));
 		currentMonthPanel.setBorder(BorderFactory.createEmptyBorder(0,20,0,20));
 		curMonth.setHorizontalTextPosition(SwingConstants.LEADING);
-		String[] weekNames = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 		
+		//set up the month table
+		String[] weekNames = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 		String[][] data = new String[6][7];
 		int numdays = (calDrive.getYear().getMonth(monthShowing)).getNumDays();
 		int curnum = 1;
@@ -322,6 +327,7 @@ public class CalendarJFrame extends JFrame{
 		default: blankDays = 0;
 			break;
 		}
+		//create the table and add days in the correct columns
 		for(int r = 0; r < 6; r++){
 			for(int c = 0; c < 7; c++){
 				if(r == 0 && blankDays >0){
@@ -350,21 +356,25 @@ public class CalendarJFrame extends JFrame{
 			}
 		};
 		
-		
+		//sizes rows 
 		monthTable = new JTable(model);
 		for(int i = 0; i < 6; i++)
 		{
 			monthTable.setRowHeight(i, 70);
 		}
+		//sets day number to the top lefthand corner of the table entry
 		for(int i = 0; i < 7; i++)
 		{
 			monthTable.getColumnModel().getColumn(i).setHeaderValue(weekNames[i]);
 			monthTable.getColumnModel().getColumn(i).setCellRenderer(rightRenderer);
 		}
+		//add to the month panel
 		currentMonthPanel.add(monthTable);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		panel.add(monthLabelPanel, BorderLayout.NORTH);
 		panel.add(currentMonthPanel, BorderLayout.SOUTH);
+		
+		//set up listeners for the buttons to update the month view
 		prevMonth.addActionListener(
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
@@ -380,6 +390,7 @@ public class CalendarJFrame extends JFrame{
 					}
 				});
 		
+		//set up listener for mouse click inside the month table
 		monthTable.addMouseListener(new MouseAdapter() {
 			  public void mousePressed(MouseEvent e) {
 			      JTable target = (JTable)e.getSource();
@@ -404,8 +415,11 @@ public class CalendarJFrame extends JFrame{
 		JLabel infoLab = new JLabel("*You can click on a day to go to the week that contains that day*");
 		infoLab.setAlignmentX(Component.CENTER_ALIGNMENT);
 		JScrollPane scrollTable = new JScrollPane(monthTable);
+		//in order to add the week days header, the table had to be a scroll table
 		scrollTable.setSize(monthTable.getSize());
 		scrollTable.setBorder(BorderFactory.createEmptyBorder());
+		
+		//finalizing the month panel
 		currentMonthPanel.add(infoLab);
 		currentMonthPanel.add(scrollTable);
 		panel.add(currentMonthPanel, BorderLayout.CENTER);
