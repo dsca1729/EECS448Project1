@@ -52,6 +52,8 @@ public class Event implements java.io.Serializable
 		eventEndDate = endDate;	
 		eventOverlap = false;
 		setMultidayStatus();
+		generateDaySpan();
+		generateEventScaffoldId();
 	}
 /**
 *	@pre: Event object exists, String argument passed in
