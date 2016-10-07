@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class EventGroup{
 	
-	public ArrayList events;
+	public ArrayList<Event2> events;
 	public static String filename = "Events.ser";
 	
 	public EventGroup(){
@@ -21,7 +21,7 @@ public class EventGroup{
 			FileInputStream fileIn = new FileInputStream(filename);
 	        ObjectInputStream in = new ObjectInputStream(fileIn);
 	        
-	        ArrayList list = (ArrayList) in.readObject();
+	        ArrayList<Event2> list = (ArrayList<Event2>) in.readObject();
 	        in.close();
 	        fileIn.close();
 	        
@@ -29,7 +29,7 @@ public class EventGroup{
 		}
 		catch(Exception e){
 			
-			return new ArrayList();
+			return new ArrayList<Event2>();
 		}
 	}
 	
@@ -48,7 +48,7 @@ public class EventGroup{
 		}
 	}
 	
-	public void addEvent(Event e){
+	public void addEvent(Event2 e){
 		events.add(e);
 	}
 	

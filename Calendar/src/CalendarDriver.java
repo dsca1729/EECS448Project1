@@ -21,6 +21,8 @@ public class CalendarDriver {
 	private static CalendarDay curDay;
 	private static CalendarMonth curMonth;
 	
+	private EventGroup events;
+	
 	/**
 	 * Sets CalendarDriver object up by setting
 	 * <p>year object to new CalendarYear
@@ -32,6 +34,9 @@ public class CalendarDriver {
 		year = new CalendarYear();
 		curDay = getCurrentDate();
 		curMonth = getCurrentMonth();
+		
+		events = new EventGroup();
+		
 		setDaysofWeek("Monday");
 	}
 	

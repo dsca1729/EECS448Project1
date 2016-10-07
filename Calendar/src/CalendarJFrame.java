@@ -148,7 +148,15 @@ public class CalendarJFrame extends JFrame{
 		eventTitle.setFont(eventTitle.getFont().deriveFont(16.0f));
 		curDate.setAlignmentX(Component.CENTER_ALIGNMENT); 
 		curDate.setFont(curDate.getFont().deriveFont(24.0f)); 
+		
+		/*
+		 * 
+		 * 
+		 * 
+		 */
 		curDay.loadDayEvents();
+		
+		
 		
 		eventText.setText(calDrive.getCurrentDate().getEvents());
 		eventText.setLineWrap(true);
@@ -201,7 +209,14 @@ public class CalendarJFrame extends JFrame{
 		JLabel remove = new JLabel("Remove Event:   ");
 		remove.setFont(remove.getFont().deriveFont(20.0f));
 		final JComboBox eventSelection = new JComboBox();
+		
+		
+		
+		///////////////////////////////////////////////////////
 		updateComboBox(curDay.getEventCount(), eventSelection);
+		////////////////////////////////////////////////////////
+		
+		
 		JButton removeEventButton = new JButton("Remove");
 		removeEvent.add(remove);
 		removeEvent.add(eventSelection);
@@ -226,9 +241,14 @@ public class CalendarJFrame extends JFrame{
 					public void actionPerformed(ActionEvent e){
 						curDay = setCurrentDate(monthList, dayList);
 						curDate.setText(curDay.getDayOfWeek() + ", " + curDay.getMonth() + " " + curDay.getDate());
+						
+						//////////////////////////////////////////////////
 						if(curDay.getEvents().equals("")){
 							curDay.loadDayEvents();
 						}
+						//////////////////////////////////////////////////
+						
+						
 						curWeek = calDrive.getWeek();
 						updateWeekDisplay(curWeek);
 						weekTitle.setText("  Week of " + curDay.getMonth() + " " + curWeek.getDay(0).getDate() + "  ");
@@ -236,8 +256,13 @@ public class CalendarJFrame extends JFrame{
 						{
 							weekTitle.setText("  Week of August 1  ");
 						}
+						
+						/////////////////////////////////////////////////////////
 						eventText.setText(curDay.getEvents());
 						updateComboBox(curDay.getEventCount(), eventSelection);
+						/////////////////////////////////////////////////////////
+						
+						
 						updateMonthDisplay(curDay.getMonth());
 					}
 				});
@@ -247,10 +272,14 @@ public class CalendarJFrame extends JFrame{
 		newEventButton.addActionListener(
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
+						
+						///////////////////////////////////////////////////////////
 						curDay.addEvent(newEventText.getText());
 						eventText.setText(curDay.getEvents());
 						newEventText.setText("");
 						updateComboBox(curDay.getEventCount(), eventSelection);
+						//////////////////////////////////////////////////////////
+						
 						updateWeekDisplay(curWeek);
 					}
 				});
@@ -261,9 +290,13 @@ public class CalendarJFrame extends JFrame{
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
 						try{
+							
+							/////////////////////////////////////////////////////////////////
 							curDay.removeEvent((int)eventSelection.getSelectedItem());
 							eventText.setText(curDay.getEvents());
 							updateComboBox(curDay.getEventCount(), eventSelection);
+							////////////////////////////////////////////////////////////////
+							
 							updateWeekDisplay(curWeek);
 						}catch(Exception err){}
 					}
