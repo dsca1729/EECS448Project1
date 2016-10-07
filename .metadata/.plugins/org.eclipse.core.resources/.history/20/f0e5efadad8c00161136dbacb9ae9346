@@ -43,7 +43,6 @@ public class Event2 {
 		this.isRecurring = isRecurring;
 	}
 	
-	//This constructor is for multi-day events
 	public Event2(String startMonth, String endMonth, int startDay, int endDay, int startYear, int endYear, int startTime, int endTime, String eventDescription){
 		
 		this.startMonth = startMonth;
