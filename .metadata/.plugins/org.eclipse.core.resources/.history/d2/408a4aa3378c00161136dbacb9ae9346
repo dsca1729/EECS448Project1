@@ -60,14 +60,13 @@ public class EventGroup{
 	public String getEventsForDate(String date){
 		
 		String events_string = new String("");
-		Event single_event;
 		
 		for(int i=0;i<events.size();i++){
 			
 			single_event = events.get(i);
 			if(single_event.getStartDate() == date){
 				
-				events_string = events_string + single_event.getEventName() + "\n";
+				events_string = events_string + single_event.get(i).getEventName() + "\n";
 			}
 		}
 		
