@@ -78,8 +78,6 @@ public class EventGroup{
 		
 		String dateBuilder = new String("");
 		
-		dateBuilder = dateBuilder + year.substring(2,4);
-		
 		switch(month){
 			case "January":
 				dateBuilder = dateBuilder + "01";
@@ -118,10 +116,7 @@ public class EventGroup{
 				dateBuilder = dateBuilder + "12";
 				break;
 		}
-		
-		dateBuilder = dateBuilder + day;
-		
-		return dateBuilder;
+		return "";
 	}
 	
 }

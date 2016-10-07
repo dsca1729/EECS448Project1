@@ -120,8 +120,7 @@ public class EventGroup{
 		}
 		
 		dateBuilder = dateBuilder + day;
-		
-		return dateBuilder;
+		return dateBuildler;
 	}
 	
 }
