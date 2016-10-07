@@ -149,15 +149,16 @@ public class CalendarJFrame extends JFrame{
 		curDate.setAlignmentX(Component.CENTER_ALIGNMENT); 
 		curDate.setFont(curDate.getFont().deriveFont(24.0f)); 
 		
-		/////////////////////////////////////
+		/*
+		 * 
+		 * 
+		 * 
+		 */
 		curDay.loadDayEvents();
-		/////////////////////////////////////
 		
 		
-		//////////////////////////////////////////////////////////////////
+		
 		eventText.setText(calDrive.getCurrentDate().getEvents());
-		/////////////////////////////////////////////////////////////////
-		
 		eventText.setLineWrap(true);
 		eventText.setWrapStyleWord(true);
 		eventText.setEditable(false);
