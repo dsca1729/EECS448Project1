@@ -78,7 +78,7 @@ public class CalendarWeek {
 			setDay(6, tempMonth.getDay(5));
 			for(int i = 0; i < 6; i++)
 			{
-				tempMonth.getDay(i).loadDayEvents();
+				//tempMonth.getDay(i).loadDayEvents();
 			}
 		}
 		else if(tempMonth.getMonth().equals("May") && day.getDate() >= 28)
@@ -92,7 +92,7 @@ public class CalendarWeek {
 			setDay(6, nullDay);
 			for(int i = 27; i < 31; i++)
 			{
-				tempMonth.getDay(i).loadDayEvents();
+				//tempMonth.getDay(i).loadDayEvents();
 			}
 		}
 		else
@@ -137,7 +137,7 @@ public class CalendarWeek {
 			while(dayCount < 7)
 			{
 				setDay(dayCount, tempMonth.getDay(tempDate));
-				tempMonth.getDay(tempDate).loadDayEvents();
+				//tempMonth.getDay(tempDate).loadDayEvents();
 				dayCount++;
 				tempDate++;
 				if(tempDate >= tempMonth.getNumDays()){

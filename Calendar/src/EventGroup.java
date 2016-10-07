@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
@@ -7,7 +8,7 @@ import java.util.ArrayList;
 public class EventGroup{
 	
 	public ArrayList<Event2> events;
-	public static String filename = "Events.ser";
+	public static String filename = "MonthFiles/Events.ser";
 	
 	public EventGroup(){
 		
@@ -33,9 +34,12 @@ public class EventGroup{
 		}
 	}
 	
-	public void writeEvents(){
+	public void saveEvents(){
 		
 		try {
+			
+			printEvents();
+			
 	         FileOutputStream fileOut = new FileOutputStream(filename);
 	         ObjectOutputStream out = new ObjectOutputStream(fileOut);
 	         
@@ -59,6 +63,7 @@ public class EventGroup{
 		for(int i =0; i < events.size(); i++){
 			
 			Event2 singleEvent = events.get(i);
+			
 			if( singleEvent.startMonth == month && singleEvent.startDay == day && singleEvent.startYear == year){
 				
 				matchedEvents.add(singleEvent.eventDescription);
@@ -66,6 +71,22 @@ public class EventGroup{
 		}
 		
 		return matchedEvents;
+	}
+	
+	public void removeEvent(Event2 badEvent){
+		
+		for(int i =0; i < events.size(); i++){
+			
+			if(events.get(i).equals(badEvent)){
+				events.remove(i);
+			}
+		}
+	}
+	
+	public void printEvents(){
+		for(int i=0; i< events.size();i++){
+			System.out.println(events.get(i).eventDescription);
+		}
 	}
 	
 }

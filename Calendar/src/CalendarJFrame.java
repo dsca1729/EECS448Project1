@@ -60,6 +60,16 @@ public class CalendarJFrame extends JFrame{
 	public CalendarJFrame()
 	{
 		super("Calendar");
+		
+		addWindowListener(new WindowAdapter()
+		{
+		    public void windowClosing(WindowEvent e)
+		    {
+		        System.out.print("Saving to ser file...");
+		        calDrive.saveEvents();
+		    }
+		});
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(800, 600);
 		setResizable(false);
@@ -150,12 +160,10 @@ public class CalendarJFrame extends JFrame{
 		curDate.setFont(curDate.getFont().deriveFont(24.0f)); 
 		
 		/////////////////////////////////////
-		curDay.setEvents(calDrive.getEventsForDate(curDay.getMonth(),curDay.getDate(),curDay.getYear()));
+		curDay.setEvents(calDrive.getEventsForDate(curDay));
 		/////////////////////////////////////
-		
-		
 		//////////////////////////////////////////////////////////////////
-		eventText.setText(calDrive.getCurrentDate().getEvents());
+		eventText.setText(curDay.getEvents());
 		/////////////////////////////////////////////////////////////////
 		
 		eventText.setLineWrap(true);
@@ -242,9 +250,9 @@ public class CalendarJFrame extends JFrame{
 						curDate.setText(curDay.getDayOfWeek() + ", " + curDay.getMonth() + " " + curDay.getDate());
 						
 						//////////////////////////////////////////////////
-						if(curDay.getEvents().equals("")){
-							curDay.setEvents(calDrive.getEventsForDate(curDay.getMonth(),curDay.getDate(),curDay.getYear()));
-						}
+						
+						curDay.setEvents(calDrive.getEventsForDate(curDay));
+						
 						//////////////////////////////////////////////////
 						
 						
@@ -273,7 +281,9 @@ public class CalendarJFrame extends JFrame{
 					public void actionPerformed(ActionEvent e){
 						
 						///////////////////////////////////////////////////////////
-						curDay.addEvent(newEventText.getText());
+						calDrive.addNormalEvent(curDay, newEventText.getText());
+						curDay.setEvents(calDrive.getEventsForDate(curDay));
+						
 						eventText.setText(curDay.getEvents());
 						newEventText.setText("");
 						updateComboBox(curDay.getEventCount(), eventSelection);
@@ -291,7 +301,7 @@ public class CalendarJFrame extends JFrame{
 						try{
 							
 							/////////////////////////////////////////////////////////////////
-							curDay.removeEvent((int)eventSelection.getSelectedItem());
+							//curDay.removeEvent((int)eventSelection.getSelectedItem());
 							eventText.setText(curDay.getEvents());
 							updateComboBox(curDay.getEventCount(), eventSelection);
 							////////////////////////////////////////////////////////////////
@@ -529,7 +539,7 @@ public class CalendarJFrame extends JFrame{
 		for(int i = 0; i < 7; i++)
 		{
 			dayOfWeekPan[i] = new JPanel(new BorderLayout());
-			curWeek.getDay(i).loadDayEvents();
+			curWeek.getDay(i).setEvents(calDrive.getEventsForDate(curWeek.getDay(i)));
 			
 			//A day's month will be null if at beginning of august or end of may
 			if(curWeek.getDay(i).getMonth().equals("Null"))

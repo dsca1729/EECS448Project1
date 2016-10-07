@@ -1,5 +1,5 @@
 
-public class Event2 {
+public class Event2 implements java.io.Serializable{
 	
 	//Member Variables
 	//Make Getters and Setters if time available
@@ -62,5 +62,28 @@ public class Event2 {
 		
 		this.isMultiday = true;
 		this.isRecurring = false;
+	}
+	
+	// src: http://stackoverflow.com/questions/16069106/how-to-compare-two-java-objects
+	@Override
+	public boolean equals(Object other) {
+	    if (!(other instanceof Event2)) {
+	        return false;
+	    }
+
+	    Event2 that = (Event2) other;
+
+	    if(this.startDay != that.startDay) return false;
+	    if(this.endDay != that.endDay) return false;
+	    if(this.startMonth != that.startMonth) return false;
+	    if(this.endMonth != that.endMonth) return false;
+	    if(this.startYear != that.startYear) return false;
+	    if(this.endYear != that.endYear) return false;
+	    if(this.startTime != that.startTime) return false;
+	    if(this.endTime != that.endTime) return false;
+	    if(this.eventDescription != that.eventDescription) return false;
+	    
+	    return true;
+
 	}
 }
