@@ -64,7 +64,7 @@ public class EventGroup{
 			
 			Event2 singleEvent = events.get(i);
 			
-			if( singleEvent.startMonth.equals(month) && singleEvent.startDay == day && singleEvent.startYear == year){
+			if( singleEvent.startMonth == month && singleEvent.startDay == day && singleEvent.startYear == year){
 				
 				matchedEvents.add(singleEvent.eventDescription);
 			}

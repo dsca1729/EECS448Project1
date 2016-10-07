@@ -249,6 +249,13 @@ public class CalendarJFrame extends JFrame{
 						curDay = setCurrentDate(monthList, dayList);
 						curDate.setText(curDay.getDayOfWeek() + ", " + curDay.getMonth() + " " + curDay.getDate());
 						
+						//////////////////////////////////////////////////
+						
+						curDay.loadDayEvents();
+						
+						//////////////////////////////////////////////////
+						
+						
 						curWeek = calDrive.getWeek();
 						updateWeekDisplay(curWeek);
 						weekTitle.setText("  Week of " + curDay.getMonth() + " " + curWeek.getDay(0).getDate() + "  ");
@@ -258,7 +265,6 @@ public class CalendarJFrame extends JFrame{
 						}
 						
 						/////////////////////////////////////////////////////////
-						curDay.loadDayEvents();
 						eventText.setText(curDay.getEvents());
 						updateComboBox(curDay.getEventCount(), eventSelection);
 						/////////////////////////////////////////////////////////
