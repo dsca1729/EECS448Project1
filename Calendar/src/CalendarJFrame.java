@@ -150,7 +150,7 @@ public class CalendarJFrame extends JFrame{
 		curDate.setFont(curDate.getFont().deriveFont(24.0f)); 
 		
 		/////////////////////////////////////
-		curDay.loadDayEvents();
+		curDay.setEvents(calDrive.getEventsForDate(curDay.getMonth(),curDay.getDate(),curDay.getYear()));
 		/////////////////////////////////////
 		
 		
@@ -243,7 +243,7 @@ public class CalendarJFrame extends JFrame{
 						
 						//////////////////////////////////////////////////
 						if(curDay.getEvents().equals("")){
-							curDay.loadDayEvents();
+							curDay.setEvents(calDrive.getEventsForDate(curDay.getMonth(),curDay.getDate(),curDay.getYear()));
 						}
 						//////////////////////////////////////////////////
 						

@@ -6,6 +6,7 @@
  */
 
 import java.io.*;
+import java.util.ArrayList;
 /**
  * <h2>CalendarDay Week</h2>
  * <p>Contains an array of events and a String "dayOfWeek"
@@ -15,8 +16,9 @@ public class CalendarDay
 	private int date = 0;
 	private String month;
 	private String dayOfWeek;
-	public String[] dayEvents;
+	public ArrayList<String> dayEvents;
 	private String monthFilePath;
+	private int year = 2016;
 	
 	/**
 	 * <h3>Calendar Day Constructor</h3><p>
@@ -25,11 +27,12 @@ public class CalendarDay
 	 * @param m - String: name of CalendarMonth that CalendarDay belongs to
 	 * @see CalendarMonth
 	 */
-	public CalendarDay(int d, String m)
+	public CalendarDay(int d, String m, int year)
 	{
-		date = d;
-		month = m;
-		dayEvents = new String[0];
+		this.date = d;
+		this.month = m;
+		this.year = year;
+		this.dayEvents = new ArrayList<String>();
 		monthFilePath = "MonthFiles/" + m + ".txt";
 	}
 
@@ -50,20 +53,16 @@ public class CalendarDay
 	public int getDate()
 	{
 		return date;
-	}
+	}	
 	
-	public String getFilePath()
-	{
-		return monthFilePath;
-	}
-	
-	/**
-	 * Returns the month as a string from the CalendarDay object.
-	 * @return the month that the given CalendarDay belongs to.
-	 */
 	public String getMonth()
 	{
 		return month;
+	}
+	
+	public int getYear(){
+		
+		return year;
 	}
 	
 	/**
@@ -82,17 +81,44 @@ public class CalendarDay
 	public String getEvents()
 	{
 		String temp = "";
-		for (int i = 0; i < dayEvents.length; i++)
+		for (int i = 0; i < dayEvents.size(); i++)
 		{
-			temp += (i+1) + ". " + dayEvents[i] + "\n";
+			temp += (i+1) + ". " + dayEvents.get(i) + "\n";
 		}
 		return temp;
 	}
 	
+
+	/**
+	 *  Gets the number of events in the day's event array
+	 * @return int - day's event array length
+	 */
+	public int getEventCount()
+	{
+		return dayEvents.size();
+	}
+	
+	public void setEvents(ArrayList<String> dayEvents){
+		
+		this.dayEvents = dayEvents;
+	}
+	
+	/*
+	public String getFilePath()
+	{
+		return monthFilePath;
+	}
+	
+	/**
+	 * Returns the month as a string from the CalendarDay object.
+	 * @return the month that the given CalendarDay belongs to.
+	 */
+	
+	/*
 	/**
 	 * Adds a new event to the CalendarDay's array of events and writes the event to specific CalendarDay's month file. <p>Event  can be any String the user wants to put.
 	 * @param event - Any String the user wants stored to the specific CalendarDay
-	 */
+	 *
 	public void addEvent(String event)
 	{
 		//if the passed in event is empty, then it does nothing
@@ -112,12 +138,14 @@ public class CalendarDay
 		}catch(IOException e){}
 		addEventToArray(event);
 	}
-
+	*/
+	
+	/*
 	/**
 	 * Adds the event to the CalendarDay's array to be used for display and record purposes.
 	 * @param event - The given string from addEvent that is to be added to the day
 	 * @see addEvent
-	 */
+	 
 	public void addEventToArray(String event)
 	{
 		//Simulates a "dynamic" array, adjusts length to allow space for new event
@@ -130,12 +158,13 @@ public class CalendarDay
 		dayEvents = temp;	
 	}
 	
+	
 	/**
 	 * Removes event from the CalendarDay's events array and from its corresponding month file.
 	 * <p>
 	 * Function always ends if user requests to remove an event that is not within the list of events, either 0 or a value greater than the known number of events.
 	 * @param event - Number from list of events user wants to remove.
-	 */
+	 
 	public void removeEvent(int event)
 	{
 		//if user miraculously passes in an event that is out of bounds of the day's event array, this function will do nothing.
@@ -191,7 +220,7 @@ public class CalendarDay
 	/**
 	 * Removes the event at the given index from the CalendarDay's event array.
 	 * @param event - index of the event to be removed from array. Will always be valid.
-	 */
+	 
 	public void removeEventFromArray(int event)
 	{
 		//Simulates a "dynamic" array, removes spaces that no longer stores events
@@ -212,7 +241,7 @@ public class CalendarDay
 	/**
 	 * Loads in events from the day's month file into its event array
 	 * <p>Prints out an error if the file stops existing or encounters an error for any reason.
-	 */
+	 
 	public void loadDayEvents()
 	{
 		try
@@ -244,13 +273,7 @@ public class CalendarDay
 		}catch(IOException e)
 		{System.out.println(e);}
 	}
+	*/
 	
-	/**
-	 *  Gets the number of events in the day's event array
-	 * @return int - day's event array length
-	 */
-	public int getEventCount()
-	{
-		return dayEvents.length;
-	}
+	
 }

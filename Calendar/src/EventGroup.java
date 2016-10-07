@@ -11,10 +11,10 @@ public class EventGroup{
 	
 	public EventGroup(){
 		
-		events = getEvents();
+		events = retrieveEventsFromFile();
 	}
 	
-	private ArrayList getEvents(){
+	private ArrayList<Event2> retrieveEventsFromFile(){
 		
 		try{
 			
@@ -50,6 +50,22 @@ public class EventGroup{
 	
 	public void addEvent(Event2 e){
 		events.add(e);
+	}
+	
+	public ArrayList<String> getEventsForDate(String month, int day, int year){
+		
+		ArrayList<String> matchedEvents = new ArrayList<String>();
+		
+		for(int i =0; i < events.size(); i++){
+			
+			Event2 singleEvent = events.get(i);
+			if( singleEvent.startMonth == month && singleEvent.startDay == day && singleEvent.startYear == year){
+				
+				matchedEvents.add(singleEvent.eventDescription);
+			}
+		}
+		
+		return matchedEvents;
 	}
 	
 }
