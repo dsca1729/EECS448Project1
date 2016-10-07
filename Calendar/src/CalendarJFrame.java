@@ -81,8 +81,40 @@ public class CalendarJFrame extends JFrame{
 		setYearPanel(yearPanel);
 		tabs.addTab("Year", yearPanel);
 		
+		JPanel eventPanel = new JPanel();
+		setNormalPanel(eventPanel);
+		tabs.addTab("Event", eventPanel);
+		
 		add(tabs);
 		setVisible(true);
+	}
+	public static void setNormalPanel(JPanel panel)
+	{
+		
+		JPanel startPanel = new JPanel();
+		startPanel.setBorder(BorderFactory.createMatteBorder(10,1,1,1, Color.black));
+		String[] timeStrings = { "12:00 am", "1:00", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00", "10:00", "11:00", "12:00 pm", "1:00", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00", "10:00", "11:00"};
+		JComboBox startTime = new JComboBox(timeStrings);
+		JLabel start = new JLabel("Start Time:");
+	
+		startPanel.add(start);
+		startPanel.add(startTime);
+		
+		JPanel endPanel = new JPanel();
+		endPanel.setBorder(BorderFactory.createMatteBorder(10,1,1,1, Color.black));
+		String[] endStrings = { "1:00 am", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00", "10:00", "11:00", "12:00 pm", "1:00", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00", "10:00", "11:00", "12:00"};
+		JComboBox endTime = new JComboBox(timeStrings);
+		JLabel end = new JLabel("End Time:");
+		
+		endPanel.add(end);
+		endPanel.add(endTime);	
+	
+		
+		
+		panel.add(startPanel);
+		panel.add(endPanel);
+		
+		 
 	}
 	
 	/**
@@ -92,8 +124,8 @@ public class CalendarJFrame extends JFrame{
 	public static void setDayPanel(JPanel panel)
 	{
 		final JLabel curDate = new JLabel(calDrive.getCurrentDayOfWeek() + ", " + calDrive.getCurMonthName() + " " + calDrive.getCurDayOfMonth());
-		final JTextArea eventText = new JTextArea(5, 35);
-		
+		final JTextArea eventText = new JTextArea(10, 35); //Today's events text box. Width, Height
+	//	final JTextArea eventTextTest = new JTextArea(5, 30);
 		//Set up the display for setting the current day
 		panel.setLayout(new BorderLayout());
 		JPanel currentDayPanel = new JPanel();
@@ -157,11 +189,22 @@ public class CalendarJFrame extends JFrame{
 		
 		//Gives the eventText a scroll bar
 		JScrollPane textBox = new JScrollPane(eventText);
+		JPanel removeEvent = new JPanel();
+		JLabel remove = new JLabel("Remove Event:   ");
+		remove.setFont(remove.getFont().deriveFont(20.0f));
+		final JComboBox eventSelection = new JComboBox();
+		updateComboBox(curDay.getEventCount(), eventSelection);
+		JButton removeEventButton = new JButton("Remove");
+		removeEvent.add(remove);
+		removeEvent.add(eventSelection);
+		removeEvent.add(removeEventButton);
 		
 		//Adds everything to the event panel
 		eventPanel.add(curDate);
 		eventPanel.add(eventTitle);
 		eventPanel.add(textBox);
+		//eventPanel.add(eventTextTest);
+		eventPanel.add(removeEvent);
 		
 		//Sets up the display of the panel that will add and remove events
 		JPanel addEventPanel = new JPanel();
@@ -177,7 +220,7 @@ public class CalendarJFrame extends JFrame{
 		newEventPanel.add(newEventButton);
 		
 		//Makes text area for the user to input what event they wish to add to the day
-		final JTextArea newEventText = new JTextArea(20, 30);
+		final JTextArea newEventText = new JTextArea(2, 30);
 		newEventText.setLineWrap(true);
 		newEventText.setWrapStyleWord(true);
 		newEventText.setEditable(true);
@@ -195,17 +238,8 @@ public class CalendarJFrame extends JFrame{
 	            newEventButton.doClick();
 	        }
 	    });
+	    
 		
-		//Makes the components for removing an event
-		JPanel removeEvent = new JPanel();
-		JLabel remove = new JLabel("Remove Event:   ");
-		remove.setFont(remove.getFont().deriveFont(20.0f));
-		final JComboBox eventSelection = new JComboBox();
-		updateComboBox(curDay.getEventCount(), eventSelection);
-		JButton removeEventButton = new JButton("Remove");
-		removeEvent.add(remove);
-		removeEvent.add(eventSelection);
-		removeEvent.add(removeEventButton);
 
 		//Gives the newEventText a scroll bar
 		JScrollPane newEventScroll = new JScrollPane(newEventText);
@@ -213,10 +247,11 @@ public class CalendarJFrame extends JFrame{
 		infoLab.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
 		//Adds everything to the add and remove event panel
-		addEventPanel.add(newEventPanel);
+		
 		addEventPanel.add(infoLab);
 		addEventPanel.add(newEventScroll);
-		addEventPanel.add(removeEvent);
+		addEventPanel.add(newEventPanel);
+	
 		
 		//Sets what dayButton does
 		//When pressed, dayButton will update current date based on the input from the combo boxes
