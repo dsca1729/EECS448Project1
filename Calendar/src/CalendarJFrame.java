@@ -91,38 +91,433 @@ public class CalendarJFrame extends JFrame{
 		setYearPanel(yearPanel);
 		tabs.addTab("Year", yearPanel);
 		
-		JPanel eventPanel = new JPanel();
-		setNormalPanel(eventPanel);
-		tabs.addTab("Event", eventPanel);
+		JPanel normalPanel = new JPanel();
+		setNormalPanel(normalPanel);
+		tabs.addTab("Add Normal", normalPanel);
+		
+		JPanel multiPanel = new JPanel();
+		setMultiPanel(multiPanel);
+		tabs.addTab("Add Multi-Day", multiPanel);
+		
+		JPanel recurPanel = new JPanel();
+		setRecurPanel(recurPanel);
+		tabs.addTab("Add Recurring", recurPanel);
+		
+		
+		
 		
 		add(tabs);
 		setVisible(true);
 	}
-	public static void setNormalPanel(JPanel panel)
+	
+	public static void setRecurPanel(JPanel panel)
 	{
+		final JLabel curDate = new JLabel(calDrive.getCurrentDayOfWeek() + ", " + calDrive.getCurMonthName() + " " + calDrive.getCurDayOfMonth());
+		curDate.setAlignmentX(Component.CENTER_ALIGNMENT); 
+		curDate.setFont(curDate.getFont().deriveFont(24.0f)); 
 		
-		JPanel startPanel = new JPanel();
-		startPanel.setBorder(BorderFactory.createMatteBorder(10,1,1,1, Color.black));
+		dayButton.addActionListener(
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						curDay = setCurrentDate(monthList, dayList);
+						curDate.setText(curDay.getDayOfWeek() + ", " + curDay.getMonth() + " " + curDay.getDate());
+						if(curDay.getEvents().equals("")){
+							curDay.loadDayEvents();
+						}
+						curWeek = calDrive.getWeek();
+						updateWeekDisplay(curWeek);
+						weekTitle.setText("  Week of " + curDay.getMonth() + " " + curWeek.getDay(0).getDate() + "  ");
+						if(curWeek.getDay(0).getDate() == 0)
+						{
+							weekTitle.setText("  Week of August 1  ");
+						}
+						
+						updateMonthDisplay(curDay.getMonth());
+					}
+				});
+		
+		
+		
+		//Creates the Panel that contains the three radio button options
+		JPanel typeRadio = new JPanel();
+		
+		final JRadioButton weekly = new JRadioButton("Weekly");
+		final JRadioButton biWeekly = new JRadioButton("Bi-Weekly");
+		final JRadioButton monthly = new JRadioButton("Monthly");
+		
+		//Groups the radio buttons, allows for just one selection
+		ButtonGroup type = new ButtonGroup();
+		type.add(weekly);
+		type.add(biWeekly);
+		type.add(monthly);
+		
+		//Adds the radio buttons to the panel
+		typeRadio.add(weekly);
+		typeRadio.add(biWeekly);
+		typeRadio.add(monthly);
+		
+		
+		//Creates the checkbox panel
+		JPanel daysPanel = new JPanel();
+		
+		final JCheckBox sunday = new JCheckBox("Sunday");
+		final JCheckBox monday = new JCheckBox("Monday");
+		final JCheckBox tuesday = new JCheckBox("Tuesday");
+		final JCheckBox wednesday = new JCheckBox("Wednesday");
+		final JCheckBox thursday = new JCheckBox("Thursday");
+		final JCheckBox friday = new JCheckBox("Friday");
+		final JCheckBox saturday = new JCheckBox("Saturday");
+		
+		//Adds the checkboxes to the panel
+		daysPanel.add(sunday);
+		daysPanel.add(monday);
+		daysPanel.add(tuesday);
+		daysPanel.add(wednesday);
+		daysPanel.add(thursday);
+		daysPanel.add(friday);
+		daysPanel.add(saturday);
+	
+		
+		//Check boxes disappear when monthly radio button is selected
+		monthly.addActionListener(
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						if(monthly.isSelected() == true){
+							
+							sunday.setVisible(false);
+							monday.setVisible(false);
+							tuesday.setVisible(false);
+							wednesday.setVisible(false);
+							thursday.setVisible(false);
+							friday.setVisible(false);
+							saturday.setVisible(false);
+							
+							sunday.setSelected(false);
+							monday.setSelected(false);
+							tuesday.setSelected(false);
+							wednesday.setSelected(false);
+							thursday.setSelected(false);
+							friday.setSelected(false);
+							saturday.setSelected(false);
+							
+						}
+					}
+				});
+		
+		//Check Boxes reappear when switching from monthly to Bi-weekly
+		biWeekly.addActionListener(
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						if(biWeekly.isSelected() == true){
+							
+							sunday.setVisible(true);
+							monday.setVisible(true);
+							tuesday.setVisible(true);
+							wednesday.setVisible(true);
+							thursday.setVisible(true);
+							friday.setVisible(true);
+							saturday.setVisible(true);
+							
+						}
+					}
+				});
+		
+		//Check Boxes reappear when switching from monthly to Bi-weekly
+		weekly.addActionListener(
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						if(weekly.isSelected() == true){
+							
+							sunday.setVisible(true);
+							monday.setVisible(true);
+							tuesday.setVisible(true);
+							wednesday.setVisible(true);
+							thursday.setVisible(true);
+							friday.setVisible(true);
+							saturday.setVisible(true);
+							
+						}
+					}
+				});
+		
+		
+		
+		//Creates the start and end time panel
+		JPanel startEndPanel = new JPanel();
+		startEndPanel.setBorder(BorderFactory.createEmptyBorder(10,1,1,1));
 		String[] timeStrings = { "12:00 am", "1:00", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00", "10:00", "11:00", "12:00 pm", "1:00", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00", "10:00", "11:00"};
 		JComboBox startTime = new JComboBox(timeStrings);
 		JLabel start = new JLabel("Start Time:");
 	
-		startPanel.add(start);
-		startPanel.add(startTime);
+		startEndPanel.add(startTime);
 		
-		JPanel endPanel = new JPanel();
-		endPanel.setBorder(BorderFactory.createMatteBorder(10,1,1,1, Color.black));
+		
+		startEndPanel.setBorder(BorderFactory.createEmptyBorder(10,1,1,1));
 		String[] endStrings = { "1:00 am", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00", "10:00", "11:00", "12:00 pm", "1:00", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00", "10:00", "11:00", "12:00"};
-		JComboBox endTime = new JComboBox(timeStrings);
+		JComboBox endTime = new JComboBox(endStrings);
 		JLabel end = new JLabel("End Time:");
 		
-		endPanel.add(end);
-		endPanel.add(endTime);	
+		startEndPanel.add(endTime);
+		
+		//Creates the add event button
+		final JButton newEventButton = new JButton("Add Event");
+		startEndPanel.add(newEventButton);
+		//Creates the panel that contains the text box
+		JPanel addRecurPanel = new JPanel();
+		addRecurPanel.setBorder(BorderFactory.createEmptyBorder(20,1,1,1));
+
+		JPanel newEventPanel = new JPanel();
+		JLabel newEventTitle = new JLabel("New Event:         ");
+		newEventTitle.setFont(newEventTitle.getFont().deriveFont(20.0f));
+		
+		//Creates the text box
+		final JTextArea newEventText = new JTextArea(20, 30);
+		newEventText.setLineWrap(true);
+		newEventText.setWrapStyleWord(true);
+		newEventText.setEditable(true);
+		
+		newEventText.setBorder(BorderFactory.createLineBorder(Color.black));
+		//KeyStroke tracking based off of http://stackoverflow.com/questions/2162170/jtextarea-new-line-on-shift-enter
+		InputMap input = newEventText.getInputMap();
+		KeyStroke enter = KeyStroke.getKeyStroke("ENTER");
+		input.put(enter, "text submit");
+				
+		//File I/O can't handle JTextArea enter characters, so this forces the submission of the event
+		ActionMap actions = newEventText.getActionMap();
+		actions.put("text submit", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				newEventButton.doClick();
+			}
+	   });
+			    
+				
+
+		//Gives the newEventText a scroll bar
+		JScrollPane newEventScroll = new JScrollPane(newEventText);
+				
+		//Adds everything to the add and remove event panel
+				
+				
+		//Adds teh text box to the addRecurPanel
+		addRecurPanel.add(newEventScroll);
+		addRecurPanel.add(newEventPanel);
+		addRecurPanel.add(newEventText);
+		
+		
+		
+		
+		
+		
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		
+		//Adds everything together
+		panel.add(curDate);
+		panel.add(typeRadio);
+		panel.add(daysPanel);
+		panel.add(addRecurPanel);
+		panel.add(startEndPanel);
+		
+		
+		 
+	}
 	
+	public static void setMultiPanel(JPanel panel)
+	{
+		final JLabel curDate = new JLabel(calDrive.getCurrentDayOfWeek() + ", " + calDrive.getCurMonthName() + " " + calDrive.getCurDayOfMonth());
+		curDate.setAlignmentX(Component.CENTER_ALIGNMENT); 
+		curDate.setFont(curDate.getFont().deriveFont(24.0f)); 
 		
 		
-		panel.add(startPanel);
-		panel.add(endPanel);
+		
+		
+		JPanel currentDayPanel = new JPanel();
+		currentDayPanel.setLayout(new FlowLayout());
+		JLabel currentDayLabel = new JLabel("Set End Date:");
+		
+		
+		for (int i = 0; i < calDrive.getMonthNames().length; i++)
+		{
+			monthList.addItem(calDrive.getMonthNames()[i]);
+		}
+		updateComboBox(calDrive.getCurrentMonth().getNumDays(), dayList);
+		
+		
+		monthList.setSelectedIndex(calDrive.getCurrentMonthIndex(calDrive.getCurMonthName()));
+		dayList.setSelectedIndex(calDrive.getCurDayOfMonth()-1);
+		
+		//Sets how the monstList comboBox will work
+		//When a month is selected in this comboBox, the dayList will update to accommodate for the month selected
+		monthList.addActionListener(
+				new ActionListener(){
+						public void actionPerformed(ActionEvent e){
+								JComboBox bx = (JComboBox)e.getSource();
+								String x = (String)bx.getSelectedItem();
+								if(x.equals("September") || x.equals("November") || x.equals("April"))
+								{
+									updateComboBox(30, dayList);
+								}
+								else if(x.equals("February"))
+								{
+									updateComboBox(28, dayList);
+								}
+								else
+								{
+									updateComboBox(31, dayList);
+								}
+						}
+				});
+		
+		final JButton newEventButton = new JButton("Add Event");
+		
+		JPanel addEventPanel = new JPanel();
+		addEventPanel.setBorder(BorderFactory.createEmptyBorder(20,1,1,1));
+
+		JPanel newEventPanel = new JPanel();
+		
+		//Creates text area
+		final JTextArea newEventText = new JTextArea(20, 30);
+		newEventText.setLineWrap(true);
+		newEventText.setWrapStyleWord(true);
+		newEventText.setEditable(true);
+		
+		newEventText.setBorder(BorderFactory.createLineBorder(Color.black));
+		//KeyStroke tracking based off of http://stackoverflow.com/questions/2162170/jtextarea-new-line-on-shift-enter
+		InputMap input = newEventText.getInputMap();
+		KeyStroke enter = KeyStroke.getKeyStroke("ENTER");
+		input.put(enter, "text submit");
+		
+		//File I/O can't handle JTextArea enter characters, so this forces the submission of the event
+		ActionMap actions = newEventText.getActionMap();
+		actions.put("text submit", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+		    newEventButton.doClick();
+		    }
+		});
+			    
+				
+
+		//Gives the newEventText a scroll bar
+		JScrollPane newEventScroll = new JScrollPane(newEventText);
+			
+				
+		//Adds everything to the add and remove event panel
+			
+			
+		addEventPanel.add(newEventScroll);
+		addEventPanel.add(newEventPanel);
+		
+		//Adds everything to the current day panel
+		currentDayPanel.add(currentDayLabel);
+		currentDayPanel.add(monthList);
+		currentDayPanel.add(dayList);
+		currentDayPanel.add(newEventButton);
+		
+		
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		panel.add(curDate);	
+		panel.add(addEventPanel);	
+		panel.add(currentDayPanel);
+		
+		
+		
+	}
+	
+	public static void setNormalPanel(JPanel panel)
+	{
+		//Adds the Date to the top of page
+		final JLabel curDate = new JLabel(calDrive.getCurrentDayOfWeek() + ", " + calDrive.getCurMonthName() + " " + calDrive.getCurDayOfMonth());
+		curDate.setAlignmentX(Component.CENTER_ALIGNMENT); 
+		curDate.setFont(curDate.getFont().deriveFont(24.0f)); 
+		
+		dayButton.addActionListener(
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						curDay = setCurrentDate(monthList, dayList);
+						curDate.setText(curDay.getDayOfWeek() + ", " + curDay.getMonth() + " " + curDay.getDate());
+						if(curDay.getEvents().equals("")){
+							curDay.loadDayEvents();
+						}
+						curWeek = calDrive.getWeek();
+						updateWeekDisplay(curWeek);
+						weekTitle.setText("  Week of " + curDay.getMonth() + " " + curWeek.getDay(0).getDate() + "  ");
+						if(curWeek.getDay(0).getDate() == 0)
+						{
+							weekTitle.setText("  Week of August 1  ");
+						}
+						
+						updateMonthDisplay(curDay.getMonth());
+					}
+				});
+		
+		//Creates the panel that contains the start and end time Combo Boxes
+		JPanel startEndPanel = new JPanel();
+		startEndPanel.setBorder(BorderFactory.createEmptyBorder(10,1,1,1));
+		String[] timeStrings = { "12:00 am", "1:00", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00", "10:00", "11:00", "12:00 pm", "1:00", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00", "10:00", "11:00"};
+		JComboBox startTime = new JComboBox(timeStrings);
+		JLabel start = new JLabel("Start Time:");
+	
+		startEndPanel.add(startTime);
+		
+		
+		startEndPanel.setBorder(BorderFactory.createEmptyBorder(10,1,1,1));
+		String[] endStrings = { "1:00 am", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00", "10:00", "11:00", "12:00 pm", "1:00", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00", "10:00", "11:00", "12:00"};
+		JComboBox endTime = new JComboBox(endStrings);
+		JLabel end = new JLabel("End Time:");
+		
+		startEndPanel.add(endTime);
+		
+		//Creates the button that adds the event
+		final JButton newEventButton = new JButton("Add Event");
+		startEndPanel.add(newEventButton);
+		//Creates the panel that contains the text box
+		JPanel addEventPanel = new JPanel();
+		addEventPanel.setBorder(BorderFactory.createEmptyBorder(20,1,1,1));
+
+		JPanel newEventPanel = new JPanel();
+		
+		//Creates text area
+		final JTextArea newEventText = new JTextArea(20, 30);
+		newEventText.setLineWrap(true);
+		newEventText.setWrapStyleWord(true);
+		newEventText.setEditable(true);
+		
+		newEventText.setBorder(BorderFactory.createLineBorder(Color.black));
+		//KeyStroke tracking based off of http://stackoverflow.com/questions/2162170/jtextarea-new-line-on-shift-enter
+		InputMap input = newEventText.getInputMap();
+		KeyStroke enter = KeyStroke.getKeyStroke("ENTER");
+		input.put(enter, "text submit");
+		
+		//File I/O can't handle JTextArea enter characters, so this forces the submission of the event
+		ActionMap actions = newEventText.getActionMap();
+		actions.put("text submit", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+		    newEventButton.doClick();
+		    }
+		});
+			    
+				
+
+		//Gives the newEventText a scroll bar
+		JScrollPane newEventScroll = new JScrollPane(newEventText);
+			
+				
+		//Adds everything to the add and remove event panel
+			
+			
+		addEventPanel.add(newEventScroll);
+		addEventPanel.add(newEventPanel);
+		
+		
+		
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+				
+		panel.add(curDate);
+		panel.add(addEventPanel);
+		panel.add(startEndPanel);
+		
 		
 		 
 	}
@@ -134,7 +529,7 @@ public class CalendarJFrame extends JFrame{
 	public static void setDayPanel(JPanel panel)
 	{
 		final JLabel curDate = new JLabel(calDrive.getCurrentDayOfWeek() + ", " + calDrive.getCurMonthName() + " " + calDrive.getCurDayOfMonth());
-		final JTextArea eventText = new JTextArea(10, 35); //Today's events text box. Width, Height
+		final JTextArea eventText = new JTextArea(18, 35); //Today's events text box. Width, Height
 	//	final JTextArea eventTextTest = new JTextArea(5, 30);
 		//Set up the display for setting the current day
 		panel.setLayout(new BorderLayout());
@@ -180,10 +575,23 @@ public class CalendarJFrame extends JFrame{
 		currentDayPanel.add(dayList);
 		currentDayPanel.add(dayButton);
 		
+		JPanel addEvent = new JPanel();
+		
+		
+		final JButton normal = new JButton("Add Normal Event");
+		final JButton multi = new JButton("Add Multi-Day Event");
+		final JButton recur = new JButton("Add Recurring Event");
+		
+		addEvent.add(normal);
+		addEvent.add(multi);
+		addEvent.add(recur);
+		
+		
 		//Sets up the display of the event panel which has the current day along with the events of it
 		JPanel eventPanel = new JPanel();
+		eventPanel.add(currentDayPanel);
 		eventPanel.setLayout(new BoxLayout(eventPanel, BoxLayout.Y_AXIS));
-		eventPanel.setBorder(BorderFactory.createEmptyBorder(10,26,26,0)); //Code from: http://stackoverflow.com/questions/8863062/add-space-between-jframe-and-jpanel
+		eventPanel.setBorder(BorderFactory.createEmptyBorder(10,26,26,20)); //Code from: http://stackoverflow.com/questions/8863062/add-space-between-jframe-and-jpanel
 		
 		JLabel eventTitle = new JLabel("Today's Events:");
 		eventTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -221,6 +629,7 @@ public class CalendarJFrame extends JFrame{
 		//eventPanel.add(eventTextTest);
 		eventPanel.add(removeEvent);
 		
+
 		//Sets up the display of the panel that will add and remove events
 		JPanel addEventPanel = new JPanel();
 		addEventPanel.setLayout(new BoxLayout(addEventPanel, BoxLayout.Y_AXIS));
@@ -265,7 +674,6 @@ public class CalendarJFrame extends JFrame{
 		addEventPanel.add(newEventScroll);
 		addEventPanel.add(newEventPanel);
 	
-		
 		//Sets what dayButton does
 		//When pressed, dayButton will update current date based on the input from the combo boxes
 		//It will also update the display of the week and month panels based on the new date
@@ -296,7 +704,9 @@ public class CalendarJFrame extends JFrame{
 		
 		//Sets what newEventButton does
 		//When pressed, newEventButton will add in the new event from the text box to the event panel
-		newEventButton.addActionListener(
+		
+		
+		normal.addActionListener(
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
 						
@@ -310,6 +720,21 @@ public class CalendarJFrame extends JFrame{
 						//////////////////////////////////////////////////////////
 						
 						updateWeekDisplay(curWeek);
+						tabs.setSelectedIndex(4);
+					}
+				});
+		
+		recur.addActionListener(
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						tabs.setSelectedIndex(6);
+					}
+				});
+		
+		multi.addActionListener(
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						tabs.setSelectedIndex(5);
 					}
 				});
 		
@@ -332,9 +757,8 @@ public class CalendarJFrame extends JFrame{
 				});
 		
 		//Adds everything to the day panel
-		panel.add(currentDayPanel, BorderLayout.NORTH);
-		panel.add(eventPanel, BorderLayout.WEST);
-		panel.add(addEventPanel, BorderLayout.EAST);
+		panel.add(eventPanel, BorderLayout.NORTH);
+		panel.add(addEvent);
 	}
 	
 	/**
