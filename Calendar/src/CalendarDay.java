@@ -20,6 +20,8 @@ public class CalendarDay
 	private String monthFilePath;
 	private int year = 2016;
 	
+	private EventGroup eventHelper;
+	
 	/**
 	 * <h3>Calendar Day Constructor</h3><p>
 	 * Creates a Calendar Day object based on the given date and month that stores its day of the week and events for the day
@@ -27,12 +29,14 @@ public class CalendarDay
 	 * @param m - String: name of CalendarMonth that CalendarDay belongs to
 	 * @see CalendarMonth
 	 */
-	public CalendarDay(int d, String m, int year)
+	public CalendarDay(int d, String m)
 	{
 		this.date = d;
 		this.month = m;
-		this.year = year;
 		this.dayEvents = new ArrayList<String>();
+		
+		eventHelper = new EventGroup();
+		
 		monthFilePath = "MonthFiles/" + m + ".txt";
 	}
 
@@ -98,10 +102,22 @@ public class CalendarDay
 		return dayEvents.size();
 	}
 	
-	public void setEvents(ArrayList<String> dayEvents){
+	public void loadDayEvents(){
 		
-		this.dayEvents = dayEvents;
+		this.dayEvents = eventHelper.getEventsForDate(getMonth(), getDate(), getYear());
 	}
+	
+	public void saveEvents(){
+		eventHelper.saveEvents();
+	}
+	
+	public void addEvent(String text){
+		
+		Event2 temp = new Event2(getMonth(), getDate(), getYear(), 0, 0, text, false);
+		eventHelper.addEvent(temp);
+	}
+	
+	
 	
 	/*
 	public String getFilePath()
