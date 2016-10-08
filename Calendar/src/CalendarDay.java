@@ -117,7 +117,26 @@ public class CalendarDay
 		eventHelper.addEvent(temp);
 	}
 	
-	
+	public void addRecurringEvent(CalendarDriver calDrive, String text, String frequency, String[] daysOfWeek ){
+		CalendarYear year = calDrive.getYear();
+		CalendarMonth month = calDrive.getCurrentMonth();
+		CalendarMonth[] monthArr = year.getMonths();
+		int mIndex = year.getMonthIndex(month.getMonth());
+		for(int i = mIndex; i < monthArr.length; i++){
+			month = monthArr[i];//set the month object to the month we are working with
+			for(int j = 1; j<=month.getNumDays();j++){
+				if(frequency.equals("Weekly")){
+					
+				}
+				else if(frequency.equals("Bi-Weekly")){
+					
+				}
+				else if(frequency.equals("Monthly")){
+					
+				}
+			}
+		}
+	}
 	
 	/*
 	public String getFilePath()
