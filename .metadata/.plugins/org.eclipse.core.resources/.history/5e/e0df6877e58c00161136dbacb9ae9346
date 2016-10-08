@@ -321,4 +321,25 @@ public class CalendarDriver {
 		return newWeek;
 	}
 	
+	public ArrayList<String> getEventsForDate(CalendarDay day){
+		 
+		return events.getEventsForDate(day.getMonth(), day.getDate(), day.getYear());
+	}
+	
+	public void addNormalEvent(CalendarDay day, String eventDescription){
+		
+		Event2 tempEvent = new Event2(day.getMonth(), day.getDate(), day.getYear(), 0, 0, eventDescription, false);
+		
+		events.addEvent(tempEvent);
+	}
+	
+	public void removeNormalEvent(CalendarDay day, String eventDescription){
+		
+		Event2 tempEvent = new Event2(day.getMonth(), day.getDate(), day.getYear(), 0, 0, eventDescription, false);
+	}
+	
+	public void saveEvents(){
+		
+		events.saveEvents();
+	}
 }

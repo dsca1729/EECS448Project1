@@ -107,16 +107,6 @@ public class CalendarDay
 		this.dayEvents = eventHelper.getEventsForDate(getMonth(), getDate(), getYear());
 	}
 	
-	public void saveEvents(){
-		eventHelper.saveEvents();
-	}
-	
-	public void addEvent(String text){
-		
-		Event2 temp = new Event2(getMonth(), getDate(), getYear(), 0, 0, text, false);
-		eventHelper.addEvent(temp);
-	}
-	
 	
 	
 	/*
