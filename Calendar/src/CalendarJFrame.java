@@ -329,44 +329,29 @@ public class CalendarJFrame extends JFrame{
 		curDate.setFont(curDate.getFont().deriveFont(24.0f)); 
 		
 		
-		
-		
-		JPanel currentDayPanel = new JPanel();
-		currentDayPanel.setLayout(new FlowLayout());
-		JLabel currentDayLabel = new JLabel("Set End Date:");
-		
-		
-		for (int i = 0; i < calDrive.getMonthNames().length; i++)
-		{
-			monthList.addItem(calDrive.getMonthNames()[i]);
-		}
-		updateComboBox(calDrive.getCurrentMonth().getNumDays(), dayList);
-		
-		
-		monthList.setSelectedIndex(calDrive.getCurrentMonthIndex(calDrive.getCurMonthName()));
-		dayList.setSelectedIndex(calDrive.getCurDayOfMonth()-1);
-		
-		//Sets how the monstList comboBox will work
-		//When a month is selected in this comboBox, the dayList will update to accommodate for the month selected
-		monthList.addActionListener(
+		dayButton.addActionListener(
 				new ActionListener(){
-						public void actionPerformed(ActionEvent e){
-								JComboBox bx = (JComboBox)e.getSource();
-								String x = (String)bx.getSelectedItem();
-								if(x.equals("September") || x.equals("November") || x.equals("April"))
-								{
-									updateComboBox(30, dayList);
-								}
-								else if(x.equals("February"))
-								{
-									updateComboBox(28, dayList);
-								}
-								else
-								{
-									updateComboBox(31, dayList);
-								}
+					public void actionPerformed(ActionEvent e){
+						curDay = setCurrentDate(monthList, dayList);
+						curDate.setText(curDay.getDayOfWeek() + ", " + curDay.getMonth() + " " + curDay.getDate());
+						if(curDay.getEvents().equals("")){
+							curDay.loadDayEvents();
 						}
+						curWeek = calDrive.getWeek();
+						updateWeekDisplay(curWeek);
+						weekTitle.setText("  Week of " + curDay.getMonth() + " " + curWeek.getDay(0).getDate() + "  ");
+						if(curWeek.getDay(0).getDate() == 0)
+						{
+							weekTitle.setText("  Week of August 1  ");
+						}
+						
+						updateMonthDisplay(curDay.getMonth());
+					}
 				});
+		
+		JPanel multiDayPanel = new JPanel();
+		multiDayPanel.setLayout(new FlowLayout());
+		JLabel currentDayLabel = new JLabel("Set End Date:");
 		
 		final JButton newEventButton = new JButton("Add Event");
 		
@@ -396,12 +381,62 @@ public class CalendarJFrame extends JFrame{
 		    }
 		});
 			    
-				
+		
 
 		//Gives the newEventText a scroll bar
 		JScrollPane newEventScroll = new JScrollPane(newEventText);
 			
-				
+		
+		String[] monthNames = {"August", "September", "October", "November", "December", "January", "February", "March", "April", "May"	};
+		final JComboBox months = new JComboBox(monthNames);
+		
+		String[] maxDays= {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30","31" };
+		final JComboBox maxDaysCB = new JComboBox(maxDays);
+		
+		String[] thirtyDays = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30",};
+		final JComboBox thirtyDaysCB = new JComboBox(thirtyDays);
+		
+		String[] minDays= {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28"};
+		final JComboBox minDaysCB = new JComboBox(minDays);
+		
+		maxDaysCB.setVisible(true);
+		thirtyDaysCB.setVisible(false);
+		minDaysCB.setVisible(false);
+		
+		months.addActionListener(
+				new ActionListener(){
+						public void actionPerformed(ActionEvent e){
+								JComboBox bx = (JComboBox)e.getSource();
+								String x = (String)bx.getSelectedItem();
+								
+								if(months.getSelectedIndex() == 1 || months.getSelectedIndex() == 3 || months.getSelectedIndex() == 7)
+								{
+									thirtyDaysCB.setVisible(true);
+									minDaysCB.setVisible(false);
+									maxDaysCB.setVisible(false);
+									minDaysCB.setSelectedItem(false);
+									maxDaysCB.setSelectedItem(false);
+								}
+								else if(months.getSelectedIndex() == 6)
+								{
+									minDaysCB.setVisible(true);
+									thirtyDaysCB.setVisible(false);
+									maxDaysCB.setVisible(false);
+									thirtyDaysCB.setSelectedItem(false);
+									maxDaysCB.setSelectedItem(false);
+								}			
+								else 
+								{
+									
+									maxDaysCB.setVisible(true);
+									thirtyDaysCB.setVisible(false);
+									minDaysCB.setVisible(false);
+									minDaysCB.setSelectedItem(false);
+									thirtyDaysCB.setSelectedItem(false);
+								}
+								
+						}
+				});
 		//Adds everything to the add and remove event panel
 			
 			
@@ -409,16 +444,19 @@ public class CalendarJFrame extends JFrame{
 		addEventPanel.add(newEventPanel);
 		
 		//Adds everything to the current day panel
-		currentDayPanel.add(currentDayLabel);
-		currentDayPanel.add(monthList);
-		currentDayPanel.add(dayList);
-		currentDayPanel.add(newEventButton);
+		multiDayPanel.add(currentDayLabel);
+		//multiDayPanel.add(months);
+		multiDayPanel.add(months);
+		multiDayPanel.add(maxDaysCB);
+		multiDayPanel.add(minDaysCB);
+		multiDayPanel.add(thirtyDaysCB);
+		multiDayPanel.add(newEventButton);
 		
 		
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		panel.add(curDate);	
 		panel.add(addEventPanel);	
-		panel.add(currentDayPanel);
+		panel.add(multiDayPanel);
 		
 		
 		
