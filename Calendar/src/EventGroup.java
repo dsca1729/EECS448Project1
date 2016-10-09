@@ -55,11 +55,16 @@ public class EventGroup{
 	public void addEvent(Event2 e){
 		
 		for(int i =0; i<events.size();i++){
-			if(e.isBefore(events.get(i))){
-				events.add(i, e);
-				break;
+			
+			if(e.isBefore(events.get(i))){ //if the added event comes before another event in the array
+				
+				events.add(i, e); //add it to the array at the right position
+				return; //exit the function
 			}
 		}
+		
+		//if the event does not come before any other events, add it at the end
+		events.add(e);
 	}
 	
 	public ArrayList<String> getEventsForDate(String month, int day, int year){
