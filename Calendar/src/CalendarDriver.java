@@ -333,7 +333,41 @@ public class CalendarDriver {
 			}
 		}
 		else if(frequency.equals("Weekly")){
-			
+			CalendarWeek workingWeek = getWeek();
+			boolean flag = true;
+			while(flag){
+				for(int i = 0;i < daysOfWeek.length;i++){
+					try{
+						switch(daysOfWeek[i].toLowerCase()){
+						case "sunday":
+							workingWeek.getDay(0).addEvent(text);
+							break;
+						case "monday":
+							workingWeek.getDay(1).addEvent(text);
+							break;
+						case "tuesday":
+							workingWeek.getDay(2).addEvent(text);
+							break;
+						case "wednesday":
+							workingWeek.getDay(3).addEvent(text);
+						case "thursday":
+							workingWeek.getDay(4).addEvent(text);
+							break;
+						case "friday":
+							workingWeek.getDay(5).addEvent(text);
+							break;
+						case "saturday":
+							workingWeek.getDay(6).addEvent(text);
+							break;
+						}
+					} catch(Exception e){}
+					if(getNextWeek(workingWeek) == workingWeek){
+						flag = false;
+					}else{
+						workingWeek = getNextWeek(workingWeek);
+					}
+				}
+			}
 		}
 	}
 	
