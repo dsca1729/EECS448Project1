@@ -67,9 +67,9 @@ public class EventGroup{
 		events.add(e);
 	}
 	
-	public ArrayList<String> getEventsForDate(String month, int day, int year){
+	public ArrayList<Event2> getEventsForDate(String month, int day, int year){
 		
-		ArrayList<String> matchedEvents = new ArrayList<String>();
+		ArrayList<Event2> matchedEvents = new ArrayList<Event2>();
 		
 		for(int i =0; i < events.size(); i++){
 			
@@ -77,7 +77,7 @@ public class EventGroup{
 			
 			if( singleEvent.startMonth.equals(month) && singleEvent.startDay == day && singleEvent.startYear == year){
 				
-				matchedEvents.add(singleEvent.eventDescription);
+				matchedEvents.add(singleEvent);
 			}
 		}
 		
@@ -90,12 +90,15 @@ public class EventGroup{
 			
 			if(events.get(i).equals(badEvent)){
 				events.remove(i);
+				return;
 			}
 		}
 	}
 	
 	public void printEvents(){
+		
 		for(int i=0; i< events.size();i++){
+			
 			System.out.println(events.get(i).eventDescription);
 		}
 	}
