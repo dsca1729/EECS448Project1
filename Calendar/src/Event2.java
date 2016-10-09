@@ -1,8 +1,11 @@
 
 public class Event2 implements java.io.Serializable{
 	
-	//Member Variables
-	//Make Getters and Setters if time available
+	
+	/*
+	 * Member Variables
+	 * 
+	 */
 	
 	public String startMonth;
 	public String endMonth;
@@ -21,7 +24,9 @@ public class Event2 implements java.io.Serializable{
 	
 	public String eventDescription;
 	
-	//Constructors
+	/*
+	 * Constructors
+	 */
 	
 	public Event2(String month, int day, int year, int startTime, int endTime, String eventDescription, boolean isRecurring){ //Normal Event Constructor
 			
@@ -43,7 +48,9 @@ public class Event2 implements java.io.Serializable{
 		this.isRecurring = isRecurring;
 	}
 	
-	//This constructor is for multi-day events
+	/*
+	 * 	This constructor is for multi-day events
+	 */
 	public Event2(String startMonth, String endMonth, int startDay, int endDay, int startYear, int endYear, int startTime, int endTime, String eventDescription){
 		
 		this.startMonth = startMonth;
@@ -64,7 +71,13 @@ public class Event2 implements java.io.Serializable{
 		this.isRecurring = false;
 	}
 	
-	// src: http://stackoverflow.com/questions/16069106/how-to-compare-two-java-objects
+	
+	/**
+	 * (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 * 
+	 * src: http://stackoverflow.com/questions/16069106/how-to-compare-two-java-objects
+	 */
 	@Override
 	public boolean equals(Object other) {
 	    if (!(other instanceof Event2)) {
@@ -87,6 +100,12 @@ public class Event2 implements java.io.Serializable{
 
 	}
 	
+	/**
+	 * Used to compare two Events, to see if one comes before another
+	 * 
+	 * @param Event2 other: the other event that is being compared
+	 * @return true if this event comes before the other
+	 */
 	public boolean isBefore(Event2 other){
 		
 		if(this.startYear < other.startYear) return true;
@@ -105,6 +124,12 @@ public class Event2 implements java.io.Serializable{
 		}
 	}
 	
+	/**
+	 * Converts a month string to an integer value
+	 * 
+	 * @param String month: String representation of the month
+	 * @return int: int representation of the month
+	 */
 	public int monthStringToInt(String month){
 		
 		switch(month){

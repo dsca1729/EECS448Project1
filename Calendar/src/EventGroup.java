@@ -10,11 +10,21 @@ public class EventGroup{
 	public ArrayList<Event2> events;
 	public static String filename = "MonthFiles/Events.ser";
 	
+	/**
+	 * Constructor
+	 * 
+	 * Retrieves events from the ser file using built in methods
+	 */
 	public EventGroup(){
 		
 		events = retrieveEventsFromFile();
 	}
 	
+	/**
+	 * Retrieves all events from the .ser file
+	 * 
+	 * @return Arraylist<Event2> of all events in file
+	 */
 	private ArrayList<Event2> retrieveEventsFromFile(){
 		
 		try{
@@ -34,6 +44,11 @@ public class EventGroup{
 		}
 	}
 	
+	/**
+	 * Save events(in an arraylist) to ser file
+	 * 
+	 * @return none
+	 */
 	public void saveEvents(){
 		
 		try {
@@ -52,6 +67,12 @@ public class EventGroup{
 		}
 	}
 	
+	/**
+	 * Add an event to events, making sure that events are added in-order.
+	 * 
+	 * @param Event2 e the event that is being added
+	 * @return none
+	 */
 	public void addEvent(Event2 e){
 		
 		for(int i =0; i<events.size();i++){
@@ -68,6 +89,15 @@ public class EventGroup{
 		saveEvents(); //This is just for safety to make sure we never lose events
 	}
 	
+	/**
+	 * Gets a list of events for a given day by checking year, day, and month and returns them
+	 * 
+	 * @param String month: month to check
+	 * @param int day: day to check
+	 * @param int year: year to check
+	 * 
+	 * @return ArrayList<Event2>: a list of events that match a given day
+	 */
 	public ArrayList<Event2> getEventsForDate(String month, int day, int year){
 		
 		ArrayList<Event2> matchedEvents = new ArrayList<Event2>();
@@ -85,6 +115,12 @@ public class EventGroup{
 		return matchedEvents;
 	}
 	
+	/**
+	 * Remove an event from the events list
+	 * 
+	 * @param Event2 badEvent: event to check for an remove
+	 * @return none
+	 */
 	public void removeEvent(Event2 badEvent){
 		
 		for(int i =0; i < events.size(); i++){
@@ -96,6 +132,11 @@ public class EventGroup{
 		}
 	}
 	
+	/**
+	 * Print all the events to the console, just for debugging purposes
+	 * 
+	 * @return none
+	 */
 	public void printEvents(){
 		
 		for(int i=0; i< events.size();i++){

@@ -59,11 +59,19 @@ public class CalendarDay
 		return date;
 	}	
 	
+	/**
+	 * Returns the month as a String from the CalendarDay object.
+	 * @return String: the month of the given CalendarDay
+	 */
 	public String getMonth()
 	{
 		return month;
 	}
 	
+	/**
+	 * Returns the year as an integer from the CalendarDay object.
+	 * @return int: the year of the given CalendarDay
+	 */
 	public int getYear(){
 		
 		return year;
@@ -102,21 +110,38 @@ public class CalendarDay
 		return dayEvents.size();
 	}
 	
+	/**
+	 *  Loads events which match the Calendar day
+	 * @return none
+	 */
 	public void loadDayEvents(){
 		
 		this.dayEvents = eventHelper.getEventsForDate(getMonth(), getDate(), getYear());
 	}
 	
+	/**
+	 *  Saves all events stored globally to ser file, CalendarDay given access here
+	 * @return none
+	 */
 	public void saveEvents(){
 		eventHelper.saveEvents();
 	}
 	
+	/**
+	 *  Adds an event to eventHelper
+	 * @return none
+	 */
 	public void addEvent(String text){
 		
 		Event2 temp = new Event2(getMonth(), getDate(), getYear(), 0, 0, text, false);
 		eventHelper.addEvent(temp);
 	}
 	
+	/**
+	 *  Removes an event from eventHelper
+	 *  @param index - int: specifies which event for this day should be removed
+	 *  @return none
+	 */
 	public void removeEvent(int index){
 		
 		eventHelper.removeEvent(dayEvents.get(index));
