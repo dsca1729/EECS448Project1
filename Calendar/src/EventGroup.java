@@ -65,6 +65,7 @@ public class EventGroup{
 		
 		//if the event does not come before any other events, add it at the end
 		events.add(e);
+		saveEvents(); //This is just for safety to make sure we never lose events
 	}
 	
 	public ArrayList<Event2> getEventsForDate(String month, int day, int year){
