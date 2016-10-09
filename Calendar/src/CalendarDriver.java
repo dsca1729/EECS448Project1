@@ -320,11 +320,16 @@ public class CalendarDriver {
 		newWeek.setupWeek(day, year);
 		return newWeek;
 	}
-	
-	public void addRecurringEvent(String text, CalendarDay startDay, String frequency, String[] daysOfWeek){
+	/**
+	 * add recurring events on a Monthly, Bi-Weekly, and weekly basis
+	 * @param text - the text to add to an event
+	 * @param frequency - the recurrence of an event ex "Monthly" 
+	 * @param daysOfWeek - array of the days of the week an event should repeat on
+	 */
+	public void addRecurringEvent(String text, String frequency, String[] daysOfWeek){
 		if(frequency.equals("Monthly")){
-			CalendarMonth[] monthArr = year.getMonths();
-			CalendarDay workingDay = curDay;
+			CalendarMonth[] monthArr = year.getMonths(); //the month to add an event to
+			CalendarDay workingDay = curDay; //day we are adding an event to
 			int dateToAdd = curDay.getDate(); //the date to add the event to each month
 			int sMonthIndex = year.getMonthIndex(getCurMonthName());
 			for(int i = sMonthIndex;i<monthArr.length;i++){
@@ -332,7 +337,7 @@ public class CalendarDriver {
 				workingDay.addEvent(text);
 			}
 		}
-		else if(frequency.equals("Weekly")){
+		else if(frequency.equals("Weekly")||frequency.equals("Bi-Weekly")){
 			CalendarWeek workingWeek = getWeek();
 			boolean flag = true;
 			while(flag){
