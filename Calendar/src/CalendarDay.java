@@ -116,32 +116,7 @@ public class CalendarDay
 		Event2 temp = new Event2(getMonth(), getDate(), getYear(), 0, 0, text, false);
 		eventHelper.addEvent(temp);
 	}
-	
-	public void addRecurringEvent(CalendarDriver calDrive, String text, String frequency, String[] daysOfWeek ){
-		CalendarYear year = calDrive.getYear();
-		CalendarMonth month = calDrive.getCurrentMonth();
-		CalendarMonth[] monthArr = year.getMonths();
-		int startDate = getDate();
-		int mIndex = year.getMonthIndex(month.getMonth());
-		for(int i = mIndex; i < monthArr.length; i++){
-			month = monthArr[i];//set the month object to the month we are working with
-			if(frequency.equals("Monthly")){
-				Event2 temp = new Event2(month.getMonth(), startDate, getYear(), 0, 0, text, true);
-				eventHelper.addEvent(temp);
-			}
-			else{
-				for(int j = 1; j<=month.getNumDays();j++){
-					if(frequency.equals("Weekly")){
-						
-					}
-					else if(frequency.equals("Bi-Weekly")){
-						
-					}
-				}
-			}
-		}
-	}
-	
+
 	/*
 	public String getFilePath()
 	{

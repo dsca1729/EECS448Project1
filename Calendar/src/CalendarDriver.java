@@ -321,4 +321,20 @@ public class CalendarDriver {
 		return newWeek;
 	}
 	
+	public void addRecurringEvent(String text, CalendarDay startDay, String frequency, String[] daysOfWeek){
+		if(frequency.equals("Monthly")){
+			CalendarMonth[] monthArr = year.getMonths();
+			CalendarDay workingDay = curDay;
+			int dateToAdd = curDay.getDate(); //the date to add the event to each month
+			int sMonthIndex = year.getMonthIndex(getCurMonthName());
+			for(int i = sMonthIndex;i<monthArr.length;i++){
+				workingDay = monthArr[i].getDay(dateToAdd);
+				workingDay.addEvent(text);
+			}
+		}
+		else if(frequency.equals("Weekly")){
+			
+		}
+	}
+	
 }
