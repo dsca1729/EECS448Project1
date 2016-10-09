@@ -16,7 +16,7 @@ public class CalendarDay
 	private int date = 0;
 	private String month;
 	private String dayOfWeek;
-	public ArrayList<String> dayEvents;
+	public ArrayList<Event2> dayEvents;
 	private String monthFilePath;
 	private int year = 2016;
 	
@@ -33,7 +33,7 @@ public class CalendarDay
 	{
 		this.date = d;
 		this.month = m;
-		this.dayEvents = new ArrayList<String>();
+		this.dayEvents = new ArrayList<Event2>();
 		
 		eventHelper = new EventGroup();
 		
@@ -87,7 +87,7 @@ public class CalendarDay
 		String temp = "";
 		for (int i = 0; i < dayEvents.size(); i++)
 		{
-			temp += (i+1) + ". " + dayEvents.get(i) + "\n";
+			temp += (i+1) + ". " + dayEvents.get(i).eventDescription + "\n";
 		}
 		return temp;
 	}
