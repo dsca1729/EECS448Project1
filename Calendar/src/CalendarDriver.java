@@ -7,6 +7,7 @@
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 /**
  * <h2>CalendarDriver Class</h2>
  * <p>Contains an instance "year" of the CalendarYear Class
@@ -326,7 +327,7 @@ public class CalendarDriver {
 	 * @param frequency - the recurrence of an event ex "Monthly" 
 	 * @param daysOfWeek - array of the days of the week an event should repeat on
 	 */
-	public void addRecurringEvent(String text, String frequency, String[] daysOfWeek){
+	public void addRecurringEvent(String text, String frequency, List<String> daysOfWeek){
 		if(frequency.equals("Monthly")){
 			CalendarMonth[] monthArr = year.getMonths(); //the month to add an event to
 			CalendarDay workingDay = curDay; //day we are adding an event to
@@ -341,9 +342,9 @@ public class CalendarDriver {
 			CalendarWeek workingWeek = getWeek();
 			boolean flag = true;
 			while(flag){
-				for(int i = 0;i < daysOfWeek.length;i++){
+				for(int i = 0;i < daysOfWeek.size();i++){
 					try{
-						switch(daysOfWeek[i].toLowerCase()){
+						switch(daysOfWeek.get(i).toLowerCase()){
 						case "sunday":
 							workingWeek.getDay(0).addEvent(text);
 							break;
