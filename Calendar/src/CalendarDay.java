@@ -116,6 +116,12 @@ public class CalendarDay
 		Event2 temp = new Event2(getMonth(), getDate(), getYear(), 0, 0, text, false);
 		eventHelper.addEvent(temp);
 	}
+	
+	public void removeEvent(int index){
+		
+		eventHelper.removeEvent(dayEvents.get(index));
+		loadDayEvents();
+	}
 
 	/*
 	public String getFilePath()
