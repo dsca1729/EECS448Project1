@@ -86,4 +86,57 @@ public class Event2 implements java.io.Serializable{
 	    return true;
 
 	}
+	
+	public boolean isBefore(Event2 other){
+		
+		if(this.startYear < other.startYear) return true;
+		else if(this.startYear > other.startYear) return false;
+		else{
+			if(monthStringToInt(this.startMonth) < monthStringToInt(other.startMonth)) return true;
+			else if(monthStringToInt(this.startMonth) > monthStringToInt(other.startMonth)) return false;
+			else{
+				if(this.startDay < other.startDay) return true;
+				else if(this.startDay > other.startDay) return false;
+				else{
+					if(this.startTime <= other.startTime) return true;
+					else return false;
+				}
+			}
+		}
+	}
+	
+	public int monthStringToInt(String month){
+		
+		switch(month){
+			
+			case "January":
+				return 1;
+			case "February":
+				return 2;
+			case "March":
+				return 3;
+			case "April":
+				return 4;
+			case "May":
+				return 5;
+			case "June":
+				return 6;
+			case "July":
+				return 7;
+			case "August":
+				return 8;
+			case "September":
+				return 8;
+			case "October":
+				return 10;
+			case "November":
+				return 11;
+			case "December":
+				return 12;
+			
+			default:
+				return 0;
+		}
+	}
+	
 }
