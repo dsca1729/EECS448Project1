@@ -53,7 +53,13 @@ public class EventGroup{
 	}
 	
 	public void addEvent(Event2 e){
-		events.add(e);
+		
+		for(int i =0; i<events.size();i++){
+			if(e.isBefore(events.get(i))){
+				events.add(i, e);
+				break;
+			}
+		}
 	}
 	
 	public ArrayList<String> getEventsForDate(String month, int day, int year){
