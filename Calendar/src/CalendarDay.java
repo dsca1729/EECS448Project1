@@ -95,8 +95,16 @@ public class CalendarDay
 		String temp = "";
 		for (int i = 0; i < dayEvents.size(); i++)
 		{
-			Event2 event = dayEvents.get(i);			
-			temp += String.valueOf(i+1) + ".   " + timeToString(event.startTime) + " - " + timeToString(event.endTime) + "       " +event.eventDescription + "\n";
+			Event2 event = dayEvents.get(i);
+			
+			if(event.startTime == 50){
+				
+				temp += String.valueOf(i+1) + ".   " + "Multiday:" + "       " +event.eventDescription + "\n";
+			}
+			else{
+				temp += String.valueOf(i+1) + ".   " + timeToString(event.startTime) + " - " + timeToString(event.endTime) + "       " +event.eventDescription + "\n";
+			}
+			
 			
 		}
 		return temp;
