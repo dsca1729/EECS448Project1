@@ -336,7 +336,9 @@ public class CalendarJFrame extends JFrame{
 						startTime.setSelectedIndex(0);
 						endTime.setSelectedIndex(0);
 
-						tabs.setSelectedIndex(1);
+						tabs.setSelectedIndex(0);
+						
+						dayButton.doClick();
 					}
 				});
 

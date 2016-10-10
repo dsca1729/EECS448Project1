@@ -337,6 +337,8 @@ public class CalendarJFrame extends JFrame{
 						endTime.setSelectedIndex(0);
 
 						tabs.setSelectedIndex(1);
+						
+						dayButton.doClick();
 					}
 				});
 
