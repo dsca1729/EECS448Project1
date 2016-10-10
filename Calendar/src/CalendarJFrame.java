@@ -65,12 +65,13 @@ public class CalendarJFrame extends JFrame{
 	{
 		super("Calendar");
 		
+		
 		addWindowListener(new WindowAdapter()
 		{
 		    public void windowClosing(WindowEvent e)
 		    {
 		        System.out.println("Saving to ser file...");
-		        curDay.saveEvents();
+		        curDay.printAllEvents();
 		    }
 		});
 		
