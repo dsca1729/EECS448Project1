@@ -833,11 +833,10 @@ public class CalendarJFrame extends JFrame{
 					public void actionPerformed(ActionEvent e){
 						try{
 							
-							/////////////////////////////////////////////////////////////////
-							//curDay.removeEvent((int)eventSelection.getSelectedItem());
-							eventText.setText(curDay.getEvents());
-							updateComboBox(curDay.getEventCount(), eventSelection);
-							////////////////////////////////////////////////////////////////
+							curDay.removeEvent(eventSelection.getSelectedIndex());
+							
+							dayButton.doClick();
+							eventSelection.setSelectedIndex(0);
 							
 							updateWeekDisplay(curWeek);
 						}catch(Exception err){}
@@ -1086,7 +1085,7 @@ public class CalendarJFrame extends JFrame{
 				dayOfWeek[i] = new JLabel(curWeek.getDay(i).getDayOfWeek());
 				dateLabels[i] = new JLabel(curWeek.getDay(i).getMonth() + " " + curWeek.getDay(i).getDate());
 				eventAreas[i] = new JTextArea(20, 9);
-				eventAreas[i].setText(curWeek.getDay(i).getEvents());
+				eventAreas[i].setText(curWeek.getDay(i).getWeekEvents());
 			}
 			
 			//this formats the event area to display events properly
@@ -1239,7 +1238,7 @@ public class CalendarJFrame extends JFrame{
 				dayOfWeek[i].setText(week.getDay(i).getDayOfWeek());
 				dateLabels[i].setText(week.getDay(i).getMonth() + " " + week.getDay(i).getDate());
 				dateLabels[i].setName(week.getDay(i).getMonth() + " " + week.getDay(i).getDate());
-				eventAreas[i].setText(week.getDay(i).getEvents());
+				eventAreas[i].setText(week.getDay(i).getWeekEvents());
 				eventAreas[i].setName(week.getDay(i).getMonth() + " " + week.getDay(i).getDate());
 			}
 		}

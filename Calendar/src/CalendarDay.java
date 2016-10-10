@@ -102,6 +102,18 @@ public class CalendarDay
 		return temp;
 	}
 	
+	public String getWeekEvents(){
+		
+		String temp = "";
+		for (int i = 0; i < dayEvents.size(); i++)
+		{
+			Event2 event = dayEvents.get(i);			
+			temp += event.eventDescription + "\n";
+			
+		}
+		return temp;
+	}
+	
 	private String timeToString(int time){
 		
 		int newtime = time % 12;
