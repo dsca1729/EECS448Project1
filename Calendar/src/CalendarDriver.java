@@ -366,13 +366,14 @@ public class CalendarDriver {
 						case "saturday":
 							workingWeek.getDay(6).addEvent(text,startTime,endTime);
 							break;
+							default: break;
 						}
 					} catch(Exception e){}
-					if(getNextWeek(workingWeek) == workingWeek){
-						flag = false;
-					}else{
-						workingWeek = getNextWeek(workingWeek);
-					}
+				}
+				if(getNextWeek(workingWeek) == workingWeek){
+					flag = false;
+				}else{
+					workingWeek = getNextWeek(workingWeek);
 				}
 			}
 		}
