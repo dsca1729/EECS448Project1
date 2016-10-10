@@ -356,6 +356,7 @@ public class CalendarDriver {
 							break;
 						case "wednesday":
 							workingWeek.getDay(3).addEvent(text,startTime,endTime);
+							break;
 						case "thursday":
 							workingWeek.getDay(4).addEvent(text,startTime,endTime);
 							break;
