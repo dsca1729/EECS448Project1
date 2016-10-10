@@ -495,20 +495,7 @@ public class CalendarJFrame extends JFrame{
 		panel.add(addEventPanel);	
 		panel.add(multiDayPanel);
 		
-		newEventButton.addActionListener(
-				new ActionListener(){
-					public void actionPerformed(ActionEvent e){
-						
-						curDay.addEvent(newEventText.getText(),startTime.getSelectedIndex(), endTime.getSelectedIndex()+1);						
-						
-						newEventText.setText("");
-						startTime.setSelectedIndex(0);
-						endTime.setSelectedIndex(0);
-						tabs.setSelectedIndex(0);
-						
-						dayButton.doClick();
-					}
-				});
+		
 		
 	}
 	
