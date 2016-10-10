@@ -328,6 +328,7 @@ public class CalendarDriver {
 	 * @param daysOfWeek - array of the days of the week an event should repeat on
 	 */
 	public void addRecurringEvent(String text, String frequency, List<String> daysOfWeek, int startTime, int endTime){
+		
 		if(frequency.equals("Monthly")){
 			CalendarMonth[] monthArr = year.getMonths(); //the month to add an event to
 			CalendarDay workingDay = curDay; //day we are adding an event to

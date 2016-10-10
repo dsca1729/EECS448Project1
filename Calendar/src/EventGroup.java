@@ -73,14 +73,20 @@ public class EventGroup{
 	 * @param Event2 e the event that is being added
 	 * @return none
 	 */
-	public boolean addEvent(Event2 e){
+	public void addEvent(Event2 e){
+		
+		retrieveEventsFromFile();
 		
 		retrieveEventsFromFile();
 		
 		if(events.size() == 0){
 			events.add(e);
 			saveEvents();
+<<<<<<< HEAD
 			return true;
+=======
+			return;
+>>>>>>> ee48fe6a7970b5d57b2fcfee1c543a32f3f94d80
 		}
 		for(int i =0; i<events.size();i++){
 			
@@ -88,13 +94,21 @@ public class EventGroup{
 				
 				events.add(i, e); //add it to the array at the right position
 				saveEvents();
+<<<<<<< HEAD
 				return true; //exit the function
+=======
+				return; //exit the function
+>>>>>>> ee48fe6a7970b5d57b2fcfee1c543a32f3f94d80
 			}
 		}
 		
 		events.add(e);
 		saveEvents();
+<<<<<<< HEAD
 		return true;
+=======
+		return;
+>>>>>>> ee48fe6a7970b5d57b2fcfee1c543a32f3f94d80
 		
 	}
 	

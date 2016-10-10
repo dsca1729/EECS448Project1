@@ -71,11 +71,7 @@ public class CalendarJFrame extends JFrame{
 		    public void windowClosing(WindowEvent e)
 		    {
 		        System.out.println("Saving to ser file...");
-<<<<<<< HEAD
-		        //curDay.saveEvents();
-=======
 		        curDay.printAllEvents();
->>>>>>> ee48fe6a7970b5d57b2fcfee1c543a32f3f94d80
 		    }
 		});
 		
@@ -340,7 +336,9 @@ public class CalendarJFrame extends JFrame{
 						startTime.setSelectedIndex(0);
 						endTime.setSelectedIndex(0);
 
-						tabs.setSelectedIndex(1);
+						tabs.setSelectedIndex(0);
+						
+						dayButton.doClick();
 					}
 				});
 
