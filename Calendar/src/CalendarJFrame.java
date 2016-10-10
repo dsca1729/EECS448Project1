@@ -1083,7 +1083,7 @@ public class CalendarJFrame extends JFrame{
 				dayOfWeek[i] = new JLabel(curWeek.getDay(i).getDayOfWeek());
 				dateLabels[i] = new JLabel(curWeek.getDay(i).getMonth() + " " + curWeek.getDay(i).getDate());
 				eventAreas[i] = new JTextArea(20, 9);
-				eventAreas[i].setText(curWeek.getDay(i).getEvents());
+				eventAreas[i].setText(curWeek.getDay(i).getWeekEvents());
 			}
 			
 			//this formats the event area to display events properly
@@ -1236,7 +1236,7 @@ public class CalendarJFrame extends JFrame{
 				dayOfWeek[i].setText(week.getDay(i).getDayOfWeek());
 				dateLabels[i].setText(week.getDay(i).getMonth() + " " + week.getDay(i).getDate());
 				dateLabels[i].setName(week.getDay(i).getMonth() + " " + week.getDay(i).getDate());
-				eventAreas[i].setText(week.getDay(i).getEvents());
+				eventAreas[i].setText(week.getDay(i).getWeekEvents());
 				eventAreas[i].setName(week.getDay(i).getMonth() + " " + week.getDay(i).getDate());
 			}
 		}
