@@ -327,15 +327,15 @@ public class CalendarDriver {
 	 * @param frequency - the recurrence of an event ex "Monthly" 
 	 * @param daysOfWeek - array of the days of the week an event should repeat on
 	 */
-	public void addRecurringEvent(String text, String frequency, List<String> daysOfWeek){
+	public void addRecurringEvent(String text, String frequency, List<String> daysOfWeek, int startTime, int endTime){
 		if(frequency.equals("Monthly")){
 			CalendarMonth[] monthArr = year.getMonths(); //the month to add an event to
 			CalendarDay workingDay = curDay; //day we are adding an event to
-			int dateToAdd = curDay.getDate(); //the date to add the event to each month
+			int dateToAdd = curDay.getDate()-1; //the date to add the event to each month
 			int sMonthIndex = year.getMonthIndex(getCurMonthName());
 			for(int i = sMonthIndex;i<monthArr.length;i++){
 				workingDay = monthArr[i].getDay(dateToAdd);
-				workingDay.addEvent(text,0,0);
+				workingDay.addEvent(text,startTime,endTime);
 			}
 		}
 		else if(frequency.equals("Weekly")||frequency.equals("Bi-Weekly")){
@@ -346,24 +346,24 @@ public class CalendarDriver {
 					try{
 						switch(daysOfWeek.get(i).toLowerCase()){
 						case "sunday":
-							workingWeek.getDay(0).addEvent(text,0,0);
+							workingWeek.getDay(0).addEvent(text,startTime,endTime);
 							break;
 						case "monday":
-							workingWeek.getDay(1).addEvent(text,0,0);
+							workingWeek.getDay(1).addEvent(text,startTime,endTime);
 							break;
 						case "tuesday":
-							workingWeek.getDay(2).addEvent(text,0,0);
+							workingWeek.getDay(2).addEvent(text,startTime,endTime);
 							break;
 						case "wednesday":
-							workingWeek.getDay(3).addEvent(text,0,0);
+							workingWeek.getDay(3).addEvent(text,startTime,endTime);
 						case "thursday":
-							workingWeek.getDay(4).addEvent(text,0,0);
+							workingWeek.getDay(4).addEvent(text,startTime,endTime);
 							break;
 						case "friday":
-							workingWeek.getDay(5).addEvent(text,0,0);
+							workingWeek.getDay(5).addEvent(text,startTime,endTime);
 							break;
 						case "saturday":
-							workingWeek.getDay(6).addEvent(text,0,0);
+							workingWeek.getDay(6).addEvent(text,startTime,endTime);
 							break;
 						}
 					} catch(Exception e){}

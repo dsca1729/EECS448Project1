@@ -250,7 +250,7 @@ public class CalendarJFrame extends JFrame{
 		JPanel startEndPanel = new JPanel();
 		startEndPanel.setBorder(BorderFactory.createEmptyBorder(10,1,1,1));
 		String[] timeStrings = { "12:00 am", "1:00", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00", "10:00", "11:00", "12:00 pm", "1:00", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00", "10:00", "11:00"};
-		JComboBox startTime = new JComboBox(timeStrings);
+		final JComboBox startTime = new JComboBox(timeStrings);
 		JLabel start = new JLabel("Start Time:");
 	
 		startEndPanel.add(startTime);
@@ -258,7 +258,7 @@ public class CalendarJFrame extends JFrame{
 		
 		startEndPanel.setBorder(BorderFactory.createEmptyBorder(10,1,1,1));
 		String[] endStrings = { "1:00 am", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00", "10:00", "11:00", "12:00 pm", "1:00", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00", "10:00", "11:00", "12:00"};
-		JComboBox endTime = new JComboBox(endStrings);
+		final JComboBox endTime = new JComboBox(endStrings);
 		JLabel end = new JLabel("End Time:");
 		
 		startEndPanel.add(endTime);
@@ -300,7 +300,7 @@ public class CalendarJFrame extends JFrame{
 					public void actionPerformed(ActionEvent e){
 						List<String> daysOfWeek = new ArrayList<String>();
 						if(monthly.isSelected() == true){
-							calDrive.addRecurringEvent(newEventText.getText(),"Monthly",daysOfWeek);
+							calDrive.addRecurringEvent(newEventText.getText(),"Monthly",daysOfWeek,startTime.getSelectedIndex(),endTime.getSelectedIndex()+1);
 						}
 						else if(weekly.isSelected()==true || biWeekly.isSelected() == true){
 							if(sunday.isSelected()==true){
@@ -325,12 +325,15 @@ public class CalendarJFrame extends JFrame{
 								daysOfWeek.add("Saturday");
 							}
 							if(weekly.isSelected()){
-								calDrive.addRecurringEvent(newEventText.getText(), "Weekly", daysOfWeek);
+								calDrive.addRecurringEvent(newEventText.getText(), "Weekly", daysOfWeek, startTime.getSelectedIndex(), endTime.getSelectedIndex()+1);
 							}
 							else{
-								calDrive.addRecurringEvent(newEventText.getText(), "Bi-Weekly", daysOfWeek);
+								calDrive.addRecurringEvent(newEventText.getText(), "Bi-Weekly", daysOfWeek, startTime.getSelectedIndex(), endTime.getSelectedIndex()+1);
 							}
 						}
+						newEventText.setText("");
+						startTime.setSelectedIndex(0);
+						endTime.setSelectedIndex(0);
 					}
 				});
 
