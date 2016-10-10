@@ -334,7 +334,7 @@ public class CalendarDriver {
 			int sMonthIndex = year.getMonthIndex(getCurMonthName());
 			for(int i = sMonthIndex;i<monthArr.length;i++){
 				workingDay = monthArr[i].getDay(dateToAdd);
-				workingDay.addEvent(text);
+				workingDay.addEvent(text,0,0);
 			}
 		}
 		else if(frequency.equals("Weekly")||frequency.equals("Bi-Weekly")){
@@ -345,24 +345,24 @@ public class CalendarDriver {
 					try{
 						switch(daysOfWeek[i].toLowerCase()){
 						case "sunday":
-							workingWeek.getDay(0).addEvent(text);
+							workingWeek.getDay(0).addEvent(text,0,0);
 							break;
 						case "monday":
-							workingWeek.getDay(1).addEvent(text);
+							workingWeek.getDay(1).addEvent(text,0,0);
 							break;
 						case "tuesday":
-							workingWeek.getDay(2).addEvent(text);
+							workingWeek.getDay(2).addEvent(text,0,0);
 							break;
 						case "wednesday":
-							workingWeek.getDay(3).addEvent(text);
+							workingWeek.getDay(3).addEvent(text,0,0);
 						case "thursday":
-							workingWeek.getDay(4).addEvent(text);
+							workingWeek.getDay(4).addEvent(text,0,0);
 							break;
 						case "friday":
-							workingWeek.getDay(5).addEvent(text);
+							workingWeek.getDay(5).addEvent(text,0,0);
 							break;
 						case "saturday":
-							workingWeek.getDay(6).addEvent(text);
+							workingWeek.getDay(6).addEvent(text,0,0);
 							break;
 						}
 					} catch(Exception e){}

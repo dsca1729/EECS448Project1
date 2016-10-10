@@ -49,6 +49,8 @@ public class CalendarJFrame extends JFrame{
 	{
 		curDay = calDrive.getCurrentDate();
 		curWeek = calDrive.getWeek();
+		
+		curDay.printAllEvents();
 		new CalendarJFrame();
 	}
 	
@@ -65,7 +67,7 @@ public class CalendarJFrame extends JFrame{
 		{
 		    public void windowClosing(WindowEvent e)
 		    {
-		        System.out.print("Saving to ser file...");
+		        System.out.println("Saving to ser file...");
 		        curDay.saveEvents();
 		    }
 		});
@@ -493,7 +495,7 @@ public class CalendarJFrame extends JFrame{
 		JPanel startEndPanel = new JPanel();
 		startEndPanel.setBorder(BorderFactory.createEmptyBorder(10,1,1,1));
 		String[] timeStrings = { "12:00 am", "1:00", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00", "10:00", "11:00", "12:00 pm", "1:00", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00", "10:00", "11:00"};
-		JComboBox startTime = new JComboBox(timeStrings);
+		final JComboBox startTime = new JComboBox(timeStrings);
 		JLabel start = new JLabel("Start Time:");
 	
 		startEndPanel.add(startTime);
@@ -501,7 +503,7 @@ public class CalendarJFrame extends JFrame{
 		
 		startEndPanel.setBorder(BorderFactory.createEmptyBorder(10,1,1,1));
 		String[] endStrings = { "1:00 am", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00", "10:00", "11:00", "12:00 pm", "1:00", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00", "10:00", "11:00", "12:00"};
-		JComboBox endTime = new JComboBox(endStrings);
+		final JComboBox endTime = new JComboBox(endStrings);
 		JLabel end = new JLabel("End Time:");
 		
 		startEndPanel.add(endTime);
@@ -512,6 +514,8 @@ public class CalendarJFrame extends JFrame{
 		//Creates the panel that contains the text box
 		JPanel addEventPanel = new JPanel();
 		addEventPanel.setBorder(BorderFactory.createEmptyBorder(20,1,1,1));
+		
+		
 
 		JPanel newEventPanel = new JPanel();
 		
@@ -556,7 +560,20 @@ public class CalendarJFrame extends JFrame{
 		panel.add(addEventPanel);
 		panel.add(startEndPanel);
 		
-		
+		newEventButton.addActionListener(
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						
+						curDay.addEvent(newEventText.getText(),startTime.getSelectedIndex(), endTime.getSelectedIndex());						
+						
+						newEventText.setText("");
+						startTime.setSelectedIndex(0);
+						endTime.setSelectedIndex(0);
+						tabs.setSelectedIndex(0);
+						
+						dayButton.doClick();
+					}
+				});
 		 
 	}
 	
@@ -747,15 +764,6 @@ public class CalendarJFrame extends JFrame{
 		normal.addActionListener(
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
-						
-						///////////////////////////////////////////////////////////
-						curDay.addEvent(newEventText.getText());
-						curDay.loadDayEvents();
-						
-						eventText.setText(curDay.getEvents());
-						newEventText.setText("");
-						updateComboBox(curDay.getEventCount(), eventSelection);
-						//////////////////////////////////////////////////////////
 						
 						updateWeekDisplay(curWeek);
 						tabs.setSelectedIndex(4);

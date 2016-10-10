@@ -73,20 +73,24 @@ public class EventGroup{
 	 * @param Event2 e the event that is being added
 	 * @return none
 	 */
-	public void addEvent(Event2 e){
+	public boolean addEvent(Event2 e){
 		
+		if(events.size() == 0){
+			events.add(e);
+			return true;
+		}
 		for(int i =0; i<events.size();i++){
 			
 			if(e.isBefore(events.get(i))){ //if the added event comes before another event in the array
 				
 				events.add(i, e); //add it to the array at the right position
-				return; //exit the function
+				return true; //exit the function
 			}
 		}
 		
-		//if the event does not come before any other events, add it at the end
 		events.add(e);
-		saveEvents(); //This is just for safety to make sure we never lose events
+		return true;
+		
 	}
 	
 	/**
@@ -127,7 +131,7 @@ public class EventGroup{
 			
 			if(events.get(i).equals(badEvent)){
 				events.remove(i);
-				return;
+				break;
 			}
 		}
 	}
@@ -141,7 +145,7 @@ public class EventGroup{
 		
 		for(int i=0; i< events.size();i++){
 			
-			System.out.println(events.get(i).eventDescription);
+			System.out.println("->"+events.get(i).eventDescription);
 		}
 	}
 	

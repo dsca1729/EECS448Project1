@@ -96,7 +96,9 @@ public class CalendarDay
 		for (int i = 0; i < dayEvents.size(); i++)
 		{
 			temp += (i+1) + ". " + dayEvents.get(i).eventDescription + "\n";
+			
 		}
+		System.out.println(temp);
 		return temp;
 	}
 	
@@ -131,10 +133,11 @@ public class CalendarDay
 	 *  Adds an event to eventHelper
 	 * @return none
 	 */
-	public void addEvent(String text){
+	public void addEvent(String text, int startTime, int endTime){
 		
-		Event2 temp = new Event2(getMonth(), getDate(), getYear(), 0, 0, text, false);
+		Event2 temp = new Event2(getMonth(), getDate(), getYear(), startTime, endTime, text, false);
 		eventHelper.addEvent(temp);
+		loadDayEvents();
 	}
 	
 	/**
@@ -146,6 +149,10 @@ public class CalendarDay
 		
 		eventHelper.removeEvent(dayEvents.get(index));
 		loadDayEvents();
+	}
+	
+	public void printAllEvents(){
+		eventHelper.printEvents();
 	}
 
 	/*
