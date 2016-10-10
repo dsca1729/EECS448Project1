@@ -533,7 +533,7 @@ public class CalendarJFrame extends JFrame{
 		//Creates the panel that contains the start and end time Combo Boxes
 		JPanel startEndPanel = new JPanel();
 		startEndPanel.setBorder(BorderFactory.createEmptyBorder(10,1,1,1));
-		String[] timeStrings = { "12:00 am", "1:00", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00", "10:00", "11:00", "12:00 pm", "1:00", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00", "10:00", "11:00"};
+		String[] timeStrings = { "12:00 am", "1:00 am", "2:00 am", "3:00 am", "4:00 am", "5:00 am", "6:00 am", "7:00 am", "8:00 am", "9:00 am", "10:00 am", "11:00 am", "12:00 pm", "1:00 pm", "2:00 pm", "3:00 pm", "4:00 pm", "5:00 pm", "6:00 pm", "7:00 pm", "8:00 pm", "9:00 pm", "10:00 pm", "11:00 pm"};
 		final JComboBox startTime = new JComboBox(timeStrings);
 		JLabel start = new JLabel("Start Time:");
 	
@@ -541,7 +541,7 @@ public class CalendarJFrame extends JFrame{
 		
 		
 		startEndPanel.setBorder(BorderFactory.createEmptyBorder(10,1,1,1));
-		String[] endStrings = { "1:00 am", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00", "10:00", "11:00", "12:00 pm", "1:00", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00", "10:00", "11:00", "12:00"};
+		String[] endStrings = {"1:00 am", "2:00 am", "3:00 am", "4:00 am", "5:00 am", "6:00 am", "7:00 am", "8:00 am", "9:00 am", "10:00 am", "11:00 am", "12:00 pm", "1:00 pm", "2:00 pm", "3:00 pm", "4:00 pm", "5:00 pm", "6:00 pm", "7:00 pm", "8:00 pm", "9:00 pm", "10:00 pm", "11:00 pm", "Midnight"};
 		final JComboBox endTime = new JComboBox(endStrings);
 		JLabel end = new JLabel("End Time:");
 		
@@ -603,7 +603,7 @@ public class CalendarJFrame extends JFrame{
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
 						
-						curDay.addEvent(newEventText.getText(),startTime.getSelectedIndex(), endTime.getSelectedIndex());						
+						curDay.addEvent(newEventText.getText(),startTime.getSelectedIndex(), endTime.getSelectedIndex()+1);						
 						
 						newEventText.setText("");
 						startTime.setSelectedIndex(0);

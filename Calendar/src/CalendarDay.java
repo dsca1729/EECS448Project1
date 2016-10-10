@@ -95,11 +95,32 @@ public class CalendarDay
 		String temp = "";
 		for (int i = 0; i < dayEvents.size(); i++)
 		{
-			temp += (i+1) + ". " + dayEvents.get(i).eventDescription + "\n";
+			Event2 event = dayEvents.get(i);			
+			temp += String.valueOf(i+1) + ".   " + timeToString(event.startTime) + " - " + timeToString(event.endTime) + "       " +event.eventDescription + "\n";
 			
 		}
-		System.out.println(temp);
 		return temp;
+	}
+	
+	private String timeToString(int time){
+		
+		int newtime = time % 12;
+		if(newtime == 0) newtime = 12;
+		
+		String timestring = "";
+		
+		if(newtime <= 9) timestring = "0" + String.valueOf(newtime) + ":00 ";
+		else timestring = String.valueOf(newtime) + ":00 ";
+		
+		if((time/12) >= 1){
+			timestring += "pm";
+		}
+		else{
+			timestring += "am";
+		}
+		
+		return timestring;
+		
 	}
 	
 
