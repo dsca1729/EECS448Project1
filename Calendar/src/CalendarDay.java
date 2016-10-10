@@ -174,6 +174,13 @@ public class CalendarDay
 		loadDayEvents();
 	}
 	
+	public void addMulti(String text, String month, int date){
+		
+		Event2 temp = new Event2(getMonth(), month, getDate(), date, getYear(), getYear(), text);
+		eventHelper.addEvent(temp);
+		loadDayEvents();
+	}
+	
 	/**
 	 *  Removes an event from eventHelper
 	 *  @param index - int: specifies which event for this day should be removed

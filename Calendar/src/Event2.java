@@ -51,7 +51,7 @@ public class Event2 implements java.io.Serializable{
 	/*
 	 * 	This constructor is for multi-day events
 	 */
-	public Event2(String startMonth, String endMonth, int startDay, int endDay, int startYear, int endYear, int startTime, int endTime, String eventDescription){
+	public Event2(String startMonth, String endMonth, int startDay, int endDay, int startYear, int endYear, String eventDescription){
 		
 		this.startMonth = startMonth;
 		this.endMonth = endMonth;
@@ -62,8 +62,8 @@ public class Event2 implements java.io.Serializable{
 		this.startYear = startYear;
 		this.endYear = endYear;
 		
-		this.startTime = startTime;
-		this.endTime = endTime;
+		this.startTime = 50;
+		this.endTime = 50;
 		
 		this.eventDescription = eventDescription;
 		
@@ -130,7 +130,7 @@ public class Event2 implements java.io.Serializable{
 	 * @param String month: String representation of the month
 	 * @return int: int representation of the month
 	 */
-	public int monthStringToInt(String month){
+	public static int monthStringToInt(String month){
 		
 		switch(month){
 			

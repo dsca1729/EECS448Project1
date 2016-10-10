@@ -476,7 +476,6 @@ public class CalendarJFrame extends JFrame{
 				});
 		//Adds everything to the add and remove event panel
 			
-			
 		addEventPanel.add(newEventScroll);
 		addEventPanel.add(newEventPanel);
 		
@@ -499,14 +498,36 @@ public class CalendarJFrame extends JFrame{
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
 						
-						curDay.addEvent(newEventText.getText(),startTime.getSelectedIndex(), endTime.getSelectedIndex()+1);						
+						int day = 0;
+						if(minDaysCB.isVisible()){
+							day = minDaysCB.getSelectedIndex() + 1;
+						}
+						else if(thirtyDaysCB.isVisible()){
+							day = thirtyDaysCB.getSelectedIndex() + 1;
+						}
+						else if(maxDaysCB.isVisible()){
+							day = maxDaysCB.getSelectedIndex() + 1;
+						}
+						System.out.print(String.valueOf(day));
+						String inputMonth = (String) months.getSelectedItem();
+						int currentMonth = Event2.monthStringToInt(curDay.getMonth());
+						int selectedMonth = Event2.monthStringToInt(inputMonth);
+						
+						if( currentMonth > selectedMonth) return;
+						else if( currentMonth == selectedMonth && day <= curDay.getDate()) return;
+						curDay.addMulti(newEventText.getText(),inputMonth,day);						
 						
 						newEventText.setText("");
-						startTime.setSelectedIndex(0);
-						endTime.setSelectedIndex(0);
-						tabs.setSelectedIndex(0);
+						maxDaysCB.setSelectedIndex(0);
+						thirtyDaysCB.setSelectedIndex(0);
+						minDaysCB.setSelectedIndex(0);
 						
 						dayButton.doClick();
+						tabs.setSelectedIndex(0);
+						
+						updateWeekDisplay(curWeek);
+						
+						
 					}
 				});
 		
@@ -617,9 +638,10 @@ public class CalendarJFrame extends JFrame{
 						newEventText.setText("");
 						startTime.setSelectedIndex(0);
 						endTime.setSelectedIndex(0);
-						tabs.setSelectedIndex(0);
 						
-						dayButton.doClick();
+						tabs.setSelectedIndex(0);
+						dayButton.doClick();			
+						updateWeekDisplay(curWeek);
 					}
 				});
 		 
