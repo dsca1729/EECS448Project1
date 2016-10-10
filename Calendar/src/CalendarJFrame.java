@@ -7,6 +7,8 @@
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -291,9 +293,46 @@ public class CalendarJFrame extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				newEventButton.doClick();
 			}
-	   });
-			    
-				
+		});
+		//add a new event
+		newEventButton.addActionListener(
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						List<String> daysOfWeek = new ArrayList<String>();
+						if(monthly.isSelected() == true){
+							calDrive.addRecurringEvent(newEventText.getText(),"Monthly",daysOfWeek);
+						}
+						else if(weekly.isSelected()==true || biWeekly.isSelected() == true){
+							if(sunday.isSelected()==true){
+								daysOfWeek.add("Sunday");
+							}
+							if(monday.isSelected() == true){
+								daysOfWeek.add("Monday");
+							}
+							if(tuesday.isSelected() == true){
+								daysOfWeek.add("Tuesday");
+							}
+							if(wednesday.isSelected() == true){
+								daysOfWeek.add("Wednesday");
+							}
+							if(thursday.isSelected() == true){
+								daysOfWeek.add("Thursday");
+							}
+							if(friday.isSelected() == true){
+								daysOfWeek.add("Friday");
+							}
+							if(saturday.isSelected() == true){
+								daysOfWeek.add("Saturday");
+							}
+							if(weekly.isSelected()){
+								calDrive.addRecurringEvent(newEventText.getText(), "Weekly", daysOfWeek);
+							}
+							else{
+								calDrive.addRecurringEvent(newEventText.getText(), "Bi-Weekly", daysOfWeek);
+							}
+						}
+					}
+				});
 
 		//Gives the newEventText a scroll bar
 		JScrollPane newEventScroll = new JScrollPane(newEventText);
