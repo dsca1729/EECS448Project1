@@ -830,11 +830,10 @@ public class CalendarJFrame extends JFrame{
 					public void actionPerformed(ActionEvent e){
 						try{
 							
-							/////////////////////////////////////////////////////////////////
-							//curDay.removeEvent((int)eventSelection.getSelectedItem());
-							eventText.setText(curDay.getEvents());
-							updateComboBox(curDay.getEventCount(), eventSelection);
-							////////////////////////////////////////////////////////////////
+							curDay.removeEvent(eventSelection.getSelectedIndex());
+							
+							dayButton.doClick();
+							eventSelection.setSelectedIndex(0);
 							
 							updateWeekDisplay(curWeek);
 						}catch(Exception err){}
