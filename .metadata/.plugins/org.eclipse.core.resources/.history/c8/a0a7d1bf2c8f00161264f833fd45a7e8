@@ -65,6 +65,20 @@ public class CalendarJFrame extends JFrame{
 	{
 		super("Calendar");
 		
+		
+		addWindowListener(new WindowAdapter()
+		{
+		    public void windowClosing(WindowEvent e)
+		    {
+		        System.out.println("Saving to ser file...");
+<<<<<<< HEAD
+		        //curDay.saveEvents();
+=======
+		        curDay.printAllEvents();
+>>>>>>> ee48fe6a7970b5d57b2fcfee1c543a32f3f94d80
+		    }
+		});
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(800, 600);
 		setResizable(false);
@@ -495,20 +509,7 @@ public class CalendarJFrame extends JFrame{
 		panel.add(addEventPanel);	
 		panel.add(multiDayPanel);
 		
-		newEventButton.addActionListener(
-				new ActionListener(){
-					public void actionPerformed(ActionEvent e){
-						
-						curDay.addEvent(newEventText.getText(),startTime.getSelectedIndex(), endTime.getSelectedIndex()+1);						
-						
-						newEventText.setText("");
-						startTime.setSelectedIndex(0);
-						endTime.setSelectedIndex(0);
-						tabs.setSelectedIndex(0);
-						
-						dayButton.doClick();
-					}
-				});
+		
 		
 	}
 	
