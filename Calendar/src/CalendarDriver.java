@@ -370,10 +370,19 @@ public class CalendarDriver {
 						}
 					} catch(Exception e){}
 				}
-				if(getNextWeek(workingWeek) == workingWeek){
-					flag = false;
-				}else{
-					workingWeek = getNextWeek(workingWeek);
+				if(frequency.equals("Weekly")){
+					if(getNextWeek(workingWeek) == workingWeek){
+						flag = false;
+					}else{
+						workingWeek = getNextWeek(workingWeek);
+					}
+				}
+				else if(frequency.equals("Bi-Weekly")){
+					if(getNextWeek(getNextWeek(workingWeek)) == workingWeek){
+						flag = false;
+					}else{
+						workingWeek = getNextWeek(getNextWeek(workingWeek));
+					}
 				}
 			}
 		}
