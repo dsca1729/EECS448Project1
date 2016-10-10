@@ -17,7 +17,7 @@ public class EventGroup{
 	 */
 	public EventGroup(){
 		
-		events = retrieveEventsFromFile();
+		retrieveEventsFromFile();
 	}
 	
 	/**
@@ -25,7 +25,7 @@ public class EventGroup{
 	 * 
 	 * @return Arraylist<Event2> of all events in file
 	 */
-	private ArrayList<Event2> retrieveEventsFromFile(){
+	public void retrieveEventsFromFile(){
 		
 		try{
 			
@@ -36,11 +36,11 @@ public class EventGroup{
 	        in.close();
 	        fileIn.close();
 	        
-	        return list;
+	        this.events = list;
 		}
 		catch(Exception e){
 			
-			return new ArrayList<Event2>();
+			this.events = new ArrayList<Event2>();
 		}
 	}
 	
@@ -75,8 +75,11 @@ public class EventGroup{
 	 */
 	public boolean addEvent(Event2 e){
 		
+		retrieveEventsFromFile();
+		
 		if(events.size() == 0){
 			events.add(e);
+			saveEvents();
 			return true;
 		}
 		for(int i =0; i<events.size();i++){
@@ -84,11 +87,13 @@ public class EventGroup{
 			if(e.isBefore(events.get(i))){ //if the added event comes before another event in the array
 				
 				events.add(i, e); //add it to the array at the right position
+				saveEvents();
 				return true; //exit the function
 			}
 		}
 		
 		events.add(e);
+		saveEvents();
 		return true;
 		
 	}

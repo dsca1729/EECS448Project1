@@ -151,6 +151,7 @@ public class CalendarDay
 	 */
 	public void loadDayEvents(){
 		
+		eventHelper.retrieveEventsFromFile();
 		this.dayEvents = eventHelper.getEventsForDate(getMonth(), getDate(), getYear());
 	}
 	
@@ -181,6 +182,7 @@ public class CalendarDay
 	public void removeEvent(int index){
 		
 		eventHelper.removeEvent(dayEvents.get(index));
+		saveEvents();
 		loadDayEvents();
 	}
 	

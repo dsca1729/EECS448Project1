@@ -70,7 +70,7 @@ public class CalendarJFrame extends JFrame{
 		    public void windowClosing(WindowEvent e)
 		    {
 		        System.out.println("Saving to ser file...");
-		        curDay.saveEvents();
+		        //curDay.saveEvents();
 		    }
 		});
 		
