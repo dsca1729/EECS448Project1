@@ -326,6 +326,8 @@ public class CalendarDriver {
 	 * @param text - the text to add to an event
 	 * @param frequency - the recurrence of an event ex "Monthly" 
 	 * @param daysOfWeek - array of the days of the week an event should repeat on
+	 * @param startTime - The event start time
+	 * @param endTime - The end time of the event
 	 */
 	public void addRecurringEvent(String text, String frequency, List<String> daysOfWeek, int startTime, int endTime){
 		if(frequency.equals("Monthly")){
