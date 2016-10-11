@@ -119,7 +119,7 @@ public class EventGroup{
 				
 				matchedEvents.add(singleEvent);
 			}
-			else if(singleEvent.isMultiday && singleEvent.multiDayApplies(month, day, year)){ //Check for multiday
+			else if(singleEvent.isMultiday && singleEvent.multiDayApplies(month, day)){ //Check for multiday
 				
 				matchedEvents.add(singleEvent);
 			}

@@ -508,13 +508,20 @@ public class CalendarJFrame extends JFrame{
 						else if(maxDaysCB.isVisible()){
 							day = maxDaysCB.getSelectedIndex() + 1;
 						}
-						System.out.print(String.valueOf(day));
+						
 						String inputMonth = (String) months.getSelectedItem();
 						int currentMonth = Event2.monthStringToInt(curDay.getMonth());
 						int selectedMonth = Event2.monthStringToInt(inputMonth);
 						
-						if( currentMonth > selectedMonth) return;
+						int newCurrentMonth = currentMonth;
+						int newSelectedMonth = selectedMonth;
+						
+						if(newCurrentMonth < 8) newCurrentMonth += 12; //This compensates for lower months in a later year
+						if(newSelectedMonth < 8) newSelectedMonth += 12;
+						
+						if(newSelectedMonth < newCurrentMonth) return;
 						else if( currentMonth == selectedMonth && day <= curDay.getDate()) return;
+						
 						curDay.addMulti(newEventText.getText(),inputMonth,day);						
 						
 						newEventText.setText("");
@@ -633,7 +640,12 @@ public class CalendarJFrame extends JFrame{
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
 						
-						curDay.addEvent(newEventText.getText(),startTime.getSelectedIndex(), endTime.getSelectedIndex()+1);						
+						int start = startTime.getSelectedIndex();
+						int end = endTime.getSelectedIndex()+1;
+						
+						if(end <= start) return;
+						
+						curDay.addEvent(newEventText.getText(),start, end);						
 						
 						newEventText.setText("");
 						startTime.setSelectedIndex(0);

@@ -184,7 +184,16 @@ public class CalendarDay
 	
 	public void addMulti(String text, String month, int date){
 		
-		Event2 temp = new Event2(getMonth(), month, getDate(), date, getYear(), getYear(), text);
+		int year = 2016;
+		if(Event2.monthStringToInt(month) < 8) year = 2017;
+		
+		/* For testing input information
+		System.out.println(getYear() + " " + year);
+		System.out.println(getMonth() + " " + month);
+		System.out.println(getDate()+" "+ date);
+		*/ 
+		
+		Event2 temp = new Event2(getMonth(), month, getDate(), date, getYear(), year, text);
 		eventHelper.addEvent(temp);
 		loadDayEvents();
 	}

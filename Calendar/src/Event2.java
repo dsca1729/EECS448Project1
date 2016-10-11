@@ -130,22 +130,22 @@ public class Event2 implements java.io.Serializable{
 	 * @param year
 	 * @return
 	 */
-	public boolean multiDayApplies(String month, int date, int year){
+	public boolean multiDayApplies(String month, int date){
 		
-		if(this.endYear > year) return true;
+		int newEndMonth = monthStringToInt(this.endMonth); //1-8
+		int newCheckMonth = monthStringToInt(month);
+		int newStartMonth = monthStringToInt(this.startMonth);
 		
-		else if(this.endYear == year){
-			
-			if(monthStringToInt(this.endMonth) > monthStringToInt(month)) return true;
-			
-			else if(monthStringToInt(this.endMonth) == monthStringToInt(month)){
-				
-				if(this.endDay >= date && this.startDay <= date) return true;
-			}
-		}
+		if(newEndMonth < 8) newEndMonth += 12; //8-17
+		if(newCheckMonth < 8) newCheckMonth += 12;
+		if(newStartMonth < 8) newStartMonth += 12;
+		
+		if(newCheckMonth < newEndMonth && newCheckMonth > newStartMonth) return true;
+		else if(newCheckMonth == newStartMonth && this.startDay <= date) return true;
+		else if(newCheckMonth == newEndMonth && this.endDay >= date) return true;
 		
 		return false;
-		
+	
 	}
 	
 	/**
