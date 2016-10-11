@@ -24,10 +24,17 @@ public class Event2 implements java.io.Serializable{
 	
 	public String eventDescription;
 	
-	/*
-	 * Constructors
+	/**
+	 * Normal event constructor
+	 * 	
+	 * @param month - month of event(start and end are the same)
+	 * @param day - date of event
+	 * @param year - year of event
+	 * @param startTime - start time of event
+	 * @param endTime - end time of event
+	 * @param eventDescription - Description of event
+	 * @param isRecurring - used to notate whether it's a recurring event(may or may not be used)
 	 */
-	
 	public Event2(String month, int day, int year, int startTime, int endTime, String eventDescription, boolean isRecurring){ //Normal Event Constructor
 			
 		this.startMonth = month;
@@ -48,8 +55,15 @@ public class Event2 implements java.io.Serializable{
 		this.isRecurring = isRecurring;
 	}
 	
-	/*
-	 * 	This constructor is for multi-day events
+	/**
+	 * Multiday Constructor
+	 * @param startMonth - start Month of event
+	 * @param endMonth - end month of the event
+	 * @param startDay - start day of the event
+	 * @param endDay - end day of the event
+	 * @param startYear - start year of the event
+	 * @param endYear - end year of the event
+	 * @param eventDescription - actual text of the event
 	 */
 	public Event2(String startMonth, String endMonth, int startDay, int endDay, int startYear, int endYear, String eventDescription){
 		
@@ -103,7 +117,7 @@ public class Event2 implements java.io.Serializable{
 	/**
 	 * Used to compare two Events, to see if one comes before another
 	 * 
-	 * @param Event2 other: the other event that is being compared
+	 * @param other: the other event that is being compared
 	 * @return true if this event comes before the other
 	 */
 	public boolean isBefore(Event2 other){
@@ -125,10 +139,9 @@ public class Event2 implements java.io.Serializable{
 	}
 	/**
 	 * Checks if multiday applies for an event for a given date
-	 * @param month
-	 * @param date
-	 * @param year
-	 * @return
+	 * @param month - month that is checked against multiday event
+	 * @param date - date that is checked against multiday event
+	 * @return true if the input date is part of the multiday event
 	 */
 	public boolean multiDayApplies(String month, int date){
 		
@@ -136,15 +149,24 @@ public class Event2 implements java.io.Serializable{
 		int newCheckMonth = monthStringToInt(month);
 		int newStartMonth = monthStringToInt(this.startMonth);
 		
+		/*
+		 * Years were not considered in original project, Since it only applies
+		 * for one school year, we can get away with only checking month by assuming
+		 * January through May are in 2017
+		 */
+		
 		if(newEndMonth < 8) newEndMonth += 12; //8-17
 		if(newCheckMonth < 8) newCheckMonth += 12;
 		if(newStartMonth < 8) newStartMonth += 12;
 		
+		/*
+		 * The following statements return true if the input day falls within scope of
+		 * the multiday event.
+		 */
 		if(newCheckMonth < newEndMonth && newCheckMonth > newStartMonth) return true;
 		else if(newCheckMonth == newStartMonth && this.startDay <= date) return true;
 		else if(newCheckMonth == newEndMonth && this.endDay >= date) return true;
-		
-		return false;
+		else return false;
 	
 	}
 	

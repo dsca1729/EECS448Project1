@@ -182,8 +182,18 @@ public class CalendarDay
 		loadDayEvents();
 	}
 	
+	/**
+	 * Adds a multiday event, made to match up with input in GUI
+	 * @param text - description of the event
+	 * @param month - month of the event(String)
+	 * @param date - day of the month
+	 */
 	public void addMulti(String text, String month, int date){
 		
+		/*
+		 * This part does not really apply because the year is never considered 
+		 * for the scope of this project
+		 */
 		int year = 2016;
 		if(Event2.monthStringToInt(month) < 8) year = 2017;
 		
@@ -193,6 +203,7 @@ public class CalendarDay
 		System.out.println(getDate()+" "+ date);
 		*/ 
 		
+		//Create event using multiday constructor and add it to global list of events
 		Event2 temp = new Event2(getMonth(), month, getDate(), date, getYear(), year, text);
 		eventHelper.addEvent(temp);
 		loadDayEvents();
@@ -214,7 +225,9 @@ public class CalendarDay
 		eventHelper.printEvents();
 	}
 
-	/*
+	/* Unnecessary methods left from the previous caretakers
+	 
+	 
 	public String getFilePath()
 	{
 		return monthFilePath;
