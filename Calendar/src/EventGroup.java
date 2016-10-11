@@ -52,9 +52,7 @@ public class EventGroup{
 	public void saveEvents(){
 		
 		try {
-			
-			printEvents();
-			
+						
 	         FileOutputStream fileOut = new FileOutputStream(filename);
 	         ObjectOutputStream out = new ObjectOutputStream(fileOut);
 	         
@@ -118,6 +116,10 @@ public class EventGroup{
 			Event2 singleEvent = events.get(i);
 			
 			if( singleEvent.startMonth.equals(month) && singleEvent.startDay == day && singleEvent.startYear == year){
+				
+				matchedEvents.add(singleEvent);
+			}
+			else if(singleEvent.isMultiday && singleEvent.multiDayApplies(month, day, year)){ //Check for multiday
 				
 				matchedEvents.add(singleEvent);
 			}

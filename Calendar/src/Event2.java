@@ -123,6 +123,30 @@ public class Event2 implements java.io.Serializable{
 			}
 		}
 	}
+	/**
+	 * Checks if multiday applies for an event for a given date
+	 * @param month
+	 * @param date
+	 * @param year
+	 * @return
+	 */
+	public boolean multiDayApplies(String month, int date, int year){
+		
+		if(this.endYear > year) return true;
+		
+		else if(this.endYear == year){
+			
+			if(monthStringToInt(this.endMonth) > monthStringToInt(month)) return true;
+			
+			else if(monthStringToInt(this.endMonth) == monthStringToInt(month)){
+				
+				if(this.endDay >= date && this.startDay <= date) return true;
+			}
+		}
+		
+		return false;
+		
+	}
 	
 	/**
 	 * Converts a month string to an integer value
