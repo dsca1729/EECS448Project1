@@ -51,7 +51,7 @@ public class Event2 implements java.io.Serializable{
 	/*
 	 * 	This constructor is for multi-day events
 	 */
-	public Event2(String startMonth, String endMonth, int startDay, int endDay, int startYear, int endYear, int startTime, int endTime, String eventDescription){
+	public Event2(String startMonth, String endMonth, int startDay, int endDay, int startYear, int endYear, String eventDescription){
 		
 		this.startMonth = startMonth;
 		this.endMonth = endMonth;
@@ -62,8 +62,8 @@ public class Event2 implements java.io.Serializable{
 		this.startYear = startYear;
 		this.endYear = endYear;
 		
-		this.startTime = startTime;
-		this.endTime = endTime;
+		this.startTime = 50;
+		this.endTime = 50;
 		
 		this.eventDescription = eventDescription;
 		
@@ -123,6 +123,30 @@ public class Event2 implements java.io.Serializable{
 			}
 		}
 	}
+	/**
+	 * Checks if multiday applies for an event for a given date
+	 * @param month
+	 * @param date
+	 * @param year
+	 * @return
+	 */
+	public boolean multiDayApplies(String month, int date){
+		
+		int newEndMonth = monthStringToInt(this.endMonth); //1-8
+		int newCheckMonth = monthStringToInt(month);
+		int newStartMonth = monthStringToInt(this.startMonth);
+		
+		if(newEndMonth < 8) newEndMonth += 12; //8-17
+		if(newCheckMonth < 8) newCheckMonth += 12;
+		if(newStartMonth < 8) newStartMonth += 12;
+		
+		if(newCheckMonth < newEndMonth && newCheckMonth > newStartMonth) return true;
+		else if(newCheckMonth == newStartMonth && this.startDay <= date) return true;
+		else if(newCheckMonth == newEndMonth && this.endDay >= date) return true;
+		
+		return false;
+	
+	}
 	
 	/**
 	 * Converts a month string to an integer value
@@ -130,7 +154,7 @@ public class Event2 implements java.io.Serializable{
 	 * @param String month: String representation of the month
 	 * @return int: int representation of the month
 	 */
-	public int monthStringToInt(String month){
+	public static int monthStringToInt(String month){
 		
 		switch(month){
 			

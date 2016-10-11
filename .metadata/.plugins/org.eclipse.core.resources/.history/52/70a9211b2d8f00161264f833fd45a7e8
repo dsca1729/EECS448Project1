@@ -52,7 +52,9 @@ public class EventGroup{
 	public void saveEvents(){
 		
 		try {
-						
+			
+			printEvents();
+			
 	         FileOutputStream fileOut = new FileOutputStream(filename);
 	         ObjectOutputStream out = new ObjectOutputStream(fileOut);
 	         
@@ -80,7 +82,11 @@ public class EventGroup{
 		if(events.size() == 0){
 			events.add(e);
 			saveEvents();
+<<<<<<< HEAD
+			return true;
+=======
 			return;
+>>>>>>> ee48fe6a7970b5d57b2fcfee1c543a32f3f94d80
 		}
 		for(int i =0; i<events.size();i++){
 			
@@ -88,13 +94,21 @@ public class EventGroup{
 				
 				events.add(i, e); //add it to the array at the right position
 				saveEvents();
+<<<<<<< HEAD
+				return true; //exit the function
+=======
 				return; //exit the function
+>>>>>>> ee48fe6a7970b5d57b2fcfee1c543a32f3f94d80
 			}
 		}
 		
 		events.add(e);
 		saveEvents();
+<<<<<<< HEAD
+		return true;
+=======
 		return;
+>>>>>>> ee48fe6a7970b5d57b2fcfee1c543a32f3f94d80
 		
 	}
 	
@@ -116,10 +130,6 @@ public class EventGroup{
 			Event2 singleEvent = events.get(i);
 			
 			if( singleEvent.startMonth.equals(month) && singleEvent.startDay == day && singleEvent.startYear == year){
-				
-				matchedEvents.add(singleEvent);
-			}
-			else if(singleEvent.isMultiday && singleEvent.multiDayApplies(month, day)){ //Check for multiday
 				
 				matchedEvents.add(singleEvent);
 			}

@@ -65,6 +65,16 @@ public class CalendarJFrame extends JFrame{
 	{
 		super("Calendar");
 		
+		
+		addWindowListener(new WindowAdapter()
+		{
+		    public void windowClosing(WindowEvent e)
+		    {
+		        System.out.println("Saving to ser file...");
+		        curDay.printAllEvents();
+		    }
+		});
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(800, 600);
 		setResizable(false);
@@ -326,7 +336,9 @@ public class CalendarJFrame extends JFrame{
 						startTime.setSelectedIndex(0);
 						endTime.setSelectedIndex(0);
 
-						tabs.setSelectedIndex(1);
+						tabs.setSelectedIndex(0);
+						
+						dayButton.doClick();
 					}
 				});
 
@@ -476,6 +488,7 @@ public class CalendarJFrame extends JFrame{
 				});
 		//Adds everything to the add and remove event panel
 			
+			
 		addEventPanel.add(newEventScroll);
 		addEventPanel.add(newEventPanel);
 		
@@ -494,49 +507,7 @@ public class CalendarJFrame extends JFrame{
 		panel.add(addEventPanel);	
 		panel.add(multiDayPanel);
 		
-		newEventButton.addActionListener(
-				new ActionListener(){
-					public void actionPerformed(ActionEvent e){
-						
-						int day = 0;
-						if(minDaysCB.isVisible()){
-							day = minDaysCB.getSelectedIndex() + 1;
-						}
-						else if(thirtyDaysCB.isVisible()){
-							day = thirtyDaysCB.getSelectedIndex() + 1;
-						}
-						else if(maxDaysCB.isVisible()){
-							day = maxDaysCB.getSelectedIndex() + 1;
-						}
-						
-						String inputMonth = (String) months.getSelectedItem();
-						int currentMonth = Event2.monthStringToInt(curDay.getMonth());
-						int selectedMonth = Event2.monthStringToInt(inputMonth);
-						
-						int newCurrentMonth = currentMonth;
-						int newSelectedMonth = selectedMonth;
-						
-						if(newCurrentMonth < 8) newCurrentMonth += 12; //This compensates for lower months in a later year
-						if(newSelectedMonth < 8) newSelectedMonth += 12;
-						
-						if(newSelectedMonth < newCurrentMonth) return;
-						else if( currentMonth == selectedMonth && day <= curDay.getDate()) return;
-						
-						curDay.addMulti(newEventText.getText(),inputMonth,day);						
-						
-						newEventText.setText("");
-						maxDaysCB.setSelectedIndex(0);
-						thirtyDaysCB.setSelectedIndex(0);
-						minDaysCB.setSelectedIndex(0);
-						
-						dayButton.doClick();
-						tabs.setSelectedIndex(0);
-						
-						updateWeekDisplay(curWeek);
-						
-						
-					}
-				});
+		
 		
 	}
 	
@@ -640,20 +611,14 @@ public class CalendarJFrame extends JFrame{
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
 						
-						int start = startTime.getSelectedIndex();
-						int end = endTime.getSelectedIndex()+1;
-						
-						if(end <= start) return;
-						
-						curDay.addEvent(newEventText.getText(),start, end);						
+						curDay.addEvent(newEventText.getText(),startTime.getSelectedIndex(), endTime.getSelectedIndex()+1);						
 						
 						newEventText.setText("");
 						startTime.setSelectedIndex(0);
 						endTime.setSelectedIndex(0);
-						
 						tabs.setSelectedIndex(0);
-						dayButton.doClick();			
-						updateWeekDisplay(curWeek);
+						
+						dayButton.doClick();
 					}
 				});
 		 

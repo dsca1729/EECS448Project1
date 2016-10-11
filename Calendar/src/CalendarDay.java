@@ -95,8 +95,16 @@ public class CalendarDay
 		String temp = "";
 		for (int i = 0; i < dayEvents.size(); i++)
 		{
-			Event2 event = dayEvents.get(i);			
-			temp += String.valueOf(i+1) + ".   " + timeToString(event.startTime) + " - " + timeToString(event.endTime) + "       " +event.eventDescription + "\n";
+			Event2 event = dayEvents.get(i);
+			
+			if(event.startTime == 50){
+				
+				temp += String.valueOf(i+1) + ".   " + "Multiday:" + "       " +event.eventDescription + "\n";
+			}
+			else{
+				temp += String.valueOf(i+1) + ".   " + timeToString(event.startTime) + " - " + timeToString(event.endTime) + "       " +event.eventDescription + "\n";
+			}
+			
 			
 		}
 		return temp;
@@ -151,6 +159,7 @@ public class CalendarDay
 	 */
 	public void loadDayEvents(){
 		
+		eventHelper.retrieveEventsFromFile();
 		this.dayEvents = eventHelper.getEventsForDate(getMonth(), getDate(), getYear());
 	}
 	
@@ -173,6 +182,22 @@ public class CalendarDay
 		loadDayEvents();
 	}
 	
+	public void addMulti(String text, String month, int date){
+		
+		int year = 2016;
+		if(Event2.monthStringToInt(month) < 8) year = 2017;
+		
+		/* For testing input information
+		System.out.println(getYear() + " " + year);
+		System.out.println(getMonth() + " " + month);
+		System.out.println(getDate()+" "+ date);
+		*/ 
+		
+		Event2 temp = new Event2(getMonth(), month, getDate(), date, getYear(), year, text);
+		eventHelper.addEvent(temp);
+		loadDayEvents();
+	}
+	
 	/**
 	 *  Removes an event from eventHelper
 	 *  @param index - int: specifies which event for this day should be removed
@@ -181,6 +206,7 @@ public class CalendarDay
 	public void removeEvent(int index){
 		
 		eventHelper.removeEvent(dayEvents.get(index));
+		saveEvents();
 		loadDayEvents();
 	}
 	

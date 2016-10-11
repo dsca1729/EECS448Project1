@@ -137,7 +137,7 @@ public class CalendarWeek {
 			while(dayCount < 7)
 			{
 				setDay(dayCount, tempMonth.getDay(tempDate));
-				//tempMonth.getDay(tempDate).loadDayEvents();
+				tempMonth.getDay(tempDate).loadDayEvents();
 				dayCount++;
 				tempDate++;
 				if(tempDate >= tempMonth.getNumDays()){
