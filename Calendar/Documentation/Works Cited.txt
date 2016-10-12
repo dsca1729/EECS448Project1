@@ -3,3 +3,16 @@ Mazzy, "add space between JFrame and JPanel", URL (version: 2012-01-14): 		http:
 dododedodonl, "JTextArea new line on shift + enter", URL (version 2010-01-29): 		http://stackoverflow.com/questions/2162170/jtextarea-new-line-on-shift-enter
 
 Venkat, "Align the values of the cells in JTable?", URL (version: 2010-03-09): 		http://stackoverflow.com/questions/2408541/align-the-values-of-the-cells-in-jtable
+
+
+
+
+------------------------------------------------------------------------
+Project 2
+
+Used for serialization storage of events
+http://www.tutorialspoint.com/java/java_serialization.html
+
+
+Used for overriding the .equals() method of an object for events
+http://stackoverflow.com/questions/16069106/how-to-compare-two-java-objects
