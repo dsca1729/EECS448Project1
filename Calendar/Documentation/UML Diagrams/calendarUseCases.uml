@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_x0bngI_uEeaezOEnuhAYeQ" name="RootElement">
+  <packagedElement xmi:type="uml:Actor" xmi:id="_zus70I_uEeaezOEnuhAYeQ" name="Calendar User"/>
+  <packagedElement xmi:type="uml:Package" xmi:id="_aFkE0I_2EeaezOEnuhAYeQ" name="Calendar System">
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_iJgGEI_2EeaezOEnuhAYeQ" name="View 2016-2017 Academic Year">
+      <generalization xmi:type="uml:Generalization" xmi:id="_YWtrcI_4EeaezOEnuhAYeQ" general="_5515UI_3EeaezOEnuhAYeQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_kHVrwI_2EeaezOEnuhAYeQ" name="View Month">
+      <generalization xmi:type="uml:Generalization" xmi:id="_W3MZcI_4EeaezOEnuhAYeQ" general="_5515UI_3EeaezOEnuhAYeQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_k_JdgI_2EeaezOEnuhAYeQ" name="View Week">
+      <generalization xmi:type="uml:Generalization" xmi:id="_VF73MI_4EeaezOEnuhAYeQ" general="_5515UI_3EeaezOEnuhAYeQ"/>
+      <extensionPoint xmi:type="uml:ExtensionPoint" xmi:id="_ZN1ZUI_7EeaezOEnuhAYeQ" name="ExtensionPoint1"/>
+      <extensionPoint xmi:type="uml:ExtensionPoint" xmi:id="_gMPV4Y_7EeaezOEnuhAYeQ" name="ExtensionPoint2"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_md1CAI_2EeaezOEnuhAYeQ" name="View Day">
+      <generalization xmi:type="uml:Generalization" xmi:id="_XqQOEI_4EeaezOEnuhAYeQ" general="_5515UI_3EeaezOEnuhAYeQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_HkaoYI_3EeaezOEnuhAYeQ" name="Add Event">
+      <extend xmi:type="uml:Extend" xmi:id="_7zcF8I_8EeaezOEnuhAYeQ" extendedCase="_axC_4I_4EeaezOEnuhAYeQ" extensionLocation="_7zctAI_8EeaezOEnuhAYeQ"/>
+      <extend xmi:type="uml:Extend" xmi:id="_9CTs0I_8EeaezOEnuhAYeQ" extendedCase="_20CUEI_5EeaezOEnuhAYeQ" extensionLocation="_9CTs0Y_8EeaezOEnuhAYeQ"/>
+      <extensionPoint xmi:type="uml:ExtensionPoint" xmi:id="_ns9KwI_6EeaezOEnuhAYeQ" name="ExtensionPoint1"/>
+      <extensionPoint xmi:type="uml:ExtensionPoint" xmi:id="_owMJYY_6EeaezOEnuhAYeQ" name="ExtensionPoint2"/>
+      <extensionPoint xmi:type="uml:ExtensionPoint" xmi:id="_pbB2II_6EeaezOEnuhAYeQ" name="ExtensionPoint3"/>
+      <extensionPoint xmi:type="uml:ExtensionPoint" xmi:id="_7zctAI_8EeaezOEnuhAYeQ" name="ExtensionPoint4"/>
+      <extensionPoint xmi:type="uml:ExtensionPoint" xmi:id="_8MI50Y_8EeaezOEnuhAYeQ" name="ExtensionPoint5"/>
+      <extensionPoint xmi:type="uml:ExtensionPoint" xmi:id="_9CTs0Y_8EeaezOEnuhAYeQ" name="ExtensionPoint6"/>
+      <include xmi:type="uml:Include" xmi:id="_V7hwgI_6EeaezOEnuhAYeQ" addition="_Oy_dAI_5EeaezOEnuhAYeQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_IrMqQI_3EeaezOEnuhAYeQ" name="Remove Event">
+      <include xmi:type="uml:Include" xmi:id="_ztyU0I_5EeaezOEnuhAYeQ" addition="_md1CAI_2EeaezOEnuhAYeQ"/>
+      <include xmi:type="uml:Include" xmi:id="_VVY9kI_6EeaezOEnuhAYeQ" addition="_Oy_dAI_5EeaezOEnuhAYeQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_5515UI_3EeaezOEnuhAYeQ" name="Select View">
+      <include xmi:type="uml:Include" xmi:id="_u8lPoI_5EeaezOEnuhAYeQ" addition="_Oy_dAI_5EeaezOEnuhAYeQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_axC_4I_4EeaezOEnuhAYeQ" name="Add Recurring Event"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_Oy_dAI_5EeaezOEnuhAYeQ" name="Build Calendar"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_20CUEI_5EeaezOEnuhAYeQ" name="Add Multi-Day Event">
+      <extensionPoint xmi:type="uml:ExtensionPoint" xmi:id="_y8wZII_8EeaezOEnuhAYeQ" name="ExtensionPoint1"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Usage" xmi:id="_LXzTEI_6EeaezOEnuhAYeQ" name="Week Chosen from Month View" client="_k_JdgI_2EeaezOEnuhAYeQ" supplier="_kHVrwI_2EeaezOEnuhAYeQ"/>
+    <packagedElement xmi:type="uml:Usage" xmi:id="_Ny7RsI_6EeaezOEnuhAYeQ" name="Select Month from Year View" client="_kHVrwI_2EeaezOEnuhAYeQ" supplier="_iJgGEI_2EeaezOEnuhAYeQ"/>
+    <packagedElement xmi:type="uml:Usage" xmi:id="_Qcn30I_6EeaezOEnuhAYeQ" name="Day Chosen from Week View" client="_md1CAI_2EeaezOEnuhAYeQ" supplier="_k_JdgI_2EeaezOEnuhAYeQ"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_XjDSgI_7EeaezOEnuhAYeQ" name="Select Next Week">
+      <include xmi:type="uml:Include" xmi:id="_67wsgI_7EeaezOEnuhAYeQ" addition="_k_JdgI_2EeaezOEnuhAYeQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_e01eEI_7EeaezOEnuhAYeQ" name="Select Previous Week">
+      <include xmi:type="uml:Include" xmi:id="_7jc-oI_7EeaezOEnuhAYeQ" addition="_k_JdgI_2EeaezOEnuhAYeQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_shZUsI_7EeaezOEnuhAYeQ" name="Select Next Month">
+      <include xmi:type="uml:Include" xmi:id="_5es4oI_7EeaezOEnuhAYeQ" addition="_kHVrwI_2EeaezOEnuhAYeQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_tuzjAI_7EeaezOEnuhAYeQ" name="Select Previous Month">
+      <include xmi:type="uml:Include" xmi:id="_yAh24I_7EeaezOEnuhAYeQ" addition="_kHVrwI_2EeaezOEnuhAYeQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uDFUcI_8EeaezOEnuhAYeQ" name="Select Event End Date">
+      <include xmi:type="uml:Include" xmi:id="_AO9PAI_9EeaezOEnuhAYeQ" addition="_20CUEI_5EeaezOEnuhAYeQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_HKCx0I_9EeaezOEnuhAYeQ" name="Select Recurrence Interval">
+      <include xmi:type="uml:Include" xmi:id="_V3yYoI_9EeaezOEnuhAYeQ" addition="_axC_4I_4EeaezOEnuhAYeQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_XNmVAI_9EeaezOEnuhAYeQ" name="Recur Monthly">
+      <include xmi:type="uml:Include" xmi:id="_OS088I_-EeaezOEnuhAYeQ" addition="_HKCx0I_9EeaezOEnuhAYeQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_epMj4I_9EeaezOEnuhAYeQ" name="Recur biweekly">
+      <include xmi:type="uml:Include" xmi:id="_OxJQoI_-EeaezOEnuhAYeQ" addition="_HKCx0I_9EeaezOEnuhAYeQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_l81JkI_9EeaezOEnuhAYeQ" name="Recur Weekly">
+      <include xmi:type="uml:Include" xmi:id="_SfejkI_-EeaezOEnuhAYeQ" addition="_HKCx0I_9EeaezOEnuhAYeQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_0YPqQI_9EeaezOEnuhAYeQ" name="Select Days Event Repeats On">
+      <include xmi:type="uml:Include" xmi:id="_4tS-8I_9EeaezOEnuhAYeQ" addition="_axC_4I_4EeaezOEnuhAYeQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Usage" xmi:id="_jOrr0I_-EeaezOEnuhAYeQ" name="Day View default in Calendar executable" client="_Oy_dAI_5EeaezOEnuhAYeQ" supplier="_md1CAI_2EeaezOEnuhAYeQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_OrdHEI_4EeaezOEnuhAYeQ" memberEnd="_OrduII_4EeaezOEnuhAYeQ _OrduIY_4EeaezOEnuhAYeQ">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_OrdHEY_4EeaezOEnuhAYeQ" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_OrdHEo_4EeaezOEnuhAYeQ" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_OrduII_4EeaezOEnuhAYeQ" name="calendar user" type="_zus70I_uEeaezOEnuhAYeQ" association="_OrdHEI_4EeaezOEnuhAYeQ"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_OrduIY_4EeaezOEnuhAYeQ" name="select view" type="_5515UI_3EeaezOEnuhAYeQ" association="_OrdHEI_4EeaezOEnuhAYeQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_QYWGsI_4EeaezOEnuhAYeQ" memberEnd="_QYWGs4_4EeaezOEnuhAYeQ _QYWGtI_4EeaezOEnuhAYeQ">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_QYWGsY_4EeaezOEnuhAYeQ" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_QYWGso_4EeaezOEnuhAYeQ" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_QYWGs4_4EeaezOEnuhAYeQ" name="calendar user" type="_zus70I_uEeaezOEnuhAYeQ" association="_QYWGsI_4EeaezOEnuhAYeQ"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_QYWGtI_4EeaezOEnuhAYeQ" name="add event" type="_HkaoYI_3EeaezOEnuhAYeQ" association="_QYWGsI_4EeaezOEnuhAYeQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_RHBKkI_4EeaezOEnuhAYeQ" memberEnd="_RHCYsI_4EeaezOEnuhAYeQ _RHCYsY_4EeaezOEnuhAYeQ">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_RHBxoI_4EeaezOEnuhAYeQ" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_RHBxoY_4EeaezOEnuhAYeQ" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_RHCYsI_4EeaezOEnuhAYeQ" name="calendar user" type="_zus70I_uEeaezOEnuhAYeQ" association="_RHBKkI_4EeaezOEnuhAYeQ"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_RHCYsY_4EeaezOEnuhAYeQ" name="remove event" type="_IrMqQI_3EeaezOEnuhAYeQ" association="_RHBKkI_4EeaezOEnuhAYeQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_YtZ3sI_5EeaezOEnuhAYeQ" memberEnd="_YtaewY_5EeaezOEnuhAYeQ _Ytaewo_5EeaezOEnuhAYeQ">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_YtZ3sY_5EeaezOEnuhAYeQ" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_YtaewI_5EeaezOEnuhAYeQ" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_YtaewY_5EeaezOEnuhAYeQ" name="calendar user" type="_zus70I_uEeaezOEnuhAYeQ" association="_YtZ3sI_5EeaezOEnuhAYeQ"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_Ytaewo_5EeaezOEnuhAYeQ" name="build calendar" type="_Oy_dAI_5EeaezOEnuhAYeQ" association="_YtZ3sI_5EeaezOEnuhAYeQ"/>
+  </packagedElement>
+</uml:Model>
