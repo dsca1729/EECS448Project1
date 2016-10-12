@@ -17,11 +17,15 @@ public class EventGroup{
 	 */
 	public EventGroup(){
 		
+		//retrieve all the events from serial file when the eventgroup is initialized
 		retrieveEventsFromFile();
 	}
 	
 	/**
 	 * Retrieves all events from the .ser file
+	 * 
+	 * @src http://www.tutorialspoint.com/java/java_serialization.htm
+	 * This is where information on serialization in java was found.
 	 * 
 	 * @return Arraylist<Event2> of all events in file
 	 */
@@ -29,6 +33,7 @@ public class EventGroup{
 		
 		try{
 			
+			//read in array of events from file and add them to eventgroup object
 			FileInputStream fileIn = new FileInputStream(filename);
 	        ObjectInputStream in = new ObjectInputStream(fileIn);
 	        
@@ -52,7 +57,8 @@ public class EventGroup{
 	public void saveEvents(){
 		
 		try {
-						
+			
+			 //writes the array of events to the serial file
 	         FileOutputStream fileOut = new FileOutputStream(filename);
 	         ObjectOutputStream out = new ObjectOutputStream(fileOut);
 	         
@@ -73,15 +79,15 @@ public class EventGroup{
 	 */
 	public void addEvent(Event2 e){
 		
+		//update events from the file
 		retrieveEventsFromFile();
 		
-		retrieveEventsFromFile();
-		
-		if(events.size() == 0){
+		if(events.size() == 0){ //if the array is empty
 			events.add(e);
 			saveEvents();
 			return;
 		}
+		
 		for(int i =0; i<events.size();i++){
 			
 			if(e.isBefore(events.get(i))){ //if the added event comes before another event in the array
@@ -92,9 +98,15 @@ public class EventGroup{
 			}
 		}
 		
+		//if the loop is never exited add the event to the end of the array
 		events.add(e);
 		saveEvents();
 		return;
+		
+		/*
+		 * The serial file is always saved upon exit to prevent discrepancies
+		 * between instances of EventGroup
+		 */
 		
 	}
 	
@@ -115,11 +127,13 @@ public class EventGroup{
 			
 			Event2 singleEvent = events.get(i);
 			
+			//if event date matches the day
 			if( singleEvent.startMonth.equals(month) && singleEvent.startDay == day && singleEvent.startYear == year){
 				
 				matchedEvents.add(singleEvent);
 			}
-			else if(singleEvent.isMultiday && singleEvent.multiDayApplies(month, day)){ //Check for multiday
+			//Check for multiday
+			else if(singleEvent.isMultiday && singleEvent.multiDayApplies(month, day)){ 
 				
 				matchedEvents.add(singleEvent);
 			}

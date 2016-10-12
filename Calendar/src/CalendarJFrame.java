@@ -494,10 +494,12 @@ public class CalendarJFrame extends JFrame{
 		panel.add(addEventPanel);	
 		panel.add(multiDayPanel);
 		
+		/* Handles when the add event button is pressed */
 		newEventButton.addActionListener(
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
 						
+						/* Check which set of days is selected, and read the value */
 						int day = 0;
 						if(minDaysCB.isVisible()){
 							day = minDaysCB.getSelectedIndex() + 1;
@@ -509,6 +511,7 @@ public class CalendarJFrame extends JFrame{
 							day = maxDaysCB.getSelectedIndex() + 1;
 						}
 						
+						/* Retrieve events from GUI */
 						String inputMonth = (String) months.getSelectedItem();
 						int currentMonth = Event2.monthStringToInt(curDay.getMonth());
 						int selectedMonth = Event2.monthStringToInt(inputMonth);
@@ -516,12 +519,15 @@ public class CalendarJFrame extends JFrame{
 						int newCurrentMonth = currentMonth;
 						int newSelectedMonth = selectedMonth;
 						
-						if(newCurrentMonth < 8) newCurrentMonth += 12; //This compensates for lower months in a later year
+						/* This compensates for months in 2017 */
+						if(newCurrentMonth < 8) newCurrentMonth += 12; 
 						if(newSelectedMonth < 8) newSelectedMonth += 12;
 						
+						/* This prevents the button from doing anything if input is invalid */
 						if(newSelectedMonth < newCurrentMonth) return;
 						else if( currentMonth == selectedMonth && day <= curDay.getDate()) return;
 						
+						/* If it passes the tests, add the event and reset GUI */
 						curDay.addMulti(newEventText.getText(),inputMonth,day);						
 						
 						newEventText.setText("");
@@ -636,15 +642,19 @@ public class CalendarJFrame extends JFrame{
 		panel.add(addEventPanel);
 		panel.add(startEndPanel);
 		
+		/* Handles when the add event button is pressed */
 		newEventButton.addActionListener(
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e){
 						
+						/* Get information from the GUI*/
 						int start = startTime.getSelectedIndex();
 						int end = endTime.getSelectedIndex()+1;
 						
+						/* Prevents anything from happening for invalid input*/
 						if(end <= start) return;
 						
+						/* If it passes the test add the event and reset GUI*/
 						curDay.addEvent(newEventText.getText(),start, end);						
 						
 						newEventText.setText("");
